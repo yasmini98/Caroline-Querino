@@ -1,9 +1,11 @@
 import React, { useState, useRef } from 'react';
 import { Link } from "react-router-dom";
+import { useI18n } from '../app/i18n';
 
 
 
 export default function Home() {
+  const { t } = useI18n();
   const [mousePosition, setMousePosition] = useState({ x: 0 });
   const titleRef = useRef<HTMLHeadingElement | null>(null);
 
@@ -56,7 +58,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <div className="inline-block px-4 py-2 bg-purple-100 text-purple-700 rounded-full mb-6 animate-fade-in">
-              Consultoria Especializada
+              {t.home.badge}
             </div>
             <h2 
               ref={titleRef}
@@ -64,17 +66,16 @@ export default function Home() {
               className="text-4xl md:text-5xl font-bold mb-6 transition-colors duration-75"
               style={{ color: getColorFromPosition(mousePosition.x) }}
             >
-              Consultoria e Pesquisa em Gênero, Tecnologia e ESG
+              {t.home.title}
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
-              Soluções estratégicas para transformar organizações através da diversidade, 
-              inovação tecnológica e sustentabilidade ambiental
+              {t.home.description}
             </p>
             <Link 
               to="/contato" 
               className="inline-block bg-purple-600 text-white px-8 py-3 rounded-lg hover:bg-purple-700 transition-colors shadow-lg hover:shadow-xl"
             >
-              Entre em Contato
+              {t.home.cta}
             </Link>
             {/* <div className="mt-12 flex justify-center">
               <a href="#areas" className="text-gray-400 hover:text-purple-600 transition-colors">

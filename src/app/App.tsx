@@ -8,6 +8,7 @@ import Contato from "../pages/Contato";
 import Artigos from "../pages/Artigos";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLocation } from "react-router-dom";
+import { Language, useI18n } from "./i18n";
 
 
 
@@ -27,6 +28,34 @@ function PageWrapper({ children }: { children: React.ReactNode }) {
 export default function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const { language, setLanguage, t } = useI18n();
+
+  const languageOptions: Array<{ code: Language; flag: string; label: string }> = [
+    { code: 'en', flag: '🇬🇧', label: t.common.languages.en },
+    { code: 'pt-BR', flag: '🇧🇷', label: t.common.languages['pt-BR'] },
+    { code: 'es', flag: '🇪🇸', label: t.common.languages.es },
+  ];
+
+  const renderLanguageFlags = () => (
+    <div className="flex items-center gap-1" aria-label="Language selector">
+      {languageOptions.map((option) => (
+        <button
+          key={option.code}
+          type="button"
+          onClick={() => setLanguage(option.code)}
+          title={option.label}
+          aria-label={option.label}
+          className={`text-lg leading-none rounded px-1.5 py-1 border transition-colors ${
+            language === option.code
+              ? 'border-purple-500 bg-purple-50'
+              : 'border-transparent hover:border-gray-300'
+          }`}
+        >
+          {option.flag}
+        </button>
+      ))}
+    </div>
+  );
 
   return (
     <div className="min-h-screen bg-white">
@@ -45,18 +74,19 @@ export default function App() {
                 to="/"
                 className="inline-block hover:text-purple-700 transition-colors cursor-pointer leading-none"
               >
-                <span className="block text-xl font-bold text-purple-600 whitespace-nowrap">Caroline Querino</span>
-                <span className="block text-base font-medium text-gray-600 whitespace-nowrap">Consultoria ESG & Tech</span>
+                <span className="block text-xl font-bold text-purple-600 whitespace-nowrap">{t.app.brandLine1}</span>
+                <span className="block text-base font-medium text-gray-600 whitespace-nowrap">{t.app.brandLine2}</span>
               </Link>
             </div>
             
             {/* Desktop Navigation */}
-            <div className="hidden md:flex space-x-8">
-              <Link to="/" className="text-gray-700 nav-link font-semibold transition-colors transform hover:scale-105">Home</Link>
-              <Link to="/areas" className="text-gray-700 nav-link font-semibold transition-colors transform hover:scale-105">Áreas de Atuação</Link>
-              <Link to="/sobre" className="text-gray-700 nav-link font-semibold transition-colors transform hover:scale-105">Sobre</Link>
-              <Link to="/artigos" className="text-gray-700 nav-link font-semibold transition-colors transform hover:scale-105">Artigos e Publicações</Link>
-              <Link to="/contato" className="text-gray-700 nav-contato font-semibold transition-colors transform hover:scale-105">Contato</Link>
+            <div className="hidden md:flex items-center space-x-6">
+              <Link to="/" className="text-gray-700 nav-link font-semibold transition-colors transform hover:scale-105">{t.app.nav.home}</Link>
+              <Link to="/areas" className="text-gray-700 nav-link font-semibold transition-colors transform hover:scale-105">{t.app.nav.areas}</Link>
+              <Link to="/sobre" className="text-gray-700 nav-link font-semibold transition-colors transform hover:scale-105">{t.app.nav.about}</Link>
+              <Link to="/artigos" className="text-gray-700 nav-link font-semibold transition-colors transform hover:scale-105">{t.app.nav.articles}</Link>
+              <Link to="/contato" className="text-gray-700 nav-contato font-semibold transition-colors transform hover:scale-105">{t.app.nav.contact}</Link>
+              {renderLanguageFlags()}
             </div>
 
             {/* Mobile menu button */}
@@ -72,11 +102,12 @@ export default function App() {
           {mobileMenuOpen && (
             <div className="md:hidden pb-4">
               <div className="flex flex-col space-y-4">
-                <Link to="/" className="text-gray-700 nav-link font-semibold transition-colors transform hover:scale-105">Home</Link>
-                <Link to="/areas" className="text-gray-700 nav-link font-semibold transition-colors transform hover:scale-105">Áreas de Atuação</Link>
-                <Link to="/sobre" className="text-gray-700 nav-link font-semibold transition-colors transform hover:scale-105">Sobre</Link>
-                <Link to="/artigos" className="text-gray-700 nav-link font-semibold transition-colors transform hover:scale-105">Artigos e Publicações</Link>
-                <Link to="/contato" className="text-gray-700 nav-contato font-semibold transition-colors transform hover:scale-105">Contato</Link>
+                <Link to="/" className="text-gray-700 nav-link font-semibold transition-colors transform hover:scale-105">{t.app.nav.home}</Link>
+                <Link to="/areas" className="text-gray-700 nav-link font-semibold transition-colors transform hover:scale-105">{t.app.nav.areas}</Link>
+                <Link to="/sobre" className="text-gray-700 nav-link font-semibold transition-colors transform hover:scale-105">{t.app.nav.about}</Link>
+                <Link to="/artigos" className="text-gray-700 nav-link font-semibold transition-colors transform hover:scale-105">{t.app.nav.articles}</Link>
+                <Link to="/contato" className="text-gray-700 nav-contato font-semibold transition-colors transform hover:scale-105">{t.app.nav.contact}</Link>
+                {renderLanguageFlags()}
               </div>
             </div>
           )}
@@ -105,9 +136,9 @@ export default function App() {
       <footer className="bg-gray-900 text-gray-400 py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center space-y-2">
-            <p>© 2026 Caroline Querino Consultoria ESG & Tech. Todos os direitos reservados.</p>
+            <p>{t.app.footer.rights}</p>
             <p>
-              Desenvolvido por{" "}
+              {t.app.footer.developedBy}{" "}
               <a
                 href="https://www.linkedin.com/in/yasminioliveira"
                 target="_blank"

@@ -1,7 +1,9 @@
 import { Mail, Linkedin } from 'lucide-react';
 import React, { useState, useRef } from 'react';
+import { useI18n } from '../app/i18n';
 
 export default function Contato() {
+  const { t } = useI18n();
   const [mousePosition, setMousePosition] = useState({ x: 50, y: 50 });
   const emailBtnRef = useRef<HTMLAnchorElement | null>(null);
   const linkedinBtnRef = useRef<HTMLAnchorElement | null>(null);
@@ -69,11 +71,10 @@ export default function Contato() {
                 className="text-3xl md:text-4xl font-bold mb-6 cursor-pointer transition-colors"
                 style={titleHover ? getTitleColorStyle() : { color: 'white' }}
               >
-                Vamos Trabalhar Juntos?
+                {t.contact.title}
               </h2>
               <p className="text-xl text-purple-100 mb-12">
-                Entre em contato para discutir como posso contribuir com seus projetos 
-                de diversidade, tecnologia e sustentabilidade.
+                {t.contact.description}
               </p>
 
               <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
@@ -86,7 +87,7 @@ export default function Contato() {
                   style={emailHover ? getButtonGradientStyle() : { background: 'white', color: '#581c87' }}
                 >
                   <Mail className="w-5 h-5" />
-                  <span>Email</span>
+                  <span>{t.contact.email}</span>
                 </a>
                 <a 
                   ref={linkedinBtnRef}
@@ -99,7 +100,7 @@ export default function Contato() {
                   style={linkedinHover ? getButtonGradientStyle() : { background: 'white', color: '#581c87' }}
                 >
                   <Linkedin className="w-5 h-5" />
-                  <span>LinkedIn</span>
+                  <span>{t.contact.linkedin}</span>
                 </a>
               </div>
             </div>
