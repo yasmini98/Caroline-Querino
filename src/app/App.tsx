@@ -15,6 +15,7 @@ import { Language, useI18n } from "./i18n";
 function PageWrapper({ children }: { children: React.ReactNode }) {
   return (
     <motion.div
+      className="flex-1 flex flex-col"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
@@ -29,6 +30,7 @@ export default function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
   const { language, setLanguage, t } = useI18n();
+  const isContatoPage = location.pathname === '/contato';
 
   const languageOptions: Array<{ code: Language; flag: string; label: string }> = [
     { code: 'en', flag: '🇬🇧', label: t.common.languages.en },
@@ -58,7 +60,7 @@ export default function App() {
   );
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white flex flex-col">
       {/* Header/Navigation */}
       <header className="fixed top-0 left-0 right-0 bg-white/40 backdrop-blur-xs shadow-sm z-50">
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -115,7 +117,7 @@ export default function App() {
       </header>
 
       {/* Conteúdo das rotas */}
-      <main className="pt-20">
+      <main className={`${isContatoPage ? 'pt-16' : 'pt-20'} flex-1 flex flex-col`}>
         <AnimatePresence mode="wait">
           <Routes location={location} key={location.pathname}>
             <Route path="/" element={<PageWrapper><Home /></PageWrapper>} />

@@ -61,8 +61,8 @@ export default function Contato() {
 
   return (
     <>
-      <section id="contato" className="py-20 bg-gradient-to-br from-purple-900 to-blue-900 text-white">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section id="contato" className="flex-1 h-full min-h-full bg-gradient-to-br from-purple-900 to-blue-900 text-white flex items-center">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-12 md:py-16">
             <div className="text-center">
               <h2 
                 ref={titleRef}

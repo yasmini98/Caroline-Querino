@@ -12,7 +12,7 @@ This website is being developed as:
 - a portfolio project focused on showcasing code organization, responsive UI, and good practices with React + TypeScript.
 
 The base layout was inspired by the design file:
-https://www.figma.com/design/rk8ARwoJp0X0o3vPCV4hdY/Site-Carol
+[Figma design file](https://www.figma.com/design/rk8ARwoJp0X0o3vPCV4hdY/Site-Carol)
 
 ### Tech stack
 
@@ -29,7 +29,7 @@ https://www.figma.com/design/rk8ARwoJp0X0o3vPCV4hdY/Site-Carol
 npm install
 ```
 
-2. Start the development server:
+1. Start the development server:
 
 ```bash
 npm run dev
@@ -53,7 +53,7 @@ Este site está sendo desenvolvido como:
 - projeto de portfólio, com foco em demonstrar organização de código, interface responsiva e boas práticas com React + TypeScript.
 
 O layout base do projeto foi inspirado no arquivo de design:
-https://www.figma.com/design/rk8ARwoJp0X0o3vPCV4hdY/Site-Carol
+[Arquivo no Figma](https://www.figma.com/design/rk8ARwoJp0X0o3vPCV4hdY/Site-Carol)
 
 ### Tecnologias
 
@@ -70,7 +70,7 @@ https://www.figma.com/design/rk8ARwoJp0X0o3vPCV4hdY/Site-Carol
 npm install
 ```
 
-2. Inicie o servidor de desenvolvimento:
+1. Inicie o servidor de desenvolvimento:
 
 ```bash
 npm run dev
