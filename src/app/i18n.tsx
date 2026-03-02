@@ -22,7 +22,7 @@ const translations = {
         home: 'Home',
         areas: 'Serviços',
         about: 'Sobre',
-        articles: 'Artigos e Publicações',
+        articles: 'Conteúdos',
         contact: 'Contato',
       },
       footer: {
@@ -230,7 +230,7 @@ const translations = {
         home: 'Home',
         areas: 'Practice Areas',
         about: 'About',
-        articles: 'Articles & Publications',
+        articles: 'Contents',
         contact: 'Contact',
       },
       footer: {
@@ -437,7 +437,7 @@ const translations = {
         home: 'Inicio',
         areas: 'Áreas de Actuación',
         about: 'Sobre mí',
-        articles: 'Artículos y Publicaciones',
+        articles: 'Contenidos',
         contact: 'Contacto',
       },
       footer: {

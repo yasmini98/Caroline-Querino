@@ -1,4 +1,4 @@
-# Site Carol
+# Caroline Querino
 
 ## 🇬🇧 English (Primary)
 
