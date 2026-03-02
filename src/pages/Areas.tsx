@@ -1,10 +1,24 @@
 import { useState } from 'react';
 import { Users, Cpu, Leaf, BookOpen, ChevronDown } from 'lucide-react';
 import { useI18n } from '../app/i18n';
+import { AnimatePresence, motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import itaipuParquetecLogo from '../assets/images/itaipu-parquetec.png';
+import oxfamLogo from '../assets/images/oxfam-logo.png';
 
 export default function Areas() {
     const { t } = useI18n();
-    const [openTopic, setOpenTopic] = useState<'genero' | 'tecnologia' | 'ambiental' | null>(null);
+        type TopicKey = 'genero' | 'tecnologia' | 'ambiental';
+        const [openTopic, setOpenTopic] = useState<TopicKey | null>(null);
+
+        const handleAreaCardClick = (topicKey: TopicKey) => {
+            setOpenTopic(topicKey);
+
+            window.setTimeout(() => {
+                const target = document.getElementById(`case-${topicKey}`);
+                target?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        };
 
     const casesByTopic = {
         genero: {
@@ -35,12 +49,33 @@ export default function Areas() {
 
     return (
         <div className="py-20 bg-white space-y-20">
+        <section id="servicos-oferecidos">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-8">{t.areas.servicesTitle}</h2>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {t.areas.servicesExamples.map((service) => (
+                <div
+                    key={service}
+                    className="bg-white border border-gray-200 rounded-lg px-4 py-3 text-gray-700"
+                >
+                    {service}
+                </div>
+                ))}
+            </div>
+            <p className="text-sm text-gray-500 italic mt-4">*essa area ainda tenho que melhorar</p>
+            </div>
+        </section>
+
         <section id="areas">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-12">{t.areas.title}</h2>
 
             <div className="grid md:grid-cols-3 gap-8">
-                <div className="bg-purple-50 border-2 border-purple-200 rounded-lg p-8 hover:shadow-lg transition-shadow">
+                <button
+                type="button"
+                onClick={() => handleAreaCardClick('genero')}
+                className="bg-purple-50 border-2 border-purple-200 rounded-lg p-8 hover:shadow-lg transition-shadow text-left cursor-pointer"
+                >
                 <div className="w-16 h-16 bg-purple-600 rounded-full flex items-center justify-center mb-6">
                     <Users className="w-8 h-8 text-white" />
                 </div>
@@ -51,9 +86,13 @@ export default function Areas() {
                     <li key={bullet}>• {bullet}</li>
                     ))}
                 </ul>
-                </div>
+                </button>
 
-                <div className="bg-blue-50 border-2 border-blue-200 rounded-lg p-8 hover:shadow-lg transition-shadow">
+                <button
+                type="button"
+                onClick={() => handleAreaCardClick('tecnologia')}
+                className="bg-blue-50 border-2 border-blue-200 rounded-lg p-8 hover:shadow-lg transition-shadow text-left cursor-pointer"
+                >
                 <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mb-6">
                     <Cpu className="w-8 h-8 text-white" />
                 </div>
@@ -64,9 +103,13 @@ export default function Areas() {
                     <li key={bullet}>• {bullet}</li>
                     ))}
                 </ul>
-                </div>
+                </button>
 
-                <div className="bg-green-50 border-2 border-green-200 rounded-lg p-8 hover:shadow-lg transition-shadow">
+                <button
+                type="button"
+                onClick={() => handleAreaCardClick('ambiental')}
+                className="bg-green-50 border-2 border-green-200 rounded-lg p-8 hover:shadow-lg transition-shadow text-left cursor-pointer"
+                >
                 <div className="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mb-6">
                     <Leaf className="w-8 h-8 text-white" />
                 </div>
@@ -77,7 +120,7 @@ export default function Areas() {
                     <li key={bullet}>• {bullet}</li>
                     ))}
                 </ul>
-                </div>
+                </button>
             </div>
             </div>
         </section>
@@ -87,18 +130,18 @@ export default function Areas() {
             <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-12">{t.areas.casesTitle}</h2>
 
             <div className="space-y-6">
-                {(Object.keys(casesByTopic) as Array<'genero' | 'tecnologia' | 'ambiental'>).map((topicKey) => {
+                {(Object.keys(casesByTopic) as Array<TopicKey>).map((topicKey) => {
                 const topic = casesByTopic[topicKey];
                 const isOpen = openTopic === topicKey;
                 const standardCase = topic.cases[0];
                 const remainingCases = topic.cases.slice(1);
 
                 return (
-                    <div key={topicKey} className="w-full bg-white border border-gray-200 rounded-lg overflow-hidden">
+                    <div id={`case-${topicKey}`} key={topicKey} className="w-full bg-white border border-gray-200 rounded-lg overflow-hidden">
                     <button
                         type="button"
                         onClick={() => setOpenTopic(isOpen ? null : topicKey)}
-                        className={`w-full p-6 text-left transition-colors ${topic.hoverHeader}`}
+                        className={`w-full p-6 text-left transition-colors cursor-pointer ${topic.hoverHeader}`}
                     >
                         <div className="w-full bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow">
                         <div className="flex items-start justify-between gap-4 mb-4">
@@ -111,31 +154,108 @@ export default function Areas() {
                             </div>
                         </div>
 
-                        <p className="text-sm font-medium text-gray-500 mb-2">{standardCase.subtitle}</p>
+                                                {standardCase.subtitle && (
+                                                    <p className="text-sm font-medium text-gray-500 mb-2">{standardCase.subtitle}</p>
+                                                )}
                         <h3 className="text-xl font-semibold text-gray-900 mb-3">{standardCase.title}</h3>
-                        <p className="text-gray-600 mb-4">{standardCase.description}</p>
+                        <p className="text-gray-600 mb-4 whitespace-pre-line text-justify">{standardCase.description}</p>
                         <span className={`inline-block px-3 py-1 rounded-full text-sm ${topic.badgeClass}`}>{topic.label}</span>
                         </div>
                     </button>
 
-                    {isOpen && (
-                        <div className="px-6 pb-6 pt-0 border-t border-gray-100 space-y-4">
-                        {remainingCases.map((caseItem) => (
-                            <div key={caseItem.title} className="w-full bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow">
-                            <div className={`w-12 h-12 ${topic.iconBg} rounded-lg flex items-center justify-center mb-4`}>
-                                <BookOpen className={`w-6 h-6 ${topic.iconColor}`} />
+                    <AnimatePresence initial={false}>
+                        {isOpen && (
+                        <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: 'auto', opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.3, ease: 'easeInOut' }}
+                            className="overflow-hidden"
+                        >
+                            <div className="px-6 pb-6 pt-0 border-t border-gray-100 space-y-4">
+                            {remainingCases.map((caseItem) => (
+                                <div key={caseItem.title} className="w-full bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow">
+                                <div className={`w-12 h-12 ${topic.iconBg} rounded-lg flex items-center justify-center mb-4`}>
+                                    <BookOpen className={`w-6 h-6 ${topic.iconColor}`} />
+                                </div>
+                                                                <div className="flex items-start justify-between gap-3 mb-3">
+                                                                    <h3 className="text-xl font-semibold text-gray-900">{caseItem.title}</h3>
+                                                                    {caseItem.subtitle && (
+                                                                        <span className="text-xs font-medium text-gray-400 whitespace-nowrap">{caseItem.subtitle}</span>
+                                                                    )}
+                                                                </div>
+                                <p className="text-gray-600 mb-4 whitespace-pre-line text-justify">{caseItem.description}</p>
+                                <span className={`inline-block px-3 py-1 rounded-full text-sm ${topic.badgeClass}`}>{topic.label}</span>
+                                </div>
+                            ))}
                             </div>
-                            <p className="text-sm font-medium text-gray-500 mb-2">{caseItem.subtitle}</p>
-                            <h3 className="text-xl font-semibold text-gray-900 mb-3">{caseItem.title}</h3>
-                            <p className="text-gray-600 mb-4">{caseItem.description}</p>
-                            <span className={`inline-block px-3 py-1 rounded-full text-sm ${topic.badgeClass}`}>{topic.label}</span>
-                            </div>
-                        ))}
-                        </div>
-                    )}
+                        </motion.div>
+                        )}
+                    </AnimatePresence>
                     </div>
                 );
                 })}
+            </div>
+            </div>
+        </section>
+
+        <section id="pesquisas-desenvolvimento">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-12">{t.areas.researchTitle}</h2>
+            <div className="max-w-4xl mx-auto mb-10">
+                <p className="text-lg text-gray-700 text-justify">{t.areas.researchIntro}</p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {t.areas.researchItems.map((item) => (
+                <div
+                    key={item.title}
+                    className="w-full bg-gray-50 border border-gray-200 rounded-lg p-8 hover:shadow-lg transition-shadow"
+                >
+                    <div className="w-12 h-12 bg-gray-200 rounded-lg flex items-center justify-center mb-6">
+                    <BookOpen className="w-6 h-6 text-gray-600" />
+                    </div>
+                    <h3 className="text-xl font-semibold text-gray-900 mb-3">{item.title}</h3>
+                                        {item.subtitle && (
+                                            <p className="text-sm text-gray-500 mb-3">{item.subtitle}</p>
+                                        )}
+                    <p className="text-gray-600 text-justify">{item.description}</p>
+                                        {item.partnerText && (
+                                            <p className="text-gray-700 mt-4 mb-3">{item.partnerText}</p>
+                                        )}
+                                        {(item.showLogoPlaceholder || item.logo) && (
+                                            <div className="w-full h-24 border border-gray-200 rounded-lg bg-white p-2 flex items-center justify-center">
+                                                {item.logo === 'oxfam' ? (
+                                                    <img
+                                                        src={oxfamLogo}
+                                                        alt="Logo Oxfam"
+                                                        className="max-h-full max-w-full object-contain"
+                                                    />
+                                                ) : item.logo === 'itaipu' ? (
+                                                    <img
+                                                        src={itaipuParquetecLogo}
+                                                        alt="Logo Itaipu Parquetec"
+                                                        className="max-h-full max-w-full object-contain"
+                                                    />
+                                                ) : (
+                                                    <span className="text-sm text-gray-500">Logo</span>
+                                                )}
+                                            </div>
+                                        )}
+                </div>
+                ))}
+            </div>
+
+            <div className="mt-12 text-center">
+                <p className="text-lg text-gray-700 mb-4">
+                {t.areas.contactLead}
+                </p>
+                <Link
+                to="/contato"
+                className="inline-block bg-purple-600 text-white px-10 py-4 text-lg font-semibold rounded-lg hover:bg-purple-700 transition-colors shadow-lg hover:shadow-xl"
+                >
+                {t.areas.contactCta}
+                </Link>
             </div>
             </div>
         </section>

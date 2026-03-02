@@ -20,7 +20,7 @@ const translations = {
       brandLine2: 'Consultoria ESG & Tech',
       nav: {
         home: 'Home',
-        areas: 'Áreas de Atuação',
+        areas: 'Serviços',
         about: 'Sobre',
         articles: 'Artigos e Publicações',
         contact: 'Contato',
@@ -35,14 +35,15 @@ const translations = {
       title: 'Consultoria e Pesquisa em Gênero, Tecnologia e ESG',
       description:
         'Soluções estratégicas para transformar organizações através da diversidade, inovação tecnológica e sustentabilidade ambiental',
-      cta: 'Entre em Contato',
+      cta: 'Conheça meu trabalho',
     },
     about: {
-      badge: 'Sobre Mim',
+      badge: 'Sobre a consultora',
       title: 'Transformando Desafios em Oportunidades',
-      p1: 'Com expertise em pesquisa e consultoria, atuo na intersecção entre gênero, tecnologia e sustentabilidade ambiental, oferecendo soluções inovadoras e baseadas em evidências científicas.',
-      p2: 'Minha abordagem combina rigor acadêmico com aplicação prática, ajudando organizações a implementar políticas de diversidade, equidade e inclusão, além de estratégias ESG efetivas.',
-      p3: 'Através de diagnósticos aprofundados e metodologias participativas, transformo desafios complexos em oportunidades de mudança sustentável.',
+      p1: 'Alice Carolline Costa Hassan Querino, conhecida como Carol, é uma pesquisadora paraibana dedicada a construir conexões entre realidades diversas, com foco em inovação social e acadêmica. Sua trajetória é marcada pela vivência no Nordeste brasileiro, onde desenvolveu valores de resiliência, força coletiva e consciência crítica diante das desigualdades sociais.',
+      p2: 'Atualmente, Carol lidera uma pesquisa em Direitos Humanos, Gênero e Inteligência Artificial, financiada pelo ParqueTec Itaipu e realizada em colaboração com docentes do Stirlab da Universidade de Stirling, na Escócia. Seu trabalho concentra-se na análise dos vieses políticos em modelos de linguagem, contribuindo para o avanço de debates éticos e científicos sobre tecnologia e sociedade.',
+      p3: 'Além da atuação acadêmica, Carol é cofundadora da Caju Consultoria Nordestina e idealizadora do projeto Café com a Internacionalista, iniciativas que integram ciência, prática e engajamento social, promovendo diálogos entre comunidades, empresas e instituições acadêmicas.',
+      p4: 'Sua experiência inclui participação em organizações da sociedade civil, projetos internacionais e espaços de advocacy, sempre orientada pela convicção de que a transformação social ocorre quando vozes historicamente marginalizadas assumem protagonismo.',
       stats: {
         years: 'Anos de Experiência',
         projects: 'Projetos Concluídos',
@@ -59,6 +60,15 @@ const translations = {
     },
     areas: {
       title: 'Áreas de Atuação',
+      servicesTitle: 'Serviços Oferecidos',
+      servicesExamples: [
+        'Palestras e treinamentos',
+        'Pesquisas aplicadas',
+        'Consultoria em gênero e inclusão',
+        'Estratégias ESG e sustentabilidade',
+        'Diagnósticos e indicadores (KPI/MEAL)',
+        'Relatórios e recomendações para políticas públicas',
+      ],
       cards: {
         gender: {
           title: 'Gênero',
@@ -92,24 +102,53 @@ const translations = {
         },
       },
       casesTitle: 'Cases e Projetos',
+      researchTitle: 'Pesquisas em desenvolvimento',
+      researchIntro:
+        'A capacidade de desenvolver pesquisas multidisciplinares, ancoradas nas diversas realidades que moldam a sociedade, é um pilar essencial no trabalho de consultoras e analistas políticas. Essa abordagem permite o desenho de soluções horizontais, construídas em parceria com as pessoas diretamente afetadas pelos problemas, tornando-as mais completas, contextualizadas e orientadas para o impacto.',
+      researchItems: [
+        {
+          title:
+            'Democratização da informação ou Multiplicador de Desinformação? Como a inteligência artificial se tornou uma ferramenta para reprodução de violências de raça, classe e gênero em espaços digitais.',
+          subtitle: 'Afinal, a inteligência artificial está ajudando ou atrapalhando?',
+          description:
+            'A IA (inteligência artificial) está cada vez mais presente na nossa vida: nas redes sociais, nas pesquisas do dia a dia, nos filtros de imagem, nos textos que aparecem pra gente. Mas será que ela está sendo usada de um jeito justo com todo mundo? Essa pesquisa quer entender como essas tecnologias podem acabar exponenciando violências de gênero no âmbito digital, contra mulheres e meninas, especialmente quando pensamos em raça e classe social.',
+          partnerText: 'Essa pesquisa é desenvolvida em parceria com:',
+          showLogoPlaceholder: true,
+          logo: 'itaipu',
+        },
+        {
+          title:
+            'Vozes da (R)existência: Mulheres Indígenas, Instagram e a Luta Contra o (Fem)genocídio no Brasil',
+          subtitle: '',
+          description:
+            'Esta pesquisa investiga como mulheres indígenas brasileiras usam o Instagram como ferramenta de advocacy, confrontando a violência estatal e influenciando processos jurídicos e políticas públicas. O estudo analisa (Fem)genocídio e epistemocídio e mostra como líderes como Sônia Guajajara, Joênia Wapichana e Célia Xacriabá transformam visibilidade digital em poder institucional, promovendo mudanças políticas e fortalecendo a produção de conhecimento liderada por indígenas. Este trabalho será publicado na edição de março da revista Gender and Development pela Oxfam e Routledge.',
+          partnerText: 'Essa pesquisa é desenvolvida em parceria com:',
+          showLogoPlaceholder: true,
+          logo: 'oxfam',
+        },
+      ],
+      contactLead: 'A ajuda para a mudança que você precisa pode estar a apenas um clique de distância.',
+      contactCta: 'Entrar em contato com a consultora',
       topics: {
         genero: {
           label: 'Gênero',
           cases: [
             {
-              subtitle: 'Versão standard',
+              subtitle: '',
               title: 'Pesquisa em Equidade de Gênero',
               description: 'Estudo sobre representatividade feminina em cargos de liderança no setor tecnológico.',
             },
             {
-              subtitle: 'Case 2',
-              title: 'Programa de Liderança Feminina',
-              description: 'Desenvolvimento de trilhas de capacitação e mentoria para ampliação da liderança de mulheres.',
+              subtitle: '06/2016 – atualmente',
+              title: 'Palestrante e facilitadora',
+              description:
+                'Desde 2016, atuo ministrando palestras e treinamentos nas áreas de gênero, feminismo, direitos humanos e gestão de projetos, com abordagens comunitárias que conectam teoria e prática, capacitando participantes e fortalecendo iniciativas locais.\n- Mais de 350 palestras ministradas.\n- Cerca de 6.000 pessoas impactadas diretamente.',
             },
             {
-              subtitle: 'Case 3',
-              title: 'Diagnóstico de Inclusão Organizacional',
-              description: 'Mapeamento de indicadores de diversidade e proposta de plano de ação para inclusão.',
+              subtitle: '08/2025 – Atualmente',
+              title: 'Gerson Lehrman Group, Inc. |  Consultora',
+              description:
+                'Consultoria remota em gênero e inclusão para projetos agrícolas e rurais na América Latina.\n- Design de KPI para participação econômica feminina\n- Recomendações para MEAL com perspectiva de gênero',
             },
           ],
         },
@@ -117,14 +156,15 @@ const translations = {
           label: 'Tecnologia',
           cases: [
             {
-              subtitle: 'Versão standard',
+              subtitle: '',
               title: 'IA e Viés Algorítmico',
               description: 'Consultoria sobre ética em inteligência artificial e impactos sociais de algoritmos.',
             },
             {
-              subtitle: 'Case 2',
-              title: 'Inclusão Digital Estratégica',
-              description: 'Estruturação de iniciativas de acesso, formação e permanência em ambientes digitais.',
+              subtitle: '02/2025 – 02/2026',
+              title: 'Itaipu Parquetec | Consultora',
+              description:
+                'Pesquisa sobre IA, desigualdade e recomendações para política pública.\n- Indicadores de política para tecnologias inclusivas.\n- Relatórios para ministério e orientação regulatória.',
             },
             {
               subtitle: 'Case 3',
@@ -137,19 +177,21 @@ const translations = {
           label: 'Ambiental',
           cases: [
             {
-              subtitle: 'Versão standard',
+              subtitle: '',
               title: 'Estratégias ESG Integradas',
               description: 'Implementação de políticas ESG com perspectiva de gênero e justiça climática.',
             },
             {
-              subtitle: 'Case 2',
-              title: 'Plano de Sustentabilidade Corporativa',
-              description: 'Definição de metas ambientais e indicadores de acompanhamento para longo prazo.',
+              subtitle: '02/2023 – 04/2025',
+              title: 'Caju Consultoria Nordestina | Cofundadora & Consultora',
+              description:
+                'Implementação de programas de impacto social (BR & UK) com foco em gênero e ambiente.\n- Capacitação de 500+ líderes comunitários\n- Estratégias de sustentabilidade e financiamento\n- Mudança Socioambiental',
             },
             {
-              subtitle: 'Case 3',
-              title: 'Projeto de Justiça Climática',
-              description: 'Iniciativas para mitigação de impactos climáticos em comunidades mais vulneráveis.',
+              subtitle: '08/2023 – 10/2024',
+              title: 'PSOL | Chefe de Campanha',
+              description:
+                'Liderança de campanha com estratégia digital e engajamento comunitário.\n- Gestão de presença online e engajamento juvenil\n- Desenvolvimento de mensagens e plataformas digitais',
             },
           ],
         },
@@ -201,7 +243,7 @@ const translations = {
       title: 'Consulting and Research in Gender, Technology, and ESG',
       description:
         'Strategic solutions to transform organizations through diversity, technological innovation, and environmental sustainability',
-      cta: 'Get in Touch',
+      cta: 'Discover my work',
     },
     about: {
       badge: 'About Me',
@@ -209,6 +251,7 @@ const translations = {
       p1: 'With expertise in research and consulting, I work at the intersection of gender, technology, and environmental sustainability, delivering innovative solutions grounded in scientific evidence.',
       p2: 'My approach combines academic rigor with practical implementation, helping organizations apply diversity, equity, and inclusion policies along with effective ESG strategies.',
       p3: 'Through in-depth diagnostics and participatory methodologies, I turn complex challenges into opportunities for sustainable change.',
+      p4: 'I believe social transformation happens when historically marginalized voices take center stage.',
       stats: {
         years: 'Years of Experience',
         projects: 'Completed Projects',
@@ -225,6 +268,15 @@ const translations = {
     },
     areas: {
       title: 'Practice Areas',
+      servicesTitle: 'Services Offered',
+      servicesExamples: [
+        'Talks and training sessions',
+        'Applied research',
+        'Gender and inclusion consulting',
+        'ESG and sustainability strategies',
+        'Diagnostics and indicators (KPI/MEAL)',
+        'Reports and public policy recommendations',
+      ],
       cards: {
         gender: {
           title: 'Gender',
@@ -258,24 +310,53 @@ const translations = {
         },
       },
       casesTitle: 'Cases & Projects',
+      researchTitle: 'Research in progress',
+      researchIntro:
+        'The ability to develop multidisciplinary research, grounded in the diverse realities that shape society, is an essential pillar in the work of consultants and policy analysts. This approach enables the design of horizontal solutions, built in partnership with people directly affected by problems, making them more comprehensive, contextualized, and impact-oriented.',
+      researchItems: [
+        {
+          title:
+            'Democratization of Information or Multiplier of Disinformation? How artificial intelligence has become a tool for reproducing race, class, and gender-based violence in digital spaces.',
+          subtitle: 'After all, is artificial intelligence helping or harming?',
+          description:
+            'AI (artificial intelligence) is increasingly present in our lives: on social media, in everyday searches, in image filters, and in the texts that appear to us. But is it being used fairly for everyone? This research seeks to understand how these technologies can end up amplifying gender-based violence in digital environments against women and girls, especially when we consider race and social class.',
+          partnerText: 'This research is developed in partnership with:',
+          showLogoPlaceholder: true,
+          logo: 'itaipu',
+        },
+        {
+          title:
+            'Voices of (R)existence: Indigenous Women, Instagram, and the Struggle Against (Fem)genocide in Brazil',
+          description:
+            'This research investigates how Brazilian Indigenous women use Instagram as an advocacy tool, confronting state violence and influencing legal processes and public policies. The study analyzes (fem)genocide and epistemicide and shows how leaders such as Sônia Guajajara, Joênia Wapichana, and Célia Xacriabá transform digital visibility into institutional power, promoting political change and strengthening Indigenous-led knowledge production. This work will be published in the March issue of the journal Gender and Development by Oxfam and Routledge.',
+          subtitle: '',
+          partnerText: 'This research is developed in partnership with:',
+          showLogoPlaceholder: true,
+          logo: 'oxfam',
+        },
+      ],
+      contactLead: 'The support for the change you need may be just one click away.',
+      contactCta: 'Get in touch with the consultant',
       topics: {
         genero: {
           label: 'Gender',
           cases: [
             {
-              subtitle: 'Standard version',
+              subtitle: '',
               title: 'Gender Equity Research',
               description: 'Study on women representation in leadership roles within the tech sector.',
             },
             {
-              subtitle: 'Case 2',
-              title: 'Women Leadership Program',
-              description: 'Development of training tracks and mentoring to strengthen women leadership.',
+              subtitle: '06/2016 – present',
+              title: 'Speaker and facilitator',
+              description:
+                'Since 2016, I have been delivering talks and training in gender, feminism, human rights, and project management, with community-based approaches that connect theory and practice, empowering participants and strengthening local initiatives.\n- More than 350 talks delivered.\n- Around 6,000 people directly impacted.',
             },
             {
-              subtitle: 'Case 3',
-              title: 'Inclusion Diagnostics',
-              description: 'Mapping diversity indicators and proposing an action plan for inclusion.',
+              subtitle: '08/2025 – Present',
+              title: 'Gerson Lehrman Group, Inc. | Consultant',
+              description:
+                'Remote consulting on gender and inclusion for agricultural and rural projects in Latin America.\n- KPI design for women’s economic participation\n- Recommendations for MEAL with a gender perspective',
             },
           ],
         },
@@ -283,17 +364,18 @@ const translations = {
           label: 'Technology',
           cases: [
             {
-              subtitle: 'Standard version',
+              subtitle: '',
               title: 'AI and Algorithmic Bias',
               description: 'Consulting on ethics in AI and social impacts of algorithms.',
             },
             {
-              subtitle: 'Case 2',
-              title: 'Strategic Digital Inclusion',
-              description: 'Structuring access, training, and retention initiatives in digital environments.',
+              subtitle: '02/2025 – 02/2026',
+              title: 'Itaipu Parquetec | Consultant',
+              description:
+                'Research on AI, inequality, and recommendations for public policy.\n- Policy indicators for inclusive technologies.\n- Reports for ministries and regulatory guidance.',
             },
             {
-              subtitle: 'Case 3',
+              subtitle: '',
               title: 'Responsible Data Governance',
               description: 'Implementation of governance practices for ethical and transparent data use.',
             },
@@ -303,19 +385,21 @@ const translations = {
           label: 'Environmental',
           cases: [
             {
-              subtitle: 'Standard version',
+              subtitle: '',
               title: 'Integrated ESG Strategies',
               description: 'Implementation of ESG policies with a gender and climate justice perspective.',
             },
             {
-              subtitle: 'Case 2',
-              title: 'Corporate Sustainability Plan',
-              description: 'Definition of environmental goals and monitoring indicators for long-term impact.',
+              subtitle: '02/2023 – 04/2025',
+              title: 'Caju Consultoria Nordestina | Co-founder & Consultant',
+              description:
+                'Implementation of social impact programs (BR & UK) focused on gender and environment.\n- Training for 500+ community leaders\n- Sustainability and funding strategies\n- Socio-environmental change',
             },
             {
-              subtitle: 'Case 3',
-              title: 'Climate Justice Project',
-              description: 'Initiatives to mitigate climate impacts in more vulnerable communities.',
+              subtitle: '08/2023 – 10/2024',
+              title: 'PSOL | Head of Campaign',
+              description:
+                'Campaign leadership with digital strategy and community engagement.\n- Online presence management and youth engagement\n- Development of messaging and digital platforms',
             },
           ],
         },
@@ -366,7 +450,7 @@ const translations = {
       title: 'Consultoría e Investigación en Género, Tecnología y ESG',
       description:
         'Soluciones estratégicas para transformar organizaciones a través de la diversidad, la innovación tecnológica y la sostenibilidad ambiental',
-      cta: 'Ponte en contacto',
+      cta: 'Conoce mi trabajo',
     },
     about: {
       badge: 'Sobre mí',
@@ -374,6 +458,7 @@ const translations = {
       p1: 'Con experiencia en investigación y consultoría, trabajo en la intersección entre género, tecnología y sostenibilidad ambiental, ofreciendo soluciones innovadoras basadas en evidencia científica.',
       p2: 'Mi enfoque combina rigor académico con aplicación práctica, ayudando a organizaciones a implementar políticas de diversidad, equidad e inclusión, además de estrategias ESG efectivas.',
       p3: 'A través de diagnósticos profundos y metodologías participativas, transformo desafíos complejos en oportunidades de cambio sostenible.',
+      p4: 'Creo que la transformación social ocurre cuando las voces históricamente marginadas asumen protagonismo.',
       stats: {
         years: 'Años de Experiencia',
         projects: 'Proyectos Finalizados',
@@ -390,6 +475,15 @@ const translations = {
     },
     areas: {
       title: 'Áreas de Actuación',
+      servicesTitle: 'Servicios Ofrecidos',
+      servicesExamples: [
+        'Charlas y capacitaciones',
+        'Investigaciones aplicadas',
+        'Consultoría en género e inclusión',
+        'Estrategias ESG y sostenibilidad',
+        'Diagnósticos e indicadores (KPI/MEAL)',
+        'Informes y recomendaciones para políticas públicas',
+      ],
       cards: {
         gender: {
           title: 'Género',
@@ -423,24 +517,53 @@ const translations = {
         },
       },
       casesTitle: 'Casos y Proyectos',
+      researchTitle: 'Investigaciones en desarrollo',
+      researchIntro:
+        'La capacidad de desarrollar investigaciones multidisciplinarias, ancladas en las diversas realidades que moldean la sociedad, es un pilar esencial en el trabajo de consultoras y analistas políticas. Este enfoque permite diseñar soluciones horizontales, construidas en alianza con las personas directamente afectadas por los problemas, haciéndolas más completas, contextualizadas y orientadas al impacto.',
+      researchItems: [
+        {
+          title:
+            '¿Democratización de la información o multiplicador de desinformación? Cómo la inteligencia artificial se convirtió en una herramienta para reproducir violencias de raza, clase y género en espacios digitales.',
+          subtitle: 'Después de todo, ¿la inteligencia artificial está ayudando o perjudicando?',
+          description:
+            'La IA (inteligencia artificial) está cada vez más presente en nuestra vida: en redes sociales, en búsquedas cotidianas, en filtros de imagen y en los textos que nos aparecen. Pero ¿se está usando de manera justa para todas las personas? Esta investigación busca entender cómo estas tecnologías pueden terminar amplificando violencias de género en el ámbito digital contra mujeres y niñas, especialmente cuando pensamos en raza y clase social.',
+          partnerText: 'Esta investigación se desarrolla en colaboración con:',
+          showLogoPlaceholder: true,
+          logo: 'itaipu',
+        },
+        {
+          title:
+            'Voces de la (R)existencia: Mujeres indígenas, Instagram y la lucha contra el (fem)genocidio en Brasil',
+          description:
+            'Esta investigación analiza cómo mujeres indígenas brasileñas usan Instagram como herramienta de advocacy, confrontando la violencia estatal e influyendo en procesos jurídicos y políticas públicas. El estudio examina el (fem)genocidio y el epistemicidio, y muestra cómo líderes como Sônia Guajajara, Joênia Wapichana y Célia Xacriabá transforman la visibilidad digital en poder institucional, promoviendo cambios políticos y fortaleciendo la producción de conocimiento liderada por pueblos indígenas. Este trabajo será publicado en la edición de marzo de la revista Gender and Development de Oxfam y Routledge.',
+          subtitle: '',
+          partnerText: 'Esta investigación se desarrolla en colaboración con:',
+          showLogoPlaceholder: true,
+          logo: 'oxfam',
+        },
+      ],
+      contactLead: 'La ayuda para el cambio que necesitas puede estar a solo un clic de distancia.',
+      contactCta: 'Contactar con la consultora',
       topics: {
         genero: {
           label: 'Género',
           cases: [
             {
-              subtitle: 'Versión estándar',
+              subtitle: '',
               title: 'Investigación en Equidad de Género',
               description: 'Estudio sobre la representación femenina en cargos de liderazgo en el sector tecnológico.',
             },
             {
-              subtitle: 'Caso 2',
-              title: 'Programa de Liderazgo Femenino',
-              description: 'Desarrollo de rutas de capacitación y mentoría para ampliar el liderazgo de mujeres.',
+              subtitle: '06/2016 – actualidad',
+              title: 'Ponente y facilitadora',
+              description:
+                'Desde 2016, imparto charlas y capacitaciones en género, feminismo, derechos humanos y gestión de proyectos, con enfoques comunitarios que conectan teoría y práctica, fortaleciendo capacidades y promoviendo iniciativas locales.\n- Más de 350 charlas impartidas.\n- Cerca de 6.000 personas impactadas directamente.',
             },
             {
-              subtitle: 'Caso 3',
-              title: 'Diagnóstico de Inclusión Organizacional',
-              description: 'Mapeo de indicadores de diversidad y propuesta de plan de acción para inclusión.',
+              subtitle: '08/2025 – Actualidad',
+              title: 'Gerson Lehrman Group, Inc. | Consultora',
+              description:
+                'Consultoría remota en género e inclusión para proyectos agrícolas y rurales en América Latina.\n- Diseño de KPI para la participación económica de las mujeres\n- Recomendaciones para MEAL con enfoque de género',
             },
           ],
         },
@@ -448,17 +571,18 @@ const translations = {
           label: 'Tecnología',
           cases: [
             {
-              subtitle: 'Versión estándar',
+              subtitle: '',
               title: 'IA y Sesgo Algorítmico',
               description: 'Consultoría sobre ética en inteligencia artificial e impactos sociales de algoritmos.',
             },
             {
-              subtitle: 'Caso 2',
-              title: 'Inclusión Digital Estratégica',
-              description: 'Estructuración de iniciativas de acceso, formación y permanencia en entornos digitales.',
+              subtitle: '02/2025 – 02/2026',
+              title: 'Itaipu Parquetec | Consultora',
+              description:
+                'Investigación sobre IA, desigualdad y recomendaciones para políticas públicas.\n- Indicadores de política para tecnologías inclusivas.\n- Informes para ministerios y orientación regulatoria.',
             },
             {
-              subtitle: 'Caso 3',
+              subtitle: '',
               title: 'Gobernanza Responsable de Datos',
               description: 'Implementación de prácticas de gobernanza para uso ético y transparente de datos.',
             },
@@ -468,19 +592,21 @@ const translations = {
           label: 'Ambiental',
           cases: [
             {
-              subtitle: 'Versión estándar',
+              subtitle: '',
               title: 'Estrategias ESG Integradas',
               description: 'Implementación de políticas ESG con perspectiva de género y justicia climática.',
             },
             {
-              subtitle: 'Caso 2',
-              title: 'Plan de Sostenibilidad Corporativa',
-              description: 'Definición de metas ambientales e indicadores de seguimiento a largo plazo.',
+              subtitle: '02/2023 – 04/2025',
+              title: 'Caju Consultoria Nordestina | Cofundadora y Consultora',
+              description:
+                'Implementación de programas de impacto social (BR y UK) con foco en género y ambiente.\n- Capacitación de más de 500 líderes comunitarios\n- Estrategias de sostenibilidad y financiamiento\n- Cambio socioambiental',
             },
             {
-              subtitle: 'Caso 3',
-              title: 'Proyecto de Justicia Climática',
-              description: 'Iniciativas para mitigar impactos climáticos en comunidades más vulnerables.',
+              subtitle: '08/2023 – 10/2024',
+              title: 'PSOL | Jefa de Campaña',
+              description:
+                'Liderazgo de campaña con estrategia digital y participación comunitaria.\n- Gestión de presencia online y participación juvenil\n- Desarrollo de mensajes y plataformas digitales',
             },
           ],
         },

@@ -52,12 +52,9 @@ export default function Home() {
   };
 
   return (
-    <section id="home" className="flex-1 h-full min-h-full bg-gradient-to-br from-purple-50 to-blue-50 flex items-center">
+    <section id="home" className="flex-1 h-full min-h-full bg-gradient-to-br from-purple-50 to-blue-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-12 md:py-16">
         <div className="text-center">
-          <div className="inline-block px-4 py-2 bg-purple-100 text-purple-700 rounded-full mb-6 animate-fade-in">
-            {t.home.badge}
-          </div>
           <h2 
             ref={titleRef}
             onMouseMove={handleMouseMove}
@@ -70,11 +67,51 @@ export default function Home() {
             {t.home.description}
           </p>
           <Link 
-            to="/contato" 
-            className="inline-block bg-purple-600 text-white px-8 py-3 rounded-lg hover:bg-purple-700 transition-colors shadow-lg hover:shadow-xl"
+            to="/areas" 
+            className="inline-block mt-2 mb-10 bg-purple-600 text-white px-10 py-4 text-lg font-semibold rounded-lg hover:bg-purple-700 transition-colors shadow-lg hover:shadow-xl"
           >
             {t.home.cta}
           </Link>
+          <div className="mt-12 bg-white/60 rounded-2xl p-6 md:p-8 text-left">
+            <div>
+              <div className="inline-block px-4 py-2 bg-purple-100 text-purple-700 rounded-full mb-6">
+                {t.about.badge}
+              </div>
+              <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+                {t.about.title}
+              </h3>
+
+              <div className="relative w-52 sm:w-60 md:w-72 mx-auto md:float-right md:ml-8 mb-6">
+                <div className="absolute inset-0 bg-gradient-to-br from-purple-400 to-blue-400 rounded-lg transform rotate-3"></div>
+                <img
+                  src="https://media.licdn.com/dms/image/v2/D4D03AQH3jMPS3KHIzA/profile-displayphoto-crop_800_800/B4DZyWB7x8IUAI-/0/1772043619280?e=1773878400&v=beta&t=NkT2qFNV_CL8fx1DnBbOAc9bGfnWuK6w16KiShngDlk"
+                  alt={t.about.imageAlt}
+                  className="relative rounded-lg shadow-xl"
+                />
+              </div>
+
+              <p className="text-lg text-gray-700 mb-4">{t.about.p1}</p>
+              <p className="text-lg text-gray-700 mb-4">{t.about.p2}</p>
+              <p className="text-lg text-gray-700 mb-4">{t.about.p3}</p>
+              <p className="text-lg text-gray-700">{t.about.p4}</p>
+
+              <div className="clear-both grid grid-cols-3 gap-6 mt-8 pt-8 border-t border-gray-200 text-center">
+                <div className="flex flex-col items-center">
+                  <div className="text-3xl font-bold text-purple-600 mb-2">10+</div>
+                  <div className="text-gray-600">{t.about.stats.years}</div>
+                </div>
+                <div className="flex flex-col items-center">
+                  <div className="text-3xl font-bold text-blue-600 mb-2">50+</div>
+                  <div className="text-gray-600">{t.about.stats.projects}</div>
+                </div>
+                <div className="flex flex-col items-center">
+                  <div className="text-3xl font-bold text-green-600 mb-2">30+</div>
+                  <div className="text-gray-600">{t.about.stats.publications}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
           {/* <div className="mt-12 flex justify-center">
             <a href="#areas" className="text-gray-400 hover:text-purple-600 transition-colors">
               <ChevronDown className="w-8 h-8 animate-bounce" />

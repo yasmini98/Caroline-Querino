@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { Routes, Route, Link } from "react-router-dom";
 import Home from "../pages/Home";
 import Areas from "../pages/Areas";
-import Sobre from "../pages/Sobre";
 import Contato from "../pages/Contato";
 import Artigos from "../pages/Artigos";
 import { motion, AnimatePresence } from "framer-motion";
@@ -31,6 +30,7 @@ export default function App() {
   const location = useLocation();
   const { language, setLanguage, t } = useI18n();
   const isContatoPage = location.pathname === '/contato';
+  const isActive = (path: string) => location.pathname === path;
 
   const languageOptions: Array<{ code: Language; flag: string; label: string }> = [
     { code: 'en', flag: '🇬🇧', label: t.common.languages.en },
@@ -77,17 +77,16 @@ export default function App() {
                 className="inline-block hover:text-purple-700 transition-colors cursor-pointer leading-none"
               >
                 <span className="block text-xl font-bold text-purple-600 whitespace-nowrap">{t.app.brandLine1}</span>
-                <span className="block text-base font-medium text-gray-600 whitespace-nowrap">{t.app.brandLine2}</span>
+                <span className="block text-sm font-normal text-gray-400 whitespace-nowrap">{t.app.brandLine2}</span>
               </Link>
             </div>
             
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-6">
-              <Link to="/" className="text-gray-700 nav-link font-semibold transition-colors transform hover:scale-105">{t.app.nav.home}</Link>
-              <Link to="/areas" className="text-gray-700 nav-link font-semibold transition-colors transform hover:scale-105">{t.app.nav.areas}</Link>
-              <Link to="/sobre" className="text-gray-700 nav-link font-semibold transition-colors transform hover:scale-105">{t.app.nav.about}</Link>
-              <Link to="/artigos" className="text-gray-700 nav-link font-semibold transition-colors transform hover:scale-105">{t.app.nav.articles}</Link>
-              <Link to="/contato" className="text-gray-700 nav-contato font-semibold transition-colors transform hover:scale-105">{t.app.nav.contact}</Link>
+              <Link to="/" className={`${isActive('/') ? 'text-purple-600' : 'text-gray-700 nav-link'} font-semibold transition-colors transform hover:scale-105`}>{t.app.nav.home}</Link>
+              <Link to="/areas" className={`${isActive('/areas') ? 'text-purple-600' : 'text-gray-700 nav-link'} font-semibold transition-colors transform hover:scale-105`}>{t.app.nav.areas}</Link>
+              <Link to="/artigos" className={`${isActive('/artigos') ? 'text-purple-600' : 'text-gray-700 nav-link'} font-semibold transition-colors transform hover:scale-105`}>{t.app.nav.articles}</Link>
+              <Link to="/contato" className={`${isActive('/contato') ? 'text-green-600' : 'text-gray-700 nav-contato'} font-semibold transition-colors transform hover:scale-105`}>{t.app.nav.contact}</Link>
               {renderLanguageFlags()}
             </div>
 
@@ -104,11 +103,10 @@ export default function App() {
           {mobileMenuOpen && (
             <div className="md:hidden pb-4">
               <div className="flex flex-col space-y-4">
-                <Link to="/" className="text-gray-700 nav-link font-semibold transition-colors transform hover:scale-105">{t.app.nav.home}</Link>
-                <Link to="/areas" className="text-gray-700 nav-link font-semibold transition-colors transform hover:scale-105">{t.app.nav.areas}</Link>
-                <Link to="/sobre" className="text-gray-700 nav-link font-semibold transition-colors transform hover:scale-105">{t.app.nav.about}</Link>
-                <Link to="/artigos" className="text-gray-700 nav-link font-semibold transition-colors transform hover:scale-105">{t.app.nav.articles}</Link>
-                <Link to="/contato" className="text-gray-700 nav-contato font-semibold transition-colors transform hover:scale-105">{t.app.nav.contact}</Link>
+                <Link to="/" className={`${isActive('/') ? 'text-purple-600' : 'text-gray-700 nav-link'} font-semibold transition-colors transform hover:scale-105`}>{t.app.nav.home}</Link>
+                <Link to="/areas" className={`${isActive('/areas') ? 'text-purple-600' : 'text-gray-700 nav-link'} font-semibold transition-colors transform hover:scale-105`}>{t.app.nav.areas}</Link>
+                <Link to="/artigos" className={`${isActive('/artigos') ? 'text-purple-600' : 'text-gray-700 nav-link'} font-semibold transition-colors transform hover:scale-105`}>{t.app.nav.articles}</Link>
+                <Link to="/contato" className={`${isActive('/contato') ? 'text-green-600' : 'text-gray-700 nav-contato'} font-semibold transition-colors transform hover:scale-105`}>{t.app.nav.contact}</Link>
                 {renderLanguageFlags()}
               </div>
             </div>
@@ -122,7 +120,6 @@ export default function App() {
           <Routes location={location} key={location.pathname}>
             <Route path="/" element={<PageWrapper><Home /></PageWrapper>} />
             <Route path="/areas" element={<PageWrapper><Areas /></PageWrapper>} />
-            <Route path="/sobre" element={<PageWrapper><Sobre /></PageWrapper>} />
             <Route path="/contato" element={<PageWrapper><Contato /></PageWrapper>} />
             <Route path="/artigos" element={<PageWrapper><Artigos /></PageWrapper>} />
             {/* qualquer rota desconhecida também vai pra home */}
