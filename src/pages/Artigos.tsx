@@ -74,14 +74,14 @@ export default function Artigos() {
   const { t } = useI18n();
 
   return (
-    <div className="space-y-20 py-20">
+    <div className="space-y-20 py-20 text-gray-900 dark:text-gray-100 transition-colors">
       {/* Artigos section */}
       <section>
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl font-bold mb-6">{t.articles.title}</h1>
           <div className="grid md:grid-cols-2 gap-8">
             {[1,2,3,4].map((i) => (
-              <article key={i} className="border rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
+              <article key={i} className="border border-gray-200 dark:border-gray-700 bg-white dark:bg-zinc-900 rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
                 <img
                   src={`https://via.placeholder.com/600x300?text=Artigo+${i}`}
                   alt={`${t.articles.articleAltPrefix} ${i}`}
@@ -89,10 +89,10 @@ export default function Artigos() {
                 />
                 <div className="p-6">
                   <h2 className="text-2xl font-semibold mb-2">{t.articles.articleTitlePrefix} {i}</h2>
-                  <p className="text-gray-700 mb-4">
+                  <p className="text-gray-700 dark:text-gray-300 mb-4">
                     {t.articles.articleDescriptionPrefix} {i}. Lorem ipsum dolor sit amet.
                   </p>
-                  <a href="#" className="text-purple-600 hover:underline">
+                  <a href="#" className="text-purple-600 dark:text-purple-300 hover:underline">
                     {t.common.readMore}
                   </a>
                 </div>
@@ -108,9 +108,9 @@ export default function Artigos() {
           <h2 className="text-3xl font-bold mb-6">{t.articles.opinionsTitle}</h2>
           <div className="space-y-8">
             {[1,2,3].map((i) => (
-              <div key={i} className="border-l-4 border-purple-600 pl-4">
+              <div key={i} className="border-l-4 border-purple-600 dark:border-purple-400 pl-4">
                 <h3 className="text-2xl font-semibold mb-1">{t.articles.opinionPrefix} {i}</h3>
-                <p className="text-gray-700">
+                <p className="text-gray-700 dark:text-gray-300">
                   {t.articles.opinionDescription}
                 </p>
               </div>
@@ -124,14 +124,14 @@ export default function Artigos() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold mb-6">{t.articles.latestTitle}</h2>
           <div className="grid md:grid-cols-2 gap-8 items-start">
-            <div className="text-center border rounded-lg p-4">
+            <div className="text-center border border-gray-200 dark:border-gray-700 bg-white dark:bg-zinc-900 rounded-lg p-4">
               <h3 className="text-xl font-semibold mb-4">{t.articles.boardTitle}</h3>
               <TikTokCreatorEmbed />
-              <p className="mt-2 text-sm text-gray-600">{t.articles.tiktokLabel}</p>
+              <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">{t.articles.tiktokLabel}</p>
             </div>
-            <div className="text-center border rounded-lg p-4">
+            <div className="text-center border border-gray-200 dark:border-gray-700 bg-white dark:bg-zinc-900 rounded-lg p-4">
               <InstagramProfileEmbed />
-              <p className="mt-2 text-sm text-gray-600">{t.articles.instagramLabel}</p>
+              <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">{t.articles.instagramLabel}</p>
             </div>
           </div>
         </div>

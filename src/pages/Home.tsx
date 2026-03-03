@@ -52,7 +52,7 @@ export default function Home() {
   };
 
   return (
-    <section id="home" className="flex-1 h-full min-h-full bg-gradient-to-br from-purple-50 to-blue-50">
+    <section id="home" className="flex-1 h-full min-h-full bg-gradient-to-br from-purple-50 to-blue-50 dark:from-zinc-950 dark:to-slate-900 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-12 md:py-16">
         <div className="text-center">
           <h2 
@@ -63,7 +63,7 @@ export default function Home() {
           >
             {t.home.title}
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
+          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-8">
             {t.home.description}
           </p>
           <Link 
@@ -72,12 +72,12 @@ export default function Home() {
           >
             {t.home.cta}
           </Link>
-          <div className="mt-12 bg-white/60 rounded-2xl p-6 md:p-8 text-left">
+          <div className="mt-12 bg-white/60 dark:bg-white/5 border border-transparent dark:border-gray-700 rounded-2xl p-6 md:p-8 text-left">
             <div>
-              <div className="inline-block px-4 py-2 bg-purple-100 text-purple-700 rounded-full mb-6">
+              <div className="inline-block px-4 py-2 bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-200 rounded-full mb-6">
                 {t.about.badge}
               </div>
-              <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+              <h3 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-6">
                 {t.about.title}
               </h3>
 
@@ -90,23 +90,23 @@ export default function Home() {
                 />
               </div>
 
-              <p className="text-lg text-gray-700 mb-4">{t.about.p1}</p>
-              <p className="text-lg text-gray-700 mb-4">{t.about.p2}</p>
-              <p className="text-lg text-gray-700 mb-4">{t.about.p3}</p>
-              <p className="text-lg text-gray-700">{t.about.p4}</p>
+              <p className="text-lg text-gray-700 dark:text-gray-300 mb-4">{t.about.p1}</p>
+              <p className="text-lg text-gray-700 dark:text-gray-300 mb-4">{t.about.p2}</p>
+              <p className="text-lg text-gray-700 dark:text-gray-300 mb-4">{t.about.p3}</p>
+              <p className="text-lg text-gray-700 dark:text-gray-300">{t.about.p4}</p>
 
-              <div className="clear-both grid grid-cols-3 gap-6 mt-8 pt-8 border-t border-gray-200 text-center">
+              <div className="clear-both grid grid-cols-3 gap-6 mt-8 pt-8 border-t border-gray-200 dark:border-gray-700 text-center">
                 <div className="flex flex-col items-center">
                   <div className="text-3xl font-bold text-purple-600 mb-2">10+</div>
-                  <div className="text-gray-600">{t.about.stats.years}</div>
+                  <div className="text-gray-600 dark:text-gray-300">{t.about.stats.years}</div>
                 </div>
                 <div className="flex flex-col items-center">
                   <div className="text-3xl font-bold text-blue-600 mb-2">50+</div>
-                  <div className="text-gray-600">{t.about.stats.projects}</div>
+                  <div className="text-gray-600 dark:text-gray-300">{t.about.stats.projects}</div>
                 </div>
                 <div className="flex flex-col items-center">
                   <div className="text-3xl font-bold text-green-600 mb-2">30+</div>
-                  <div className="text-gray-600">{t.about.stats.publications}</div>
+                  <div className="text-gray-600 dark:text-gray-300">{t.about.stats.publications}</div>
                 </div>
               </div>
             </div>

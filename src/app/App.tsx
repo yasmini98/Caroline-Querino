@@ -1,5 +1,5 @@
-import { Menu } from 'lucide-react';
-import { useState } from 'react';
+import { Menu, Monitor, Moon, Sun } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import { Routes, Route, Link } from "react-router-dom";
 import Home from "../pages/Home";
 import Areas from "../pages/Areas";
@@ -8,6 +8,31 @@ import Artigos from "../pages/Artigos";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLocation } from "react-router-dom";
 import { Language, useI18n } from "./i18n";
+
+type ThemeMode = 'system' | 'light' | 'dark';
+
+const THEME_STORAGE_KEY = 'caroline-querino-theme';
+
+function getInitialThemeMode(): ThemeMode {
+  if (typeof window === 'undefined') {
+    return 'system';
+  }
+
+  const storedTheme = window.localStorage.getItem(THEME_STORAGE_KEY);
+  if (storedTheme === 'light' || storedTheme === 'dark' || storedTheme === 'system') {
+    return storedTheme;
+  }
+
+  return 'system';
+}
+
+function getSystemPrefersDark(): boolean {
+  if (typeof window === 'undefined') {
+    return false;
+  }
+
+  return window.matchMedia('(prefers-color-scheme: dark)').matches;
+}
 
 
 
@@ -27,10 +52,13 @@ function PageWrapper({ children }: { children: React.ReactNode }) {
 
 export default function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [themeMode, setThemeMode] = useState<ThemeMode>(() => getInitialThemeMode());
+  const [systemPrefersDark, setSystemPrefersDark] = useState(() => getSystemPrefersDark());
   const location = useLocation();
   const { language, setLanguage, t } = useI18n();
   const isContatoPage = location.pathname === '/contato';
   const isActive = (path: string) => location.pathname === path;
+  const resolvedTheme = themeMode === 'system' ? (systemPrefersDark ? 'dark' : 'light') : themeMode;
 
   const languageOptions: Array<{ code: Language; flag: string; label: string }> = [
     { code: 'en', flag: '🇬🇧', label: t.common.languages.en },
@@ -49,8 +77,8 @@ export default function App() {
           aria-label={option.label}
           className={`text-lg leading-none rounded px-1.5 py-1 border transition-colors ${
             language === option.code
-              ? 'border-purple-500 bg-purple-50'
-              : 'border-transparent hover:border-gray-300'
+              ? 'border-purple-500 bg-purple-50 dark:bg-purple-900/30'
+              : 'border-transparent hover:border-gray-300 dark:hover:border-gray-600'
           }`}
         >
           {option.flag}
@@ -59,10 +87,78 @@ export default function App() {
     </div>
   );
 
+  const renderThemeControl = () => (
+    <div className="flex items-center gap-1" aria-label="Theme selector">
+      <button
+        type="button"
+        onClick={() => setThemeMode('system')}
+        title="Sistema"
+        aria-label="Sistema"
+        className={`rounded p-1.5 border transition-colors ${
+          themeMode === 'system'
+            ? 'border-purple-500 bg-purple-50 dark:bg-purple-900/30 text-purple-700 dark:text-purple-200'
+            : 'border-transparent text-gray-700 dark:text-gray-200 hover:border-gray-300 dark:hover:border-gray-600'
+        }`}
+      >
+        <Monitor className="h-4 w-4" />
+      </button>
+      <button
+        type="button"
+        onClick={() => setThemeMode('light')}
+        title="Claro"
+        aria-label="Claro"
+        className={`rounded p-1.5 border transition-colors ${
+          themeMode === 'light'
+            ? 'border-purple-500 bg-purple-50 dark:bg-purple-900/30 text-purple-700 dark:text-purple-200'
+            : 'border-transparent text-gray-700 dark:text-gray-200 hover:border-gray-300 dark:hover:border-gray-600'
+        }`}
+      >
+        <Sun className="h-4 w-4" />
+      </button>
+      <button
+        type="button"
+        onClick={() => setThemeMode('dark')}
+        title="Escuro"
+        aria-label="Escuro"
+        className={`rounded p-1.5 border transition-colors ${
+          themeMode === 'dark'
+            ? 'border-purple-500 bg-purple-50 dark:bg-purple-900/30 text-purple-700 dark:text-purple-200'
+            : 'border-transparent text-gray-700 dark:text-gray-200 hover:border-gray-300 dark:hover:border-gray-600'
+        }`}
+      >
+        <Moon className="h-4 w-4" />
+      </button>
+    </div>
+  );
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+    const handleMediaQueryChange = (event: MediaQueryListEvent) => {
+      setSystemPrefersDark(event.matches);
+    };
+
+    setSystemPrefersDark(mediaQuery.matches);
+    mediaQuery.addEventListener('change', handleMediaQueryChange);
+
+    return () => {
+      mediaQuery.removeEventListener('change', handleMediaQueryChange);
+    };
+  }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem(THEME_STORAGE_KEY, themeMode);
+  }, [themeMode]);
+
+  useEffect(() => {
+    const htmlElement = document.documentElement;
+    htmlElement.classList.toggle('dark', resolvedTheme === 'dark');
+  }, [resolvedTheme]);
+
   return (
-    <div className="min-h-screen bg-white flex flex-col">
+    <div className="min-h-screen bg-background text-foreground flex flex-col transition-colors">
       {/* Header/Navigation */}
-      <header className="fixed top-0 left-0 right-0 bg-white/40 backdrop-blur-xs shadow-sm z-50">
+      <header className="fixed top-0 left-0 right-0 bg-white/40 dark:bg-zinc-900/70 backdrop-blur-xs shadow-sm z-50 transition-colors">
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <style>{`
             .nav-link { transition: color .15s; }
@@ -83,16 +179,17 @@ export default function App() {
             
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-6">
-              <Link to="/" className={`${isActive('/') ? 'text-purple-600' : 'text-gray-700 nav-link'} font-semibold transition-colors transform hover:scale-105`}>{t.app.nav.home}</Link>
-              <Link to="/areas" className={`${isActive('/areas') ? 'text-purple-600' : 'text-gray-700 nav-link'} font-semibold transition-colors transform hover:scale-105`}>{t.app.nav.areas}</Link>
-              <Link to="/artigos" className={`${isActive('/artigos') ? 'text-purple-600' : 'text-gray-700 nav-link'} font-semibold transition-colors transform hover:scale-105`}>{t.app.nav.articles}</Link>
-              <Link to="/contato" className={`${isActive('/contato') ? 'text-green-600' : 'text-gray-700 nav-contato'} font-semibold transition-colors transform hover:scale-105`}>{t.app.nav.contact}</Link>
+              <Link to="/" className={`${isActive('/') ? 'text-purple-600' : 'text-gray-700 dark:text-gray-200 nav-link'} font-semibold transition-colors transform hover:scale-105`}>{t.app.nav.home}</Link>
+              <Link to="/areas" className={`${isActive('/areas') ? 'text-purple-600' : 'text-gray-700 dark:text-gray-200 nav-link'} font-semibold transition-colors transform hover:scale-105`}>{t.app.nav.areas}</Link>
+              <Link to="/artigos" className={`${isActive('/artigos') ? 'text-purple-600' : 'text-gray-700 dark:text-gray-200 nav-link'} font-semibold transition-colors transform hover:scale-105`}>{t.app.nav.articles}</Link>
+              <Link to="/contato" className={`${isActive('/contato') ? 'text-green-600' : 'text-gray-700 dark:text-gray-200 nav-contato'} font-semibold transition-colors transform hover:scale-105`}>{t.app.nav.contact}</Link>
               {renderLanguageFlags()}
+              {renderThemeControl()}
             </div>
 
             {/* Mobile menu button */}
             <button 
-              className="md:hidden"
+              className="md:hidden text-gray-800 dark:text-gray-100"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
               <Menu className="h-6 w-6" />
@@ -103,11 +200,12 @@ export default function App() {
           {mobileMenuOpen && (
             <div className="md:hidden pb-4">
               <div className="flex flex-col space-y-4">
-                <Link to="/" className={`${isActive('/') ? 'text-purple-600' : 'text-gray-700 nav-link'} font-semibold transition-colors transform hover:scale-105`}>{t.app.nav.home}</Link>
-                <Link to="/areas" className={`${isActive('/areas') ? 'text-purple-600' : 'text-gray-700 nav-link'} font-semibold transition-colors transform hover:scale-105`}>{t.app.nav.areas}</Link>
-                <Link to="/artigos" className={`${isActive('/artigos') ? 'text-purple-600' : 'text-gray-700 nav-link'} font-semibold transition-colors transform hover:scale-105`}>{t.app.nav.articles}</Link>
-                <Link to="/contato" className={`${isActive('/contato') ? 'text-green-600' : 'text-gray-700 nav-contato'} font-semibold transition-colors transform hover:scale-105`}>{t.app.nav.contact}</Link>
+                <Link to="/" className={`${isActive('/') ? 'text-purple-600' : 'text-gray-700 dark:text-gray-200 nav-link'} font-semibold transition-colors transform hover:scale-105`}>{t.app.nav.home}</Link>
+                <Link to="/areas" className={`${isActive('/areas') ? 'text-purple-600' : 'text-gray-700 dark:text-gray-200 nav-link'} font-semibold transition-colors transform hover:scale-105`}>{t.app.nav.areas}</Link>
+                <Link to="/artigos" className={`${isActive('/artigos') ? 'text-purple-600' : 'text-gray-700 dark:text-gray-200 nav-link'} font-semibold transition-colors transform hover:scale-105`}>{t.app.nav.articles}</Link>
+                <Link to="/contato" className={`${isActive('/contato') ? 'text-green-600' : 'text-gray-700 dark:text-gray-200 nav-contato'} font-semibold transition-colors transform hover:scale-105`}>{t.app.nav.contact}</Link>
                 {renderLanguageFlags()}
+                {renderThemeControl()}
               </div>
             </div>
           )}

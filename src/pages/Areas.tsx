@@ -24,64 +24,64 @@ export default function Areas() {
         genero: {
         label: t.areas.topics.genero.label,
         iconColor: 'text-purple-600',
-        iconBg: 'bg-purple-100',
-        badgeClass: 'bg-purple-100 text-purple-700',
-        hoverHeader: 'hover:bg-purple-50',
+        iconBg: 'bg-purple-100 dark:bg-purple-900/40',
+        badgeClass: 'bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-200',
+        hoverHeader: 'hover:bg-purple-50 dark:hover:bg-purple-950/40',
         cases: t.areas.topics.genero.cases,
         },
         tecnologia: {
         label: t.areas.topics.tecnologia.label,
         iconColor: 'text-blue-600',
-        iconBg: 'bg-blue-100',
-        badgeClass: 'bg-blue-100 text-blue-700',
-        hoverHeader: 'hover:bg-blue-50',
+        iconBg: 'bg-blue-100 dark:bg-blue-900/40',
+        badgeClass: 'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-200',
+        hoverHeader: 'hover:bg-blue-50 dark:hover:bg-blue-950/40',
         cases: t.areas.topics.tecnologia.cases,
         },
         ambiental: {
         label: t.areas.topics.ambiental.label,
         iconColor: 'text-green-600',
-        iconBg: 'bg-green-100',
-        badgeClass: 'bg-green-100 text-green-700',
-        hoverHeader: 'hover:bg-green-50',
+        iconBg: 'bg-green-100 dark:bg-green-900/40',
+        badgeClass: 'bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-200',
+        hoverHeader: 'hover:bg-green-50 dark:hover:bg-green-950/40',
         cases: t.areas.topics.ambiental.cases,
         },
     } as const;
 
     return (
-        <div className="py-20 bg-white space-y-20">
+        <div className="py-20 bg-white dark:bg-zinc-950 text-gray-900 dark:text-gray-100 space-y-20 transition-colors">
         <section id="servicos-oferecidos">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-8">{t.areas.servicesTitle}</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 dark:text-gray-100 mb-8">{t.areas.servicesTitle}</h2>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {t.areas.servicesExamples.map((service) => (
                 <div
                     key={service}
-                    className="bg-white border border-gray-200 rounded-lg px-4 py-3 text-gray-700"
+                    className="bg-white dark:bg-zinc-900 border border-gray-200 dark:border-gray-700 rounded-lg px-4 py-3 text-gray-700 dark:text-gray-200"
                 >
                     {service}
                 </div>
                 ))}
             </div>
-            <p className="text-sm text-gray-500 italic mt-4">*essa area ainda tenho que melhorar</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400 italic mt-4">*essa area ainda tenho que melhorar</p>
             </div>
         </section>
 
         <section id="areas">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-12">{t.areas.title}</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 dark:text-gray-100 mb-12">{t.areas.title}</h2>
 
             <div className="grid md:grid-cols-3 gap-8">
                 <button
                 type="button"
                 onClick={() => handleAreaCardClick('genero')}
-                className="bg-purple-50 border-2 border-purple-200 rounded-lg p-8 hover:shadow-lg transition-shadow text-left cursor-pointer"
+                className="bg-purple-50 dark:bg-purple-950/40 border-2 border-purple-200 dark:border-purple-800 rounded-lg p-8 hover:shadow-lg transition-shadow text-left cursor-pointer"
                 >
                 <div className="w-16 h-16 bg-purple-600 rounded-full flex items-center justify-center mb-6">
                     <Users className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-2xl font-semibold text-purple-900 mb-4">{t.areas.cards.gender.title}</h3>
-                <p className="text-gray-700 mb-4">{t.areas.cards.gender.description}</p>
-                <ul className="space-y-2 text-gray-600">
+                <h3 className="text-2xl font-semibold text-purple-900 dark:text-purple-200 mb-4">{t.areas.cards.gender.title}</h3>
+                <p className="text-gray-700 dark:text-gray-300 mb-4">{t.areas.cards.gender.description}</p>
+                <ul className="space-y-2 text-gray-600 dark:text-gray-300">
                     {t.areas.cards.gender.bullets.map((bullet) => (
                     <li key={bullet}>• {bullet}</li>
                     ))}
@@ -91,14 +91,14 @@ export default function Areas() {
                 <button
                 type="button"
                 onClick={() => handleAreaCardClick('tecnologia')}
-                className="bg-blue-50 border-2 border-blue-200 rounded-lg p-8 hover:shadow-lg transition-shadow text-left cursor-pointer"
+                className="bg-blue-50 dark:bg-blue-950/40 border-2 border-blue-200 dark:border-blue-800 rounded-lg p-8 hover:shadow-lg transition-shadow text-left cursor-pointer"
                 >
                 <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mb-6">
                     <Cpu className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-2xl font-semibold text-blue-900 mb-4">{t.areas.cards.technology.title}</h3>
-                <p className="text-gray-700 mb-4">{t.areas.cards.technology.description}</p>
-                <ul className="space-y-2 text-gray-600">
+                <h3 className="text-2xl font-semibold text-blue-900 dark:text-blue-200 mb-4">{t.areas.cards.technology.title}</h3>
+                <p className="text-gray-700 dark:text-gray-300 mb-4">{t.areas.cards.technology.description}</p>
+                <ul className="space-y-2 text-gray-600 dark:text-gray-300">
                     {t.areas.cards.technology.bullets.map((bullet) => (
                     <li key={bullet}>• {bullet}</li>
                     ))}
@@ -108,14 +108,14 @@ export default function Areas() {
                 <button
                 type="button"
                 onClick={() => handleAreaCardClick('ambiental')}
-                className="bg-green-50 border-2 border-green-200 rounded-lg p-8 hover:shadow-lg transition-shadow text-left cursor-pointer"
+                className="bg-green-50 dark:bg-green-950/40 border-2 border-green-200 dark:border-green-800 rounded-lg p-8 hover:shadow-lg transition-shadow text-left cursor-pointer"
                 >
                 <div className="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mb-6">
                     <Leaf className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-2xl font-semibold text-green-900 mb-4">{t.areas.cards.environmental.title}</h3>
-                <p className="text-gray-700 mb-4">{t.areas.cards.environmental.description}</p>
-                <ul className="space-y-2 text-gray-600">
+                <h3 className="text-2xl font-semibold text-green-900 dark:text-green-200 mb-4">{t.areas.cards.environmental.title}</h3>
+                <p className="text-gray-700 dark:text-gray-300 mb-4">{t.areas.cards.environmental.description}</p>
+                <ul className="space-y-2 text-gray-600 dark:text-gray-300">
                     {t.areas.cards.environmental.bullets.map((bullet) => (
                     <li key={bullet}>• {bullet}</li>
                     ))}
@@ -127,7 +127,7 @@ export default function Areas() {
 
         <section id="projetos">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-12">{t.areas.casesTitle}</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 dark:text-gray-100 mb-12">{t.areas.casesTitle}</h2>
 
             <div className="space-y-6">
                 {(Object.keys(casesByTopic) as Array<TopicKey>).map((topicKey) => {
@@ -137,13 +137,13 @@ export default function Areas() {
                 const remainingCases = topic.cases.slice(1);
 
                 return (
-                    <div id={`case-${topicKey}`} key={topicKey} className="w-full bg-white border border-gray-200 rounded-lg overflow-hidden">
+                    <div id={`case-${topicKey}`} key={topicKey} className="w-full bg-white dark:bg-zinc-900 border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
                     <button
                         type="button"
                         onClick={() => setOpenTopic(isOpen ? null : topicKey)}
                         className={`w-full p-6 text-left transition-colors cursor-pointer ${topic.hoverHeader}`}
                     >
-                        <div className="w-full bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow">
+                        <div className="w-full bg-white dark:bg-zinc-900 border border-gray-200 dark:border-gray-700 rounded-lg p-6 hover:shadow-lg transition-shadow">
                         <div className="flex items-start justify-between gap-4 mb-4">
                             <div className={`w-12 h-12 ${topic.iconBg} rounded-lg flex items-center justify-center`}>
                             <BookOpen className={`w-6 h-6 ${topic.iconColor}`} />
@@ -155,10 +155,10 @@ export default function Areas() {
                         </div>
 
                                                 {standardCase.subtitle && (
-                                                    <p className="text-sm font-medium text-gray-500 mb-2">{standardCase.subtitle}</p>
+                                                    <p className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">{standardCase.subtitle}</p>
                                                 )}
-                        <h3 className="text-xl font-semibold text-gray-900 mb-3">{standardCase.title}</h3>
-                        <p className="text-gray-600 mb-4 whitespace-pre-line text-justify">{standardCase.description}</p>
+                        <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-3">{standardCase.title}</h3>
+                        <p className="text-gray-600 dark:text-gray-300 mb-4 whitespace-pre-line text-justify">{standardCase.description}</p>
                         <span className={`inline-block px-3 py-1 rounded-full text-sm ${topic.badgeClass}`}>{topic.label}</span>
                         </div>
                     </button>
@@ -172,19 +172,19 @@ export default function Areas() {
                             transition={{ duration: 0.3, ease: 'easeInOut' }}
                             className="overflow-hidden"
                         >
-                            <div className="px-6 pb-6 pt-0 border-t border-gray-100 space-y-4">
+                            <div className="px-6 pb-6 pt-0 border-t border-gray-100 dark:border-gray-700 space-y-4">
                             {remainingCases.map((caseItem) => (
-                                <div key={caseItem.title} className="w-full bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow">
+                                <div key={caseItem.title} className="w-full bg-white dark:bg-zinc-900 border border-gray-200 dark:border-gray-700 rounded-lg p-6 hover:shadow-lg transition-shadow">
                                 <div className={`w-12 h-12 ${topic.iconBg} rounded-lg flex items-center justify-center mb-4`}>
                                     <BookOpen className={`w-6 h-6 ${topic.iconColor}`} />
                                 </div>
                                                                 <div className="flex items-start justify-between gap-3 mb-3">
-                                                                    <h3 className="text-xl font-semibold text-gray-900">{caseItem.title}</h3>
+                                                                    <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">{caseItem.title}</h3>
                                                                     {caseItem.subtitle && (
-                                                                        <span className="text-xs font-medium text-gray-400 whitespace-nowrap">{caseItem.subtitle}</span>
+                                                                        <span className="text-xs font-medium text-gray-400 dark:text-gray-500 whitespace-nowrap">{caseItem.subtitle}</span>
                                                                     )}
                                                                 </div>
-                                <p className="text-gray-600 mb-4 whitespace-pre-line text-justify">{caseItem.description}</p>
+                                <p className="text-gray-600 dark:text-gray-300 mb-4 whitespace-pre-line text-justify">{caseItem.description}</p>
                                 <span className={`inline-block px-3 py-1 rounded-full text-sm ${topic.badgeClass}`}>{topic.label}</span>
                                 </div>
                             ))}
@@ -201,30 +201,30 @@ export default function Areas() {
 
         <section id="pesquisas-desenvolvimento">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-12">{t.areas.researchTitle}</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 dark:text-gray-100 mb-12">{t.areas.researchTitle}</h2>
             <div className="max-w-4xl mx-auto mb-10">
-                <p className="text-lg text-gray-700 text-justify">{t.areas.researchIntro}</p>
+                <p className="text-lg text-gray-700 dark:text-gray-300 text-justify">{t.areas.researchIntro}</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {t.areas.researchItems.map((item) => (
                 <div
                     key={item.title}
-                    className="w-full bg-gray-50 border border-gray-200 rounded-lg p-8 hover:shadow-lg transition-shadow"
+                    className="w-full bg-gray-50 dark:bg-zinc-900 border border-gray-200 dark:border-gray-700 rounded-lg p-8 hover:shadow-lg transition-shadow"
                 >
-                    <div className="w-12 h-12 bg-gray-200 rounded-lg flex items-center justify-center mb-6">
-                    <BookOpen className="w-6 h-6 text-gray-600" />
+                    <div className="w-12 h-12 bg-gray-200 dark:bg-zinc-800 rounded-lg flex items-center justify-center mb-6">
+                    <BookOpen className="w-6 h-6 text-gray-600 dark:text-gray-300" />
                     </div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-3">{item.title}</h3>
+                    <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-3">{item.title}</h3>
                                         {item.subtitle && (
-                                            <p className="text-sm text-gray-500 mb-3">{item.subtitle}</p>
+                                            <p className="text-sm text-gray-500 dark:text-gray-400 mb-3">{item.subtitle}</p>
                                         )}
-                    <p className="text-gray-600 text-justify">{item.description}</p>
+                    <p className="text-gray-600 dark:text-gray-300 text-justify">{item.description}</p>
                                         {item.partnerText && (
-                                            <p className="text-gray-700 mt-4 mb-3">{item.partnerText}</p>
+                                            <p className="text-gray-700 dark:text-gray-300 mt-4 mb-3">{item.partnerText}</p>
                                         )}
                                         {(item.showLogoPlaceholder || item.logo) && (
-                                            <div className="w-full h-24 border border-gray-200 rounded-lg bg-white p-2 flex items-center justify-center">
+                                            <div className="w-full h-24 border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-zinc-800 p-2 flex items-center justify-center">
                                                 {item.logo === 'oxfam' ? (
                                                     <img
                                                         src={oxfamLogo}
@@ -238,7 +238,7 @@ export default function Areas() {
                                                         className="max-h-full max-w-full object-contain"
                                                     />
                                                 ) : (
-                                                    <span className="text-sm text-gray-500">Logo</span>
+                                                    <span className="text-sm text-gray-500 dark:text-gray-300">Logo</span>
                                                 )}
                                             </div>
                                         )}
@@ -247,7 +247,7 @@ export default function Areas() {
             </div>
 
             <div className="mt-12 text-center">
-                <p className="text-lg text-gray-700 mb-4">
+                <p className="text-lg text-gray-700 dark:text-gray-300 mb-4">
                 {t.areas.contactLead}
                 </p>
                 <Link
