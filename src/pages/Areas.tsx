@@ -23,26 +23,26 @@ export default function Areas() {
     const casesByTopic = {
         genero: {
         label: t.areas.topics.genero.label,
-        iconColor: 'text-purple-600',
-        iconBg: 'bg-purple-100 dark:bg-purple-900/40',
-        badgeClass: 'bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-200',
-        hoverHeader: 'hover:bg-purple-50 dark:hover:bg-purple-950/40',
+        iconColor: 'text-[#67127c] dark:text-purple-600',
+        iconBg: 'bg-[#67127c]/10 dark:bg-purple-900/40',
+        badgeClass: 'bg-[#67127c]/10 text-[#67127c] dark:bg-purple-900/40 dark:text-purple-200',
+        hoverHeader: 'hover:bg-[#67127c]/5 dark:hover:bg-purple-950/40',
         cases: t.areas.topics.genero.cases,
         },
         tecnologia: {
         label: t.areas.topics.tecnologia.label,
-        iconColor: 'text-blue-600',
-        iconBg: 'bg-blue-100 dark:bg-blue-900/40',
-        badgeClass: 'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-200',
-        hoverHeader: 'hover:bg-blue-50 dark:hover:bg-blue-950/40',
+        iconColor: 'text-[#12277C] dark:text-blue-600',
+        iconBg: 'bg-[#12277C]/10 dark:bg-blue-900/40',
+        badgeClass: 'bg-[#12277C]/10 text-[#12277C] dark:bg-blue-900/40 dark:text-blue-200',
+        hoverHeader: 'hover:bg-[#12277C]/5 dark:hover:bg-blue-950/40',
         cases: t.areas.topics.tecnologia.cases,
         },
         ambiental: {
         label: t.areas.topics.ambiental.label,
-        iconColor: 'text-green-600',
-        iconBg: 'bg-green-100 dark:bg-green-900/40',
-        badgeClass: 'bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-200',
-        hoverHeader: 'hover:bg-green-50 dark:hover:bg-green-950/40',
+        iconColor: 'text-[#127C27] dark:text-green-600',
+        iconBg: 'bg-[#127C27]/10 dark:bg-green-900/40',
+        badgeClass: 'bg-[#127C27]/10 text-[#127C27] dark:bg-green-900/40 dark:text-green-200',
+        hoverHeader: 'hover:bg-[#127C27]/5 dark:hover:bg-green-950/40',
         cases: t.areas.topics.ambiental.cases,
         },
     } as const;
@@ -74,12 +74,12 @@ export default function Areas() {
                 <button
                 type="button"
                 onClick={() => handleAreaCardClick('genero')}
-                className="bg-purple-50 dark:bg-purple-950/40 border-2 border-purple-200 dark:border-purple-800 rounded-lg p-8 hover:shadow-lg transition-shadow text-left cursor-pointer"
+                className="bg-[#67127c]/5 dark:bg-purple-950/40 border-2 border-[#67127c]/20 dark:border-purple-800 rounded-lg p-8 hover:shadow-lg transition-shadow text-left cursor-pointer"
                 >
-                <div className="w-16 h-16 bg-purple-600 rounded-full flex items-center justify-center mb-6">
+                <div className="w-16 h-16 bg-[#67127c] dark:bg-purple-600 rounded-full flex items-center justify-center mb-6">
                     <Users className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-2xl font-semibold text-purple-900 dark:text-purple-200 mb-4">{t.areas.cards.gender.title}</h3>
+                <h3 className="text-2xl font-semibold text-[#67127c] dark:text-purple-200 mb-4">{t.areas.cards.gender.title}</h3>
                 <p className="text-gray-700 dark:text-gray-300 mb-4">{t.areas.cards.gender.description}</p>
                 <ul className="space-y-2 text-gray-600 dark:text-gray-300">
                     {t.areas.cards.gender.bullets.map((bullet) => (
@@ -91,12 +91,12 @@ export default function Areas() {
                 <button
                 type="button"
                 onClick={() => handleAreaCardClick('tecnologia')}
-                className="bg-blue-50 dark:bg-blue-950/40 border-2 border-blue-200 dark:border-blue-800 rounded-lg p-8 hover:shadow-lg transition-shadow text-left cursor-pointer"
+                className="bg-[#12277C]/5 dark:bg-blue-950/40 border-2 border-[#12277C]/20 dark:border-blue-800 rounded-lg p-8 hover:shadow-lg transition-shadow text-left cursor-pointer"
                 >
-                <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mb-6">
+                <div className="w-16 h-16 bg-[#12277C] dark:bg-blue-600 rounded-full flex items-center justify-center mb-6">
                     <Cpu className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-2xl font-semibold text-blue-900 dark:text-blue-200 mb-4">{t.areas.cards.technology.title}</h3>
+                <h3 className="text-2xl font-semibold text-[#12277C] dark:text-blue-200 mb-4">{t.areas.cards.technology.title}</h3>
                 <p className="text-gray-700 dark:text-gray-300 mb-4">{t.areas.cards.technology.description}</p>
                 <ul className="space-y-2 text-gray-600 dark:text-gray-300">
                     {t.areas.cards.technology.bullets.map((bullet) => (
@@ -108,12 +108,12 @@ export default function Areas() {
                 <button
                 type="button"
                 onClick={() => handleAreaCardClick('ambiental')}
-                className="bg-green-50 dark:bg-green-950/40 border-2 border-green-200 dark:border-green-800 rounded-lg p-8 hover:shadow-lg transition-shadow text-left cursor-pointer"
+                className="bg-[#127C27]/5 dark:bg-green-950/40 border-2 border-[#127C27]/20 dark:border-green-800 rounded-lg p-8 hover:shadow-lg transition-shadow text-left cursor-pointer"
                 >
-                <div className="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mb-6">
+                <div className="w-16 h-16 bg-[#127C27] dark:bg-green-600 rounded-full flex items-center justify-center mb-6">
                     <Leaf className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-2xl font-semibold text-green-900 dark:text-green-200 mb-4">{t.areas.cards.environmental.title}</h3>
+                <h3 className="text-2xl font-semibold text-[#127C27] dark:text-green-200 mb-4">{t.areas.cards.environmental.title}</h3>
                 <p className="text-gray-700 dark:text-gray-300 mb-4">{t.areas.cards.environmental.description}</p>
                 <ul className="space-y-2 text-gray-600 dark:text-gray-300">
                     {t.areas.cards.environmental.bullets.map((bullet) => (
@@ -252,7 +252,7 @@ export default function Areas() {
                 </p>
                 <Link
                 to="/contato"
-                className="inline-block bg-purple-600 text-white px-10 py-4 text-lg font-semibold rounded-lg hover:bg-purple-700 transition-colors shadow-lg hover:shadow-xl"
+                className="inline-block bg-[#67127c] dark:bg-purple-600 text-white px-10 py-4 text-lg font-semibold rounded-lg hover:bg-[#67127c]/90 dark:hover:bg-purple-700 transition-colors shadow-lg hover:shadow-xl"
                 >
                 {t.areas.contactCta}
                 </Link>

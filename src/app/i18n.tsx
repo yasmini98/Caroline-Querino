@@ -629,7 +629,7 @@ const translations = {
   },
 } as const;
 
-type Translations = typeof translations['pt-BR'];
+type Translations = (typeof translations)[Language];
 
 type I18nContextValue = {
   language: Language;

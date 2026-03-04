@@ -5,6 +5,7 @@ import Home from "../pages/Home";
 import Areas from "../pages/Areas";
 import Contato from "../pages/Contato";
 import Artigos from "../pages/Artigos";
+import OpiniaoDetalhe from "../pages/OpiniaoDetail";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLocation } from "react-router-dom";
 import { Language, useI18n } from "./i18n";
@@ -77,7 +78,7 @@ export default function App() {
           aria-label={option.label}
           className={`text-lg leading-none rounded px-1.5 py-1 border transition-colors ${
             language === option.code
-              ? 'border-purple-500 bg-purple-50 dark:bg-purple-900/30'
+              ? 'border-[#67127c]/50 bg-[#67127c]/5 dark:border-purple-500 dark:bg-purple-900/30'
               : 'border-transparent hover:border-gray-300 dark:hover:border-gray-600'
           }`}
         >
@@ -96,7 +97,7 @@ export default function App() {
         aria-label="Sistema"
         className={`rounded p-1.5 border transition-colors ${
           themeMode === 'system'
-            ? 'border-purple-500 bg-purple-50 dark:bg-purple-900/30 text-purple-700 dark:text-purple-200'
+            ? 'border-[#67127c]/50 bg-[#67127c]/5 text-[#67127c] dark:border-purple-500 dark:bg-purple-900/30 dark:text-purple-200'
             : 'border-transparent text-gray-700 dark:text-gray-200 hover:border-gray-300 dark:hover:border-gray-600'
         }`}
       >
@@ -109,7 +110,7 @@ export default function App() {
         aria-label="Claro"
         className={`rounded p-1.5 border transition-colors ${
           themeMode === 'light'
-            ? 'border-purple-500 bg-purple-50 dark:bg-purple-900/30 text-purple-700 dark:text-purple-200'
+            ? 'border-[#67127c]/50 bg-[#67127c]/5 text-[#67127c] dark:border-purple-500 dark:bg-purple-900/30 dark:text-purple-200'
             : 'border-transparent text-gray-700 dark:text-gray-200 hover:border-gray-300 dark:hover:border-gray-600'
         }`}
       >
@@ -122,7 +123,7 @@ export default function App() {
         aria-label="Escuro"
         className={`rounded p-1.5 border transition-colors ${
           themeMode === 'dark'
-            ? 'border-purple-500 bg-purple-50 dark:bg-purple-900/30 text-purple-700 dark:text-purple-200'
+            ? 'border-[#67127c]/50 bg-[#67127c]/5 text-[#67127c] dark:border-purple-500 dark:bg-purple-900/30 dark:text-purple-200'
             : 'border-transparent text-gray-700 dark:text-gray-200 hover:border-gray-300 dark:hover:border-gray-600'
         }`}
       >
@@ -162,27 +163,29 @@ export default function App() {
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <style>{`
             .nav-link { transition: color .15s; }
-            .nav-link:hover { color: var(--color-blue-600, #2563eb) !important; }
+            .nav-link:hover { color: #12277C !important; }
+            .dark .nav-link:hover { color: var(--color-blue-600, #2563eb) !important; }
             .nav-contato { transition: color .15s; }
-            .nav-contato:hover { color: var(--color-green-600, #16a34a) !important; }
+            .nav-contato:hover { color: #127C27 !important; }
+            .dark .nav-contato:hover { color: var(--color-green-600, #16a34a) !important; }
           `}</style>
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
               <Link
                 to="/"
-                className="inline-block hover:text-purple-700 transition-colors cursor-pointer leading-none"
+                className="inline-block hover:text-[#67127c] dark:hover:text-purple-700 transition-colors cursor-pointer leading-none"
               >
-                <span className="block text-xl font-bold text-purple-600 whitespace-nowrap">{t.app.brandLine1}</span>
+                <span className="block text-xl font-bold text-[#67127c] dark:text-purple-600 whitespace-nowrap">{t.app.brandLine1}</span>
                 <span className="block text-sm font-normal text-gray-400 whitespace-nowrap">{t.app.brandLine2}</span>
               </Link>
             </div>
             
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-6">
-              <Link to="/" className={`${isActive('/') ? 'text-purple-600' : 'text-gray-700 dark:text-gray-200 nav-link'} font-semibold transition-colors transform hover:scale-105`}>{t.app.nav.home}</Link>
-              <Link to="/areas" className={`${isActive('/areas') ? 'text-purple-600' : 'text-gray-700 dark:text-gray-200 nav-link'} font-semibold transition-colors transform hover:scale-105`}>{t.app.nav.areas}</Link>
-              <Link to="/artigos" className={`${isActive('/artigos') ? 'text-purple-600' : 'text-gray-700 dark:text-gray-200 nav-link'} font-semibold transition-colors transform hover:scale-105`}>{t.app.nav.articles}</Link>
-              <Link to="/contato" className={`${isActive('/contato') ? 'text-green-600' : 'text-gray-700 dark:text-gray-200 nav-contato'} font-semibold transition-colors transform hover:scale-105`}>{t.app.nav.contact}</Link>
+              <Link to="/" className={`${isActive('/') ? 'text-[#67127c] dark:text-purple-600' : 'text-gray-700 dark:text-gray-200 nav-link'} font-semibold transition-colors transform hover:scale-105`}>{t.app.nav.home}</Link>
+              <Link to="/areas" className={`${isActive('/areas') ? 'text-[#67127c] dark:text-purple-600' : 'text-gray-700 dark:text-gray-200 nav-link'} font-semibold transition-colors transform hover:scale-105`}>{t.app.nav.areas}</Link>
+              <Link to="/artigos" className={`${isActive('/artigos') ? 'text-[#67127c] dark:text-purple-600' : 'text-gray-700 dark:text-gray-200 nav-link'} font-semibold transition-colors transform hover:scale-105`}>{t.app.nav.articles}</Link>
+              <Link to="/contato" className={`${isActive('/contato') ? 'text-[#127C27] dark:text-green-600' : 'text-gray-700 dark:text-gray-200 nav-contato'} font-semibold transition-colors transform hover:scale-105`}>{t.app.nav.contact}</Link>
               {renderLanguageFlags()}
               {renderThemeControl()}
             </div>
@@ -200,10 +203,10 @@ export default function App() {
           {mobileMenuOpen && (
             <div className="md:hidden pb-4">
               <div className="flex flex-col space-y-4">
-                <Link to="/" className={`${isActive('/') ? 'text-purple-600' : 'text-gray-700 dark:text-gray-200 nav-link'} font-semibold transition-colors transform hover:scale-105`}>{t.app.nav.home}</Link>
-                <Link to="/areas" className={`${isActive('/areas') ? 'text-purple-600' : 'text-gray-700 dark:text-gray-200 nav-link'} font-semibold transition-colors transform hover:scale-105`}>{t.app.nav.areas}</Link>
-                <Link to="/artigos" className={`${isActive('/artigos') ? 'text-purple-600' : 'text-gray-700 dark:text-gray-200 nav-link'} font-semibold transition-colors transform hover:scale-105`}>{t.app.nav.articles}</Link>
-                <Link to="/contato" className={`${isActive('/contato') ? 'text-green-600' : 'text-gray-700 dark:text-gray-200 nav-contato'} font-semibold transition-colors transform hover:scale-105`}>{t.app.nav.contact}</Link>
+                <Link to="/" className={`${isActive('/') ? 'text-[#67127c] dark:text-purple-600' : 'text-gray-700 dark:text-gray-200 nav-link'} font-semibold transition-colors transform hover:scale-105`}>{t.app.nav.home}</Link>
+                <Link to="/areas" className={`${isActive('/areas') ? 'text-[#67127c] dark:text-purple-600' : 'text-gray-700 dark:text-gray-200 nav-link'} font-semibold transition-colors transform hover:scale-105`}>{t.app.nav.areas}</Link>
+                <Link to="/artigos" className={`${isActive('/artigos') ? 'text-[#67127c] dark:text-purple-600' : 'text-gray-700 dark:text-gray-200 nav-link'} font-semibold transition-colors transform hover:scale-105`}>{t.app.nav.articles}</Link>
+                <Link to="/contato" className={`${isActive('/contato') ? 'text-[#127C27] dark:text-green-600' : 'text-gray-700 dark:text-gray-200 nav-contato'} font-semibold transition-colors transform hover:scale-105`}>{t.app.nav.contact}</Link>
                 {renderLanguageFlags()}
                 {renderThemeControl()}
               </div>
@@ -220,6 +223,7 @@ export default function App() {
             <Route path="/areas" element={<PageWrapper><Areas /></PageWrapper>} />
             <Route path="/contato" element={<PageWrapper><Contato /></PageWrapper>} />
             <Route path="/artigos" element={<PageWrapper><Artigos /></PageWrapper>} />
+            <Route path="/artigos/opinioes/:id" element={<PageWrapper><OpiniaoDetalhe /></PageWrapper>} />
             {/* qualquer rota desconhecida também vai pra home */}
             <Route path="*" element={<PageWrapper><Home /></PageWrapper>} />
           </Routes>

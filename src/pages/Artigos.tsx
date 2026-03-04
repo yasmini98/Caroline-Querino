@@ -1,17 +1,35 @@
 import { useEffect } from 'react';
 import { useI18n } from '../app/i18n';
+import { Link } from 'react-router-dom';
+import { getOpinions } from './opinioesData';
+import iconeSite from '../assets/images/iconesite.avif';
 
 function TikTokCreatorEmbed() {
   useEffect(() => {
+    const processEmbed = () => {
+      (window as any).tiktokEmbedLoad?.();
+    };
+
+    const retryProcessEmbed = () => {
+      window.setTimeout(processEmbed, 150);
+      window.setTimeout(processEmbed, 500);
+    };
+
     const existingScript = document.querySelector('script[src="https://www.tiktok.com/embed.js"]');
 
     if (!existingScript) {
       const script = document.createElement('script');
       script.src = 'https://www.tiktok.com/embed.js';
       script.async = true;
+      script.addEventListener('load', retryProcessEmbed, { once: true });
       document.body.appendChild(script);
     } else {
-      (window as any).tiktokEmbedLoad?.();
+      if ((window as any).tiktokEmbedLoad) {
+        processEmbed();
+      } else {
+        existingScript.addEventListener('load', retryProcessEmbed, { once: true });
+        retryProcessEmbed();
+      }
     }
   }, []);
 
@@ -71,8 +89,8 @@ function InstagramProfileEmbed() {
 }
 
 export default function Artigos() {
-  const { t } = useI18n();
-
+  const { t, language } = useI18n();
+  const opinions = getOpinions(language);
   return (
     <div className="space-y-20 py-20 text-gray-900 dark:text-gray-100 transition-colors">
       {/* Artigos section */}
@@ -83,7 +101,7 @@ export default function Artigos() {
             {[1,2,3,4].map((i) => (
               <article key={i} className="border border-gray-200 dark:border-gray-700 bg-white dark:bg-zinc-900 rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
                 <img
-                  src={`https://via.placeholder.com/600x300?text=Artigo+${i}`}
+                  src={iconeSite}
                   alt={`${t.articles.articleAltPrefix} ${i}`}
                   className="w-full h-48 object-cover"
                 />
@@ -92,7 +110,7 @@ export default function Artigos() {
                   <p className="text-gray-700 dark:text-gray-300 mb-4">
                     {t.articles.articleDescriptionPrefix} {i}. Lorem ipsum dolor sit amet.
                   </p>
-                  <a href="#" className="text-purple-600 dark:text-purple-300 hover:underline">
+                  <a href="#" className="text-[#67127c] dark:text-purple-300 hover:underline">
                     {t.common.readMore}
                   </a>
                 </div>
@@ -107,13 +125,19 @@ export default function Artigos() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold mb-6">{t.articles.opinionsTitle}</h2>
           <div className="space-y-8">
-            {[1,2,3].map((i) => (
-              <div key={i} className="border-l-4 border-purple-600 dark:border-purple-400 pl-4">
-                <h3 className="text-2xl font-semibold mb-1">{t.articles.opinionPrefix} {i}</h3>
+            {opinions.map((opinion) => (
+              <Link
+                key={opinion.id}
+                to={`/artigos/opinioes/${opinion.id}`}
+                className="block border-l-4 border-[#67127c] dark:border-purple-400 pl-4 hover:bg-gray-50 dark:hover:bg-zinc-900/60 hover:opacity-90 transition-colors"
+              >
+                <h3 className="text-2xl font-normal mb-1 leading-snug">
+                  {opinion.title}
+                </h3>
                 <p className="text-gray-700 dark:text-gray-300">
-                  {t.articles.opinionDescription}
+                  {`${opinion.body[0].slice(0, 170)}...`}
                 </p>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
