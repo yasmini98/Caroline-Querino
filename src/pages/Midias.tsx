@@ -105,7 +105,7 @@ export default function Midias() {
             </p>
             <Link
               to="/contato"
-              className="inline-block bg-[#127C27] dark:bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#127C27]/90 dark:hover:bg-green-700 transition-colors"
+              className="inline-block mt-2 mb-10 bg-[#67127c] dark:bg-purple-600 text-white px-10 py-4 text-lg font-semibold rounded-lg hover:bg-[#67127c]/90 dark:hover:bg-purple-700 transition-colors shadow-lg hover:shadow-xl"
             >
               {t.midias.scheduleButton}
             </Link>
