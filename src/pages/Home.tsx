@@ -1,8 +1,6 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import { useI18n } from '../app/i18n';
-
-
+import { useI18n } from "../app/i18n";
 
 export default function Home() {
   const { t } = useI18n();
@@ -52,10 +50,13 @@ export default function Home() {
   };
 
   return (
-    <section id="home" className="flex-1 h-full min-h-full bg-gradient-to-br from-[#67127c]/5 to-blue-50 dark:from-zinc-950 dark:to-slate-900 transition-colors">
+    <section
+      id="home"
+      className="flex-1 h-full min-h-full bg-gradient-to-br from-[#67127c]/5 to-blue-50 dark:from-zinc-950 dark:to-slate-900 transition-colors"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-12 md:py-16">
         <div className="text-center">
-          <h2 
+          <h2
             ref={titleRef}
             onMouseMove={handleMouseMove}
             className="text-4xl md:text-5xl font-bold mb-6 transition-colors duration-75"
@@ -66,8 +67,8 @@ export default function Home() {
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-8">
             {t.home.description}
           </p>
-          <Link 
-            to="/areas" 
+          <Link
+            to="/areas"
             className="inline-block mt-2 mb-10 bg-[#67127c] dark:bg-purple-600 text-white px-10 py-4 text-lg font-semibold rounded-lg hover:bg-[#67127c]/90 dark:hover:bg-purple-700 transition-colors shadow-lg hover:shadow-xl"
           >
             {t.home.cta}
@@ -97,16 +98,24 @@ export default function Home() {
 
               <div className="clear-both grid grid-cols-3 gap-6 mt-8 pt-8 border-t border-gray-200 dark:border-gray-700 text-center">
                 <div className="flex flex-col items-center">
-                  <div className="text-3xl font-bold text-[#67127c] dark:text-purple-600 mb-2">10+</div>
+                  <div className="text-3xl font-bold text-[#67127c] dark:text-purple-600 mb-2">
+                    10+
+                  </div>
                   <div className="text-gray-600 dark:text-gray-300">{t.about.stats.years}</div>
                 </div>
                 <div className="flex flex-col items-center">
-                  <div className="text-3xl font-bold text-[#12277C] dark:text-blue-600 mb-2">50+</div>
+                  <div className="text-3xl font-bold text-[#12277C] dark:text-blue-600 mb-2">
+                    50+
+                  </div>
                   <div className="text-gray-600 dark:text-gray-300">{t.about.stats.projects}</div>
                 </div>
                 <div className="flex flex-col items-center">
-                  <div className="text-3xl font-bold text-[#127C27] dark:text-green-600 mb-2">30+</div>
-                  <div className="text-gray-600 dark:text-gray-300">{t.about.stats.publications}</div>
+                  <div className="text-3xl font-bold text-[#127C27] dark:text-green-600 mb-2">
+                    30+
+                  </div>
+                  <div className="text-gray-600 dark:text-gray-300">
+                    {t.about.stats.publications}
+                  </div>
                 </div>
               </div>
             </div>

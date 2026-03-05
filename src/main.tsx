@@ -10,5 +10,5 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <BrowserRouter>
       <App />
     </BrowserRouter>
-  </I18nProvider>
+  </I18nProvider>,
 );

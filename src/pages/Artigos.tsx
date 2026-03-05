@@ -1,8 +1,8 @@
-import { useEffect } from 'react';
-import { useI18n } from '../app/i18n';
-import { Link } from 'react-router-dom';
-import { getOpinions } from './opinioesData';
-import iconeSite from '../assets/images/iconesite.avif';
+import { useEffect } from "react";
+import { useI18n } from "../app/i18n";
+import { Link } from "react-router-dom";
+import { getOpinions } from "./opinioesData";
+import iconeSite from "../assets/images/iconesite.avif";
 
 function TikTokCreatorEmbed() {
   useEffect(() => {
@@ -18,16 +18,18 @@ function TikTokCreatorEmbed() {
     const existingScript = document.querySelector('script[src="https://www.tiktok.com/embed.js"]');
 
     if (!existingScript) {
-      const script = document.createElement('script');
-      script.src = 'https://www.tiktok.com/embed.js';
+      const script = document.createElement("script");
+      script.src = "https://www.tiktok.com/embed.js";
       script.async = true;
-      script.addEventListener('load', retryProcessEmbed, { once: true });
+      script.addEventListener("load", retryProcessEmbed, { once: true });
       document.body.appendChild(script);
     } else {
       if ((window as any).tiktokEmbedLoad) {
         processEmbed();
       } else {
-        existingScript.addEventListener('load', retryProcessEmbed, { once: true });
+        existingScript.addEventListener("load", retryProcessEmbed, {
+          once: true,
+        });
         retryProcessEmbed();
       }
     }
@@ -39,7 +41,7 @@ function TikTokCreatorEmbed() {
       cite="https://www.tiktok.com/@carollinequerino"
       data-unique-id="carollinequerino"
       data-embed-type="creator"
-      style={{ maxWidth: '780px', minWidth: '288px' }}
+      style={{ maxWidth: "780px", minWidth: "288px" }}
     >
       <section>
         <a
@@ -58,11 +60,13 @@ function InstagramProfileEmbed() {
   const { t } = useI18n();
 
   useEffect(() => {
-    const existingScript = document.querySelector('script[src="https://www.instagram.com/embed.js"]');
+    const existingScript = document.querySelector(
+      'script[src="https://www.instagram.com/embed.js"]',
+    );
 
     if (!existingScript) {
-      const script = document.createElement('script');
-      script.src = 'https://www.instagram.com/embed.js';
+      const script = document.createElement("script");
+      script.src = "https://www.instagram.com/embed.js";
       script.async = true;
       document.body.appendChild(script);
     } else {
@@ -75,7 +79,13 @@ function InstagramProfileEmbed() {
       className="instagram-media"
       data-instgrm-permalink="https://www.instagram.com/carollinequerino?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
       data-instgrm-version="14"
-      style={{ background: '#fff', border: 0, margin: 0, maxWidth: '540px', width: '100%' }}
+      style={{
+        background: "#fff",
+        border: 0,
+        margin: 0,
+        maxWidth: "540px",
+        width: "100%",
+      }}
     >
       <a
         href="https://www.instagram.com/carollinequerino?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
@@ -98,15 +108,20 @@ export default function Artigos() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl font-bold mb-6">{t.articles.title}</h1>
           <div className="grid md:grid-cols-2 gap-8">
-            {[1,2,3,4].map((i) => (
-              <article key={i} className="border border-gray-200 dark:border-gray-700 bg-white dark:bg-zinc-900 rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
+            {[1, 2, 3, 4].map((i) => (
+              <article
+                key={i}
+                className="border border-gray-200 dark:border-gray-700 bg-white dark:bg-zinc-900 rounded-lg overflow-hidden hover:shadow-lg transition-shadow"
+              >
                 <img
                   src={iconeSite}
                   alt={`${t.articles.articleAltPrefix} ${i}`}
                   className="w-full h-48 object-cover"
                 />
                 <div className="p-6">
-                  <h2 className="text-2xl font-semibold mb-2">{t.articles.articleTitlePrefix} {i}</h2>
+                  <h2 className="text-2xl font-semibold mb-2">
+                    {t.articles.articleTitlePrefix} {i}
+                  </h2>
                   <p className="text-gray-700 dark:text-gray-300 mb-4">
                     {t.articles.articleDescriptionPrefix} {i}. Lorem ipsum dolor sit amet.
                   </p>
@@ -131,9 +146,7 @@ export default function Artigos() {
                 to={`/artigos/opinioes/${opinion.id}`}
                 className="block border-l-4 border-[#67127c] dark:border-purple-400 pl-4 hover:bg-gray-50 dark:hover:bg-zinc-900/60 hover:opacity-90 transition-colors"
               >
-                <h3 className="text-2xl font-normal mb-1 leading-snug">
-                  {opinion.title}
-                </h3>
+                <h3 className="text-2xl font-normal mb-1 leading-snug">{opinion.title}</h3>
                 <p className="text-gray-700 dark:text-gray-300">
                   {`${opinion.body[0].slice(0, 170)}...`}
                 </p>
@@ -151,11 +164,15 @@ export default function Artigos() {
             <div className="text-center border border-gray-200 dark:border-gray-700 bg-white dark:bg-zinc-900 rounded-lg p-4">
               <h3 className="text-xl font-semibold mb-4">{t.articles.boardTitle}</h3>
               <TikTokCreatorEmbed />
-              <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">{t.articles.tiktokLabel}</p>
+              <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
+                {t.articles.tiktokLabel}
+              </p>
             </div>
             <div className="text-center border border-gray-200 dark:border-gray-700 bg-white dark:bg-zinc-900 rounded-lg p-4">
               <InstagramProfileEmbed />
-              <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">{t.articles.instagramLabel}</p>
+              <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
+                {t.articles.instagramLabel}
+              </p>
             </div>
           </div>
         </div>

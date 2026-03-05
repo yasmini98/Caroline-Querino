@@ -1,6 +1,6 @@
-import { Link, useParams } from 'react-router-dom';
-import { useI18n } from '../app/i18n';
-import { getOpinions } from './opinioesData';
+import { Link, useParams } from "react-router-dom";
+import { useI18n } from "../app/i18n";
+import { getOpinions } from "./opinioesData";
 
 const richTokenRegex = /(https?:\/\/[^\s]+|[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,})/g;
 
@@ -8,7 +8,13 @@ function renderRichText(text: string) {
   return text.split(richTokenRegex).map((part, index) => {
     if (/^https?:\/\//.test(part)) {
       return (
-        <a key={`${part}-${index}`} href={part} target="_blank" rel="noreferrer" className="underline break-all">
+        <a
+          key={`${part}-${index}`}
+          href={part}
+          target="_blank"
+          rel="noreferrer"
+          className="underline break-all"
+        >
           {part}
         </a>
       );
@@ -35,7 +41,10 @@ export default function OpiniaoDetalhe() {
   const opinionIds = opinions.map((op) => op.id);
   const currentIndex = opinionIds.indexOf(parsedId);
   const previousId = currentIndex > 0 ? opinionIds[currentIndex - 1] : undefined;
-  const nextId = currentIndex >= 0 && currentIndex < opinionIds.length - 1 ? opinionIds[currentIndex + 1] : undefined;
+  const nextId =
+    currentIndex >= 0 && currentIndex < opinionIds.length - 1
+      ? opinionIds[currentIndex + 1]
+      : undefined;
 
   if (!opinion) {
     return (

@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useI18n } from '../app/i18n';
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { useI18n } from "../app/i18n";
 import {
   Carousel,
   CarouselApi,
@@ -8,20 +8,20 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from '../app/components/ui/carousel';
+} from "../app/components/ui/carousel";
 
 const latestEventPhotos = [
-  'https://picsum.photos/seed/evento-1/1200/800',
-  'https://picsum.photos/seed/evento-2/1200/800',
-  'https://picsum.photos/seed/evento-3/1200/800',
-  'https://picsum.photos/seed/evento-4/1200/800',
+  "https://picsum.photos/seed/evento-1/1200/800",
+  "https://picsum.photos/seed/evento-2/1200/800",
+  "https://picsum.photos/seed/evento-3/1200/800",
+  "https://picsum.photos/seed/evento-4/1200/800",
 ];
 
 const interviewPhotos = [
-  'https://picsum.photos/seed/entrevista-1/1200/800',
-  'https://picsum.photos/seed/entrevista-2/1200/800',
-  'https://picsum.photos/seed/entrevista-3/1200/800',
-  'https://picsum.photos/seed/entrevista-4/1200/800',
+  "https://picsum.photos/seed/entrevista-1/1200/800",
+  "https://picsum.photos/seed/entrevista-2/1200/800",
+  "https://picsum.photos/seed/entrevista-3/1200/800",
+  "https://picsum.photos/seed/entrevista-4/1200/800",
 ];
 
 function LoopingCarousel({ photos, altPrefix }: { photos: string[]; altPrefix: string }) {
@@ -38,7 +38,7 @@ function LoopingCarousel({ photos, altPrefix }: { photos: string[]; altPrefix: s
   }, [api]);
 
   return (
-    <Carousel setApi={setApi} opts={{ align: 'start', loop: true }} className="w-full">
+    <Carousel setApi={setApi} opts={{ align: "start", loop: true }} className="w-full">
       <CarouselContent>
         {photos.map((photo, index) => (
           <CarouselItem key={`${photo}-${index}`} className="basis-full md:basis-1/2">
@@ -67,7 +67,10 @@ export default function Midias() {
       <section>
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold mb-6">{t.midias.latestEventsTitle}</h2>
-          <LoopingCarousel photos={latestEventPhotos} altPrefix={t.midias.latestEventsPhotoAltPrefix} />
+          <LoopingCarousel
+            photos={latestEventPhotos}
+            altPrefix={t.midias.latestEventsPhotoAltPrefix}
+          />
         </div>
       </section>
 
@@ -87,7 +90,9 @@ export default function Midias() {
                 key={`${event.date}-${event.title}`}
                 className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-zinc-900 p-5"
               >
-                <p className="text-sm font-semibold text-[#67127c] dark:text-purple-300 mb-2">{event.date}</p>
+                <p className="text-sm font-semibold text-[#67127c] dark:text-purple-300 mb-2">
+                  {event.date}
+                </p>
                 <h3 className="text-xl font-bold mb-2">{event.title}</h3>
                 <p className="text-gray-700 dark:text-gray-300">{event.location}</p>
               </article>
@@ -95,7 +100,9 @@ export default function Midias() {
           </div>
 
           <div className="mt-8 rounded-xl border border-dashed border-[#67127c]/40 dark:border-purple-400/40 p-6 text-center bg-[#67127c]/5 dark:bg-purple-900/20">
-            <p className="text-base md:text-lg text-gray-800 dark:text-gray-100 mb-4">{t.midias.scheduleLead}</p>
+            <p className="text-base md:text-lg text-gray-800 dark:text-gray-100 mb-4">
+              {t.midias.scheduleLead}
+            </p>
             <Link
               to="/contato"
               className="inline-block bg-[#127C27] dark:bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#127C27]/90 dark:hover:bg-green-700 transition-colors"
