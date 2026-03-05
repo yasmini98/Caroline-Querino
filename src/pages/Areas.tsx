@@ -3,8 +3,9 @@ import { Users, Cpu, Leaf, BookOpen, ChevronDown } from "lucide-react";
 import { useI18n } from "../app/i18n";
 import { AnimatePresence, motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import itaipuParquetecLogo from "../assets/images/itaipu-parquetec.png";
-import oxfamLogo from "../assets/images/oxfam-logo.png";
+
+const itaipuParquetecLogo = "/src/assets/images/itaipu-parquetec.png";
+const oxfamLogo = "/src/assets/images/oxfam-logo.png";
 
 export default function Areas() {
   const { t } = useI18n();
