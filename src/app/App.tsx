@@ -5,6 +5,7 @@ import Home from "../pages/Home";
 import Areas from "../pages/Areas";
 import Contato from "../pages/Contato";
 import Artigos from "../pages/Artigos";
+import Midias from "../pages/Midias";
 import OpiniaoDetalhe from "../pages/OpiniaoDetail";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLocation } from "react-router-dom";
@@ -184,6 +185,7 @@ export default function App() {
             <div className="hidden md:flex items-center space-x-6">
               <Link to="/" className={`${isActive('/') ? 'text-[#67127c] dark:text-purple-600' : 'text-gray-700 dark:text-gray-200 nav-link'} font-semibold transition-colors transform hover:scale-105`}>{t.app.nav.home}</Link>
               <Link to="/areas" className={`${isActive('/areas') ? 'text-[#67127c] dark:text-purple-600' : 'text-gray-700 dark:text-gray-200 nav-link'} font-semibold transition-colors transform hover:scale-105`}>{t.app.nav.areas}</Link>
+              <Link to="/midias" className={`${isActive('/midias') ? 'text-[#67127c] dark:text-purple-600' : 'text-gray-700 dark:text-gray-200 nav-link'} font-semibold transition-colors transform hover:scale-105`}>{t.app.nav.media}</Link>
               <Link to="/artigos" className={`${isActive('/artigos') ? 'text-[#67127c] dark:text-purple-600' : 'text-gray-700 dark:text-gray-200 nav-link'} font-semibold transition-colors transform hover:scale-105`}>{t.app.nav.articles}</Link>
               <Link to="/contato" className={`${isActive('/contato') ? 'text-[#127C27] dark:text-green-600' : 'text-gray-700 dark:text-gray-200 nav-contato'} font-semibold transition-colors transform hover:scale-105`}>{t.app.nav.contact}</Link>
               {renderLanguageFlags()}
@@ -205,6 +207,7 @@ export default function App() {
               <div className="flex flex-col space-y-4">
                 <Link to="/" className={`${isActive('/') ? 'text-[#67127c] dark:text-purple-600' : 'text-gray-700 dark:text-gray-200 nav-link'} font-semibold transition-colors transform hover:scale-105`}>{t.app.nav.home}</Link>
                 <Link to="/areas" className={`${isActive('/areas') ? 'text-[#67127c] dark:text-purple-600' : 'text-gray-700 dark:text-gray-200 nav-link'} font-semibold transition-colors transform hover:scale-105`}>{t.app.nav.areas}</Link>
+                <Link to="/midias" className={`${isActive('/midias') ? 'text-[#67127c] dark:text-purple-600' : 'text-gray-700 dark:text-gray-200 nav-link'} font-semibold transition-colors transform hover:scale-105`}>{t.app.nav.media}</Link>
                 <Link to="/artigos" className={`${isActive('/artigos') ? 'text-[#67127c] dark:text-purple-600' : 'text-gray-700 dark:text-gray-200 nav-link'} font-semibold transition-colors transform hover:scale-105`}>{t.app.nav.articles}</Link>
                 <Link to="/contato" className={`${isActive('/contato') ? 'text-[#127C27] dark:text-green-600' : 'text-gray-700 dark:text-gray-200 nav-contato'} font-semibold transition-colors transform hover:scale-105`}>{t.app.nav.contact}</Link>
                 {renderLanguageFlags()}
@@ -221,6 +224,7 @@ export default function App() {
           <Routes location={location} key={location.pathname}>
             <Route path="/" element={<PageWrapper><Home /></PageWrapper>} />
             <Route path="/areas" element={<PageWrapper><Areas /></PageWrapper>} />
+            <Route path="/midias" element={<PageWrapper><Midias /></PageWrapper>} />
             <Route path="/contato" element={<PageWrapper><Contato /></PageWrapper>} />
             <Route path="/artigos" element={<PageWrapper><Artigos /></PageWrapper>} />
             <Route path="/artigos/opinioes/:id" element={<PageWrapper><OpiniaoDetalhe /></PageWrapper>} />

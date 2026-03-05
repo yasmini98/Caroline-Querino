@@ -22,6 +22,7 @@ const translations = {
         home: 'Home',
         areas: 'Serviços',
         about: 'Sobre',
+        media: 'Mídias',
         articles: 'Conteúdos',
         contact: 'Contato',
       },
@@ -212,6 +213,32 @@ const translations = {
       instagramProfile: 'Ver perfil no Instagram',
       articleAltPrefix: 'Artigo',
     },
+    midias: {
+      latestEventsTitle: 'Últimos eventos',
+      latestEventsPhotoAltPrefix: 'Foto de evento',
+      interviewsTitle: 'Entrevistas',
+      interviewsPhotoAltPrefix: 'Foto de entrevista',
+      agendaTitle: 'Próximos eventos',
+      upcomingEvents: [
+        {
+          date: '12/03/2026',
+          title: 'Palestra: Gênero e inovação no setor público',
+          location: 'João Pessoa, PB',
+        },
+        {
+          date: '28/03/2026',
+          title: 'Workshop: ESG com perspectiva de inclusão',
+          location: 'Recife, PE',
+        },
+        {
+          date: '10/04/2026',
+          title: 'Mesa-redonda: IA, vieses e direitos humanos',
+          location: 'Evento online',
+        },
+      ],
+      scheduleLead: 'Quer agendar uma participação em evento, entrevista ou palestra?',
+      scheduleButton: 'Agendar com a consultora',
+    },
   },
   en: {
     common: {
@@ -230,6 +257,7 @@ const translations = {
         home: 'Home',
         areas: 'Practice Areas',
         about: 'About',
+        media: 'Media',
         articles: 'Contents',
         contact: 'Contact',
       },
@@ -419,6 +447,32 @@ const translations = {
       instagramProfile: 'View Instagram profile',
       articleAltPrefix: 'Article',
     },
+    midias: {
+      latestEventsTitle: 'Latest events',
+      latestEventsPhotoAltPrefix: 'Event photo',
+      interviewsTitle: 'Interviews',
+      interviewsPhotoAltPrefix: 'Interview photo',
+      agendaTitle: 'Upcoming events',
+      upcomingEvents: [
+        {
+          date: '03/12/2026',
+          title: 'Talk: Gender and innovation in the public sector',
+          location: 'João Pessoa, PB',
+        },
+        {
+          date: '03/28/2026',
+          title: 'Workshop: ESG with an inclusion perspective',
+          location: 'Recife, PE',
+        },
+        {
+          date: '04/10/2026',
+          title: 'Roundtable: AI, bias, and human rights',
+          location: 'Online event',
+        },
+      ],
+      scheduleLead: 'Would you like to schedule a participation in an event, interview, or talk?',
+      scheduleButton: 'Schedule with the consultant',
+    },
   },
   es: {
     common: {
@@ -437,6 +491,7 @@ const translations = {
         home: 'Inicio',
         areas: 'Áreas de Actuación',
         about: 'Sobre mí',
+        media: 'Medios',
         articles: 'Contenidos',
         contact: 'Contacto',
       },
@@ -625,6 +680,32 @@ const translations = {
       instagramLabel: 'Instagram',
       instagramProfile: 'Ver perfil en Instagram',
       articleAltPrefix: 'Artículo',
+    },
+    midias: {
+      latestEventsTitle: 'Últimos eventos',
+      latestEventsPhotoAltPrefix: 'Foto de evento',
+      interviewsTitle: 'Entrevistas',
+      interviewsPhotoAltPrefix: 'Foto de entrevista',
+      agendaTitle: 'Próximos eventos',
+      upcomingEvents: [
+        {
+          date: '12/03/2026',
+          title: 'Charla: Género e innovación en el sector público',
+          location: 'João Pessoa, PB',
+        },
+        {
+          date: '28/03/2026',
+          title: 'Taller: ESG con perspectiva de inclusión',
+          location: 'Recife, PE',
+        },
+        {
+          date: '10/04/2026',
+          title: 'Mesa redonda: IA, sesgos y derechos humanos',
+          location: 'Evento en línea',
+        },
+      ],
+      scheduleLead: '¿Quieres agendar una participación en evento, entrevista o charla?',
+      scheduleButton: 'Agendar con la consultora',
     },
   },
 } as const;
