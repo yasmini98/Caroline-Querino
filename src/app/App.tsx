@@ -166,11 +166,11 @@ export default function App() {
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <style>{`
             .nav-link { transition: color .15s; }
-            .nav-link:hover { color: #12277C !important; }
-            .dark .nav-link:hover { color: var(--color-blue-600, #2563eb) !important; }
+            .nav-link:hover { color: #12277C; }
+            .dark .nav-link:hover { color: var(--color-blue-600, #2563eb); }
             .nav-contato { transition: color .15s; }
-            .nav-contato:hover { color: #127C27 !important; }
-            .dark .nav-contato:hover { color: var(--color-green-600, #16a34a) !important; }
+            .nav-contato:hover { color: #127C27; }
+            .dark .nav-contato:hover { color: var(--color-green-600, #16a34a); }
           `}</style>
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
