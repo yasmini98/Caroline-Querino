@@ -4,7 +4,7 @@ import { useI18n } from "../app/i18n";
 
 export default function Home() {
   const { t } = useI18n();
-  const [mousePosition, setMousePosition] = useState({ x: 0 });
+  const [mousePosition, setMousePosition] = useState({ x: 50 });
   const titleRef = useRef<HTMLHeadingElement | null>(null);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLHeadingElement>) => {
@@ -22,10 +22,13 @@ export default function Home() {
     // Split 0-100 into 5 equal segments (20 each).
     const p = percentage;
 
+    const ease = (t: number) => t * t * (3 - 2 * t);
+
     const interp = (start: [number, number, number], end: [number, number, number], t: number) => {
-      const r = Math.round(start[0] + (end[0] - start[0]) * t);
-      const g = Math.round(start[1] + (end[1] - start[1]) * t);
-      const b = Math.round(start[2] + (end[2] - start[2]) * t);
+      const easedT = ease(t);
+      const r = Math.round(start[0] + (end[0] - start[0]) * easedT);
+      const g = Math.round(start[1] + (end[1] - start[1]) * easedT);
+      const b = Math.round(start[2] + (end[2] - start[2]) * easedT);
       return `rgb(${r}, ${g}, ${b})`;
     };
 
@@ -59,7 +62,8 @@ export default function Home() {
           <h2
             ref={titleRef}
             onMouseMove={handleMouseMove}
-            className="text-4xl md:text-5xl font-bold mb-6 transition-colors duration-75"
+            onMouseLeave={() => setMousePosition({ x: 50 })}
+            className="text-4xl md:text-5xl font-bold mb-6 transition-colors duration-300 ease-out"
             style={{ color: getColorFromPosition(mousePosition.x) }}
           >
             {t.home.title}

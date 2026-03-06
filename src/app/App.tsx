@@ -168,9 +168,34 @@ export default function App() {
             .nav-link { transition: color .15s; }
             .nav-link:hover { color: #12277C; }
             .dark .nav-link:hover { color: var(--color-blue-600, #2563eb); }
-            .nav-contato { transition: color .15s; }
-            .nav-contato:hover { color: #127C27; }
-            .dark .nav-contato:hover { color: var(--color-green-600, #16a34a); }
+            @keyframes header-contato-rainbow-move {
+              0% { background-position: 0% 50%; }
+              100% { background-position: 200% 50%; }
+            }
+            .nav-contato {
+              transition: color .2s ease, background-color .2s ease;
+              border-radius: 9999px;
+              padding: .32rem .95rem;
+            }
+            .nav-contato:hover {
+              color: #ffffff;
+              text-shadow: 0 1px 2px rgba(0,0,0,.65);
+              background-color: rgba(0, 0, 0, 0.2);
+              background-image: repeating-linear-gradient(
+                90deg,
+                rgba(139, 92, 246, 0.32) 0%,
+                rgba(59, 130, 246, 0.30) 14%,
+                rgba(16, 185, 129, 0.29) 30%,
+                rgba(132, 204, 22, 0.29) 44%,
+                rgba(250, 204, 21, 0.30) 58%,
+                rgba(249, 115, 22, 0.31) 72%,
+                rgba(239, 68, 68, 0.32) 86%,
+                rgba(139, 92, 246, 0.32) 100%,
+                rgba(59, 130, 246, 0.30) 114%
+              );
+              background-size: 200% 100%;
+              animation: header-contato-rainbow-move 2.2s linear infinite;
+            }
           `}</style>
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
@@ -215,7 +240,7 @@ export default function App() {
               </Link>
               <Link
                 to="/contato"
-                className={`${isActive("/contato") ? "text-[#127C27] dark:text-green-600" : "text-gray-700 dark:text-gray-200 nav-contato"} font-semibold transition-colors transform hover:scale-105`}
+                className={`${isActive("/contato") ? "text-[#127C27] dark:text-green-600" : "text-gray-700 dark:text-gray-200"} nav-contato font-semibold transition-colors transform hover:scale-105`}
               >
                 {t.app.nav.contact}
               </Link>
@@ -262,7 +287,7 @@ export default function App() {
                 </Link>
                 <Link
                   to="/contato"
-                  className={`${isActive("/contato") ? "text-[#127C27] dark:text-green-600" : "text-gray-700 dark:text-gray-200 nav-contato"} font-semibold transition-colors transform hover:scale-105`}
+                  className={`${isActive("/contato") ? "text-[#127C27] dark:text-green-600" : "text-gray-700 dark:text-gray-200"} nav-contato font-semibold transition-colors transform hover:scale-105`}
                 >
                   {t.app.nav.contact}
                 </Link>

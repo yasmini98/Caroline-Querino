@@ -7,10 +7,8 @@ export default function Contato() {
   const [mousePosition, setMousePosition] = useState({ x: 50, y: 50 });
   const emailBtnRef = useRef<HTMLAnchorElement | null>(null);
   const linkedinBtnRef = useRef<HTMLAnchorElement | null>(null);
-  const titleRef = useRef<HTMLHeadingElement | null>(null);
   const [emailHover, setEmailHover] = useState(false);
   const [linkedinHover, setLinkedinHover] = useState(false);
-  const [titleHover, setTitleHover] = useState(false);
 
   const handleMouseMove = (e: React.MouseEvent, buttonRef: React.RefObject<HTMLElement | null>) => {
     if (!buttonRef.current) return;
@@ -37,25 +35,7 @@ export default function Contato() {
         hsl(${210 - mousePosition.x * 0.3 + mousePosition.y * 0.2}, 80%, 30%),
         hsl(${140 + mousePosition.x * 0.2 - mousePosition.y * 0.3}, 75%, 40%)
       )`,
-      transition: "background 0.1s ease-out",
-      color: "white",
-    };
-  };
-
-  // Cor que segue o mouse para o título (white -> green -> white)
-  const getTitleColorStyle = () => {
-    // Posição do mouse de 0-100%, mapeamos para: 0% = white, 50% = green, 100% = white
-    let lightness = 50; // começa no meio (50-50 entre white e green)
-    if (mousePosition.x < 50) {
-      // 0-50%: white (90%) -> green (40%)
-      lightness = 90 - (50 - mousePosition.x) * 0.8; // 90 -> 50
-    } else {
-      // 50-100%: green (40%) -> white (90%)
-      lightness = 50 + (mousePosition.x - 50) * 0.8; // 50 -> 90
-    }
-    return {
-      color: `hsl(140, 100%, ${lightness}%)`,
-      transition: "color 0.1s ease-out",
+      transition: "background 0.28s cubic-bezier(0.22, 1, 0.36, 1)",
     };
   };
 
@@ -67,21 +47,7 @@ export default function Contato() {
       >
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-12 md:py-16">
           <div className="text-center">
-            <h2
-              ref={titleRef}
-              onMouseMove={(e) => {
-                setTitleHover(true);
-                handleMouseMove(e, titleRef);
-              }}
-              onMouseLeave={() => {
-                setTitleHover(false);
-                handleMouseLeave();
-              }}
-              className="text-3xl md:text-4xl font-bold mb-6 cursor-pointer transition-colors"
-              style={titleHover ? getTitleColorStyle() : { color: "white" }}
-            >
-              {t.contact.title}
-            </h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">{t.contact.title}</h2>
             <p className="text-xl text-purple-100 mb-12">{t.contact.description}</p>
 
             <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
@@ -96,7 +62,7 @@ export default function Contato() {
                   setEmailHover(false);
                   handleMouseLeave();
                 }}
-                className="flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-all duration-75"
+                className="flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-all duration-300 ease-out"
                 style={
                   emailHover ? getButtonGradientStyle() : { background: "white", color: "#581c87" }
                 }
@@ -117,7 +83,7 @@ export default function Contato() {
                   setLinkedinHover(false);
                   handleMouseLeave();
                 }}
-                className="flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-all duration-75"
+                className="flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-all duration-300 ease-out"
                 style={
                   linkedinHover
                     ? getButtonGradientStyle()
