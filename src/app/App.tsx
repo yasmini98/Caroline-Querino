@@ -6,6 +6,7 @@ import Areas from "../pages/Areas";
 import Contato from "../pages/Contato";
 import Artigos from "../pages/Artigos";
 import Midias from "../pages/Midias";
+import ArtigoCardDetail from "../pages/ArtigoCardDetail";
 import OpiniaoDetalhe from "../pages/OpiniaoDetail";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLocation } from "react-router-dom";
@@ -340,6 +341,14 @@ export default function App() {
               element={
                 <PageWrapper>
                   <Artigos />
+                </PageWrapper>
+              }
+            />
+            <Route
+              path="/artigos/materias/:id"
+              element={
+                <PageWrapper>
+                  <ArtigoCardDetail />
                 </PageWrapper>
               }
             />

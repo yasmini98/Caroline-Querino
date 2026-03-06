@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useI18n } from "../app/i18n";
 import { Link } from "react-router-dom";
 import { getOpinions } from "./opinioesData";
+import { getArtigoCards } from "./artigosCardsData";
 import iconeSite from "../assets/images/iconesite.avif";
 
 function TikTokCreatorEmbed() {
@@ -101,6 +102,7 @@ function InstagramProfileEmbed() {
 export default function Artigos() {
   const { t, language } = useI18n();
   const opinions = getOpinions(language);
+  const articleCards = getArtigoCards(language);
   return (
     <div className="space-y-20 py-20 text-gray-900 dark:text-gray-100 transition-colors">
       {/* Artigos section */}
@@ -108,26 +110,25 @@ export default function Artigos() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl font-bold mb-6">{t.articles.title}</h1>
           <div className="grid md:grid-cols-2 gap-8">
-            {[1, 2, 3, 4].map((i) => (
+            {articleCards.map((card) => (
               <article
-                key={i}
+                key={card.id}
                 className="border border-gray-200 dark:border-gray-700 bg-white dark:bg-zinc-900 rounded-lg overflow-hidden hover:shadow-lg transition-shadow"
               >
                 <img
                   src={iconeSite}
-                  alt={`${t.articles.articleAltPrefix} ${i}`}
+                  alt={`${t.articles.articleAltPrefix} ${card.id}`}
                   className="w-full h-48 object-cover"
                 />
                 <div className="p-6">
-                  <h2 className="text-2xl font-semibold mb-2">
-                    {t.articles.articleTitlePrefix} {i}
-                  </h2>
-                  <p className="text-gray-700 dark:text-gray-300 mb-4">
-                    {t.articles.articleDescriptionPrefix} {i}. Lorem ipsum dolor sit amet.
-                  </p>
-                  <a href="#" className="text-[#67127c] dark:text-purple-300 hover:underline">
+                  <h2 className="text-2xl font-semibold mb-2">{card.title}</h2>
+                  <p className="text-gray-700 dark:text-gray-300 mb-4">{card.preview}</p>
+                  <Link
+                    to={`/artigos/materias/${card.id}`}
+                    className="text-[#67127c] dark:text-purple-300 hover:underline"
+                  >
                     {t.common.readMore}
-                  </a>
+                  </Link>
                 </div>
               </article>
             ))}
