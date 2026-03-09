@@ -283,10 +283,10 @@ const translations = {
     about: {
       badge: "About Me",
       title: "Turning Challenges into Opportunities",
-      p1: "With expertise in research and consulting, I work at the intersection of gender, technology, and environmental sustainability, delivering innovative solutions grounded in scientific evidence.",
-      p2: "My approach combines academic rigor with practical implementation, helping organizations apply diversity, equity, and inclusion policies along with effective ESG strategies.",
-      p3: "Through in-depth diagnostics and participatory methodologies, I turn complex challenges into opportunities for sustainable change.",
-      p4: "I believe social transformation happens when historically marginalized voices take center stage.",
+      p1: "Alice Carolline Costa Hassan Querino, known as Carol, is a researcher from Paraíba dedicated to building connections between diverse realities, with a focus on social and academic innovation. Her trajectory is marked by her experience in the Brazilian Northeast, where she developed values of resilience, collective strength, and critical awareness in the face of social inequalities.",
+      p2: "Currently, Carol leads a research project in Human Rights, Gender, and Artificial Intelligence, funded by ParqueTec Itaipu and carried out in collaboration with professors from Stirlab at the University of Stirling, in Scotland. Her work focuses on the analysis of political biases in language models, contributing to the advancement of ethical and scientific debates on technology and society.",
+      p3: "In addition to her academic work, Carol is co-founder of Caju Consultoria Nordestina and creator of the project Café com a Internacionalista, initiatives that integrate science, practice, and social engagement, promoting dialogues between communities, companies, and academic institutions.",
+      p4: "Her experience includes participation in civil society organizations, international projects, and advocacy spaces, always guided by the conviction that social transformation occurs when historically marginalized voices take the lead.",
       stats: {
         years: "Years of Experience",
         projects: "Completed Projects",
@@ -524,10 +524,10 @@ const translations = {
     about: {
       badge: "Sobre mí",
       title: "Transformando Desafíos en Oportunidades",
-      p1: "Con experiencia en investigación y consultoría, trabajo en la intersección entre género, tecnología y sostenibilidad ambiental, ofreciendo soluciones innovadoras basadas en evidencia científica.",
-      p2: "Mi enfoque combina rigor académico con aplicación práctica, ayudando a organizaciones a implementar políticas de diversidad, equidad e inclusión, además de estrategias ESG efectivas.",
-      p3: "A través de diagnósticos profundos y metodologías participativas, transformo desafíos complejos en oportunidades de cambio sostenible.",
-      p4: "Creo que la transformación social ocurre cuando las voces históricamente marginadas asumen protagonismo.",
+      p1: "Alice Carolline Costa Hassan Querino, conocida como Carol, es una investigadora paraibana dedicada a construir conexiones entre realidades diversas, con enfoque en innovación social y académica. Su trayectoria está marcada por la vivencia en el Nordeste brasileño, donde desarrolló valores de resiliencia, fuerza colectiva y conciencia crítica frente a las desigualdades sociales.",
+      p2: "Actualmente, Carol lidera una investigación en Derechos Humanos, Género e Inteligencia Artificial, financiada por el ParqueTec Itaipu y realizada en colaboración con docentes del Stirlab de la Universidad de Stirling, en Escocia. Su trabajo se concentra en el análisis de los sesgos políticos en modelos de lenguaje, contribuyendo al avance de debates éticos y científicos sobre tecnología y sociedad.",
+      p3: "Además de su actuación académica, Carol es cofundadora de Caju Consultoria Nordestina e idealizadora del proyecto Café com a Internacionalista, iniciativas que integran ciencia, práctica y compromiso social, promoviendo diálogos entre comunidades, empresas e instituciones académicas.",
+      p4: "Su experiencia incluye participación en organizaciones de la sociedad civil, proyectos internacionales y espacios de advocacy, siempre orientada por la convicción de que la transformación social ocurre cuando voces históricamente marginadas asumen protagonismo.",
       stats: {
         years: "Años de Experiencia",
         projects: "Proyectos Finalizados",
