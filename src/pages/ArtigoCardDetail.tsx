@@ -1,6 +1,7 @@
 import { Link, useParams } from "react-router-dom";
 import { useI18n } from "../app/i18n";
 import { getArtigoCards } from "./artigosCardsData";
+import iconeSite from "../assets/images/iconesite.avif";
 
 export default function ArtigoCardDetail() {
   const { id } = useParams();
@@ -8,6 +9,7 @@ export default function ArtigoCardDetail() {
   const parsedId = Number(id);
   const cards = getArtigoCards(language);
   const card = cards.find((item) => item.id === parsedId);
+  const articleImage = card?.image ?? iconeSite;
 
   const labels = {
     "pt-BR": {
@@ -45,21 +47,43 @@ export default function ArtigoCardDetail() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <h1 className="text-3xl md:text-4xl font-bold mb-8 leading-tight">{card.title}</h1>
 
+        {card.subtitle && (
+          <h2 className="text-xl md:text-2xl font-semibold mb-6 leading-snug text-gray-800 dark:text-gray-200">
+            {card.subtitle}
+          </h2>
+        )}
+
+        {card.authors && card.authors.length > 0 && (
+          <div className="mb-8 space-y-1 text-sm md:text-base text-gray-700 dark:text-gray-300">
+            {card.authors.map((author) => (
+              <p key={author}>{author}</p>
+            ))}
+          </div>
+        )}
+
         <article className="space-y-6 text-base md:text-lg leading-relaxed text-gray-700 dark:text-gray-300 mb-10 text-justify">
           {card.body.map((paragraph, index) => (
             <p key={`${card.id}-${index}`}>{paragraph}</p>
           ))}
         </article>
 
+        <div className="mb-10 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-zinc-900 overflow-hidden">
+          <img
+            src={articleImage}
+            alt={card.title}
+            className={`${card.id === 2 ? "w-1/2 mx-auto" : "w-full"} h-auto object-cover`}
+            loading="lazy"
+          />
+        </div>
+
         <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-zinc-900 p-6 mb-8">
-          <p className="text-sm font-semibold text-gray-600 dark:text-gray-300 mb-2">{labels.full}</p>
           <a
             href={card.sourceSiteUrl}
             target="_blank"
             rel="noreferrer"
-            className="text-[#67127c] dark:text-purple-300 hover:underline break-all"
+            className="text-[#67127c] dark:text-purple-300 hover:underline break-all font-semibold"
           >
-            {card.sourceSiteLabel}
+            {labels.full}
           </a>
         </div>
 

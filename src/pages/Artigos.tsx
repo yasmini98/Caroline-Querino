@@ -116,7 +116,7 @@ export default function Artigos() {
                 className="border border-gray-200 dark:border-gray-700 bg-white dark:bg-zinc-900 rounded-lg overflow-hidden hover:shadow-lg transition-shadow"
               >
                 <img
-                  src={iconeSite}
+                  src={card.image ?? iconeSite}
                   alt={`${t.articles.articleAltPrefix} ${card.id}`}
                   className="w-full h-48 object-cover"
                 />
