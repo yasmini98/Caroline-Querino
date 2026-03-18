@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Users, Cpu, Leaf, BookOpen, ChevronDown } from "lucide-react";
 import { useI18n } from "../app/i18n";
 import { AnimatePresence, motion } from "framer-motion";
@@ -10,9 +10,29 @@ const oxfamLogo = "/src/assets/images/oxfam-logo.png";
 export default function Areas() {
   const { t } = useI18n();
   type TopicKey = "genero" | "tecnologia" | "ambiental";
+  const topicTransitionDuration = 0.22;
   const [openTopic, setOpenTopic] = useState<TopicKey | null>(null);
   const [servicesTitleMousePosition, setServicesTitleMousePosition] = useState({ x: 50 });
   const servicesTitleRef = useRef<HTMLHeadingElement | null>(null);
+  const topicRefs = useRef<Record<TopicKey, HTMLDivElement | null>>({
+    genero: null,
+    tecnologia: null,
+    ambiental: null,
+  });
+  const scrollCompensationFrameRef = useRef<number | null>(null);
+  const scrollIntoViewTimeoutRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (scrollCompensationFrameRef.current !== null) {
+        window.cancelAnimationFrame(scrollCompensationFrameRef.current);
+      }
+
+      if (scrollIntoViewTimeoutRef.current !== null) {
+        window.clearTimeout(scrollIntoViewTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const handleServicesTitleMouseMove = (e: React.MouseEvent<HTMLHeadingElement>) => {
     if (!servicesTitleRef.current) return;
@@ -60,13 +80,83 @@ export default function Areas() {
     return `rgb(${violet[0]}, ${violet[1]}, ${violet[2]})`;
   };
 
-  const handleAreaCardClick = (topicKey: TopicKey) => {
+  const scrollTopicIntoView = (topicKey: TopicKey) => {
+    if (scrollIntoViewTimeoutRef.current !== null) {
+      window.clearTimeout(scrollIntoViewTimeoutRef.current);
+    }
+
+    scrollIntoViewTimeoutRef.current = window.setTimeout(() => {
+      topicRefs.current[topicKey]?.scrollIntoView({ behavior: "smooth", block: "start" });
+      scrollIntoViewTimeoutRef.current = null;
+    }, 80);
+  };
+
+  const keepTopicPositionStable = (topicKey: TopicKey) => {
+    const target = topicRefs.current[topicKey];
+
+    if (!target) {
+      return;
+    }
+
+    const initialTop = target.getBoundingClientRect().top;
+    const startTime = window.performance.now();
+    const duration = 260;
+
+    if (scrollCompensationFrameRef.current !== null) {
+      window.cancelAnimationFrame(scrollCompensationFrameRef.current);
+    }
+
+    const compensateScroll = (currentTime: number) => {
+      const currentTarget = topicRefs.current[topicKey];
+
+      if (!currentTarget) {
+        scrollCompensationFrameRef.current = null;
+        return;
+      }
+
+      const currentTop = currentTarget.getBoundingClientRect().top;
+      const offset = currentTop - initialTop;
+
+      if (offset !== 0) {
+        window.scrollBy({ top: offset });
+      }
+
+      if (currentTime - startTime < duration) {
+        scrollCompensationFrameRef.current = window.requestAnimationFrame(compensateScroll);
+        return;
+      }
+
+      scrollCompensationFrameRef.current = null;
+    };
+
+    scrollCompensationFrameRef.current = window.requestAnimationFrame(compensateScroll);
+  };
+
+  const openTopicPanel = (topicKey: TopicKey, options?: { scrollIntoView?: boolean }) => {
+    if (openTopic !== null && openTopic !== topicKey) {
+      keepTopicPositionStable(topicKey);
+    }
+
     setOpenTopic(topicKey);
 
-    window.setTimeout(() => {
-      const target = document.getElementById(`case-${topicKey}`);
-      target?.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 100);
+    if (options?.scrollIntoView) {
+      scrollTopicIntoView(topicKey);
+    }
+  };
+
+  const handleAreaCardClick = (topicKey: TopicKey) => {
+    openTopicPanel(topicKey, { scrollIntoView: true });
+  };
+
+  const handleTopicToggle = (topicKey: TopicKey) => {
+    const isOpen = openTopic === topicKey;
+
+    if (isOpen) {
+      setOpenTopic(null);
+      return;
+    }
+
+    openTopicPanel(topicKey);
   };
 
   const casesByTopic = {
@@ -215,11 +305,14 @@ export default function Areas() {
                 <div
                   id={`case-${topicKey}`}
                   key={topicKey}
+                  ref={(element) => {
+                    topicRefs.current[topicKey] = element;
+                  }}
                   className="w-full bg-white dark:bg-zinc-900 border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden"
                 >
                   <button
                     type="button"
-                    onClick={() => setOpenTopic(isOpen ? null : topicKey)}
+                    onClick={() => handleTopicToggle(topicKey)}
                     className={`w-full p-6 text-left transition-colors cursor-pointer ${topic.hoverHeader}`}
                   >
                     <div className="w-full bg-white dark:bg-zinc-900 border border-gray-200 dark:border-gray-700 rounded-lg p-6 hover:shadow-lg transition-shadow">
@@ -266,7 +359,7 @@ export default function Areas() {
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: "auto", opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.3, ease: "easeInOut" }}
+                        transition={{ duration: topicTransitionDuration, ease: "easeInOut" }}
                         className="overflow-hidden"
                       >
                         <div className="px-6 pb-6 pt-0 border-t border-gray-100 dark:border-gray-700 space-y-4">
