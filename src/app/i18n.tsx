@@ -37,6 +37,7 @@ const translations = {
       description:
         "Soluções estratégicas para transformar organizações através da diversidade, inovação tecnológica e sustentabilidade ambiental",
       cta: "Conheça meu trabalho",
+      trustTitle: "Veja quem confia no meu trabalho",
     },
     about: {
       badge: "Sobre a consultora",
@@ -223,24 +224,37 @@ const translations = {
     midias: {
       latestEventsTitle: "Últimos eventos",
       latestEventsPhotoAltPrefix: "Foto de evento",
+      latestEventFeaturedTitle:
+        "AI & Gender evento: Unhyped AI - Sociotechnical & Responsible AI Seminars",
+      latestEventFeaturedDate: "29 de agosto de 2025",
+      latestEventFeaturedLocation: "United Kingdom",
+      latestEventSecondTitle:
+        "Amazônia: construindo uma economia para a floresta e para as pessoas",
+      latestEventSecondDate: "26 de jun. de 2022",
+      latestEventThirdTitle: "Lançamento chatbot Maria Valente",
+      latestEventThirdDate: "09/12/2025",
+      latestEventThirdLocation: "São Paulo, Brasil",
       interviewsTitle: "Entrevistas",
       interviewsPhotoAltPrefix: "Foto de entrevista",
+      interviewFeaturedTitle:
+        "Convidado #5 - Leonardo Bezerra - Edição de aniversário com apresentação de Carolline Querino",
       agendaTitle: "Próximos eventos",
       upcomingEvents: [
         {
-          date: "12/03/2026",
-          title: "Palestra: Gênero e inovação no setor público",
-          location: "João Pessoa, PB",
+          date: "27–30 April 2026",
+          title: "Mídia escolar no evento Women Deliver na Austrália",
+          location: "em Narrm (Melbourne), Austrália",
+          image: "eventWd2026",
+          href: "https://womendeliver.org/wd2026/",
+          sortDate: "2026-04-30",
         },
         {
-          date: "28/03/2026",
-          title: "Workshop: ESG com perspectiva de inclusão",
-          location: "Recife, PE",
-        },
-        {
-          date: "10/04/2026",
-          title: "Mesa-redonda: IA, vieses e direitos humanos",
-          location: "Evento online",
+          date: "18–19 de maio de 2026",
+          title: "Estudos de Gênero e Sexualidade 2026",
+          location: "Amsterdã, Países Baixos",
+          image: "genderStudy2026",
+          href: "https://genderstudycongress.com/program-details.php?id=186",
+          sortDate: "2026-05-19",
         },
       ],
       scheduleLead: "Quer agendar uma participação em evento, entrevista ou palestra?",
@@ -279,6 +293,7 @@ const translations = {
       description:
         "Strategic solutions to transform organizations through diversity, technological innovation, and environmental sustainability",
       cta: "Discover my work",
+      trustTitle: "See who trusts my work",
     },
     about: {
       badge: "About Me",
@@ -464,24 +479,37 @@ const translations = {
     midias: {
       latestEventsTitle: "Latest events",
       latestEventsPhotoAltPrefix: "Event photo",
+      latestEventFeaturedTitle:
+        "AI & Gender event: Unhyped AI - Sociotechnical & Responsible AI Seminars",
+      latestEventFeaturedDate: "August 29, 2025",
+      latestEventFeaturedLocation: "United Kingdom",
+      latestEventSecondTitle:
+        "Amazon: building an economy for the forest and for the people",
+      latestEventSecondDate: "June 26, 2022",
+      latestEventThirdTitle: "Maria Valente chatbot launch",
+      latestEventThirdDate: "12/09/2025",
+      latestEventThirdLocation: "São Paulo, Brazil",
       interviewsTitle: "Interviews",
       interviewsPhotoAltPrefix: "Interview photo",
+      interviewFeaturedTitle:
+        "Guest #5 - Leonardo Bezerra - Birthday Edition hosted by Carolline Querino",
       agendaTitle: "Upcoming events",
       upcomingEvents: [
         {
-          date: "03/12/2026",
-          title: "Talk: Gender and innovation in the public sector",
-          location: "João Pessoa, PB",
+          date: "27–30 April 2026",
+          title: "Media Schoolar at Women Delivery event in Australia",
+          location: "in Narrm (Melbourne), Australia",
+          image: "eventWd2026",
+          href: "https://womendeliver.org/wd2026/",
+          sortDate: "2026-04-30",
         },
         {
-          date: "03/28/2026",
-          title: "Workshop: ESG with an inclusion perspective",
-          location: "Recife, PE",
-        },
-        {
-          date: "04/10/2026",
-          title: "Roundtable: AI, bias, and human rights",
-          location: "Online event",
+          date: "May 18–19, 2026",
+          title: "Gender & Sexuality Studies 2026",
+          location: "Amsterdam, Netherlands",
+          image: "genderStudy2026",
+          href: "https://genderstudycongress.com/program-details.php?id=186",
+          sortDate: "2026-05-19",
         },
       ],
       scheduleLead: "Would you like to schedule a participation in an event, interview, or talk?",
@@ -520,6 +548,7 @@ const translations = {
       description:
         "Soluciones estratégicas para transformar organizaciones a través de la diversidad, la innovación tecnológica y la sostenibilidad ambiental",
       cta: "Conoce mi trabajo",
+      trustTitle: "Mira quién confía en mi trabajo",
     },
     about: {
       badge: "Sobre mí",
@@ -705,24 +734,37 @@ const translations = {
     midias: {
       latestEventsTitle: "Últimos eventos",
       latestEventsPhotoAltPrefix: "Foto de evento",
+      latestEventFeaturedTitle:
+        "Evento AI & Gender: Unhyped AI - Sociotechnical & Responsible AI Seminars",
+      latestEventFeaturedDate: "29 de agosto de 2025",
+      latestEventFeaturedLocation: "Reino Unido",
+      latestEventSecondTitle:
+        "Amazonía: construyendo una economía para el bosque y para las personas",
+      latestEventSecondDate: "26 de jun. de 2022",
+      latestEventThirdTitle: "Lanzamiento del chatbot Maria Valente",
+      latestEventThirdDate: "09/12/2025",
+      latestEventThirdLocation: "São Paulo, Brasil",
       interviewsTitle: "Entrevistas",
       interviewsPhotoAltPrefix: "Foto de entrevista",
+      interviewFeaturedTitle:
+        "Invitado #5 - Leonardo Bezerra - Edición de cumpleaños conducida por Carolline Querino",
       agendaTitle: "Próximos eventos",
       upcomingEvents: [
         {
-          date: "12/03/2026",
-          title: "Charla: Género e innovación en el sector público",
-          location: "João Pessoa, PB",
+          date: "27–30 April 2026",
+          title: "Medio escolar en el evento Women Deliver en Australia",
+          location: "en Narrm (Melbourne), Australia",
+          image: "eventWd2026",
+          href: "https://womendeliver.org/wd2026/",
+          sortDate: "2026-04-30",
         },
         {
-          date: "28/03/2026",
-          title: "Taller: ESG con perspectiva de inclusión",
-          location: "Recife, PE",
-        },
-        {
-          date: "10/04/2026",
-          title: "Mesa redonda: IA, sesgos y derechos humanos",
-          location: "Evento en línea",
+          date: "18–19 de mayo de 2026",
+          title: "Estudios de Género y Sexualidad 2026",
+          location: "Ámsterdam, Países Bajos",
+          image: "genderStudy2026",
+          href: "https://genderstudycongress.com/program-details.php?id=186",
+          sortDate: "2026-05-19",
         },
       ],
       scheduleLead: "¿Quieres agendar una participación en evento, entrevista o charla?",

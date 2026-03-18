@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Users, Cpu, Leaf, BookOpen, ChevronDown } from "lucide-react";
 import { useI18n } from "../app/i18n";
 import { AnimatePresence, motion } from "framer-motion";
@@ -11,6 +11,54 @@ export default function Areas() {
   const { t } = useI18n();
   type TopicKey = "genero" | "tecnologia" | "ambiental";
   const [openTopic, setOpenTopic] = useState<TopicKey | null>(null);
+  const [servicesTitleMousePosition, setServicesTitleMousePosition] = useState({ x: 50 });
+  const servicesTitleRef = useRef<HTMLHeadingElement | null>(null);
+
+  const handleServicesTitleMouseMove = (e: React.MouseEvent<HTMLHeadingElement>) => {
+    if (!servicesTitleRef.current) return;
+
+    const rect = servicesTitleRef.current.getBoundingClientRect();
+    const x = (e.nativeEvent as MouseEvent).clientX - rect.left;
+    const percentage = Math.max(0, Math.min(100, (x / rect.width) * 100));
+
+    setServicesTitleMousePosition({ x: percentage });
+  };
+
+  const getColorFromPosition = (percentage: number) => {
+    const p = percentage;
+
+    const ease = (t: number) => t * t * (3 - 2 * t);
+
+    const interp = (start: [number, number, number], end: [number, number, number], t: number) => {
+      const easedT = ease(t);
+      const r = Math.round(start[0] + (end[0] - start[0]) * easedT);
+      const g = Math.round(start[1] + (end[1] - start[1]) * easedT);
+      const b = Math.round(start[2] + (end[2] - start[2]) * easedT);
+      return `rgb(${r}, ${g}, ${b})`;
+    };
+
+    const isDarkTheme =
+      typeof document !== "undefined" && document.documentElement.classList.contains("dark");
+
+    const violet: [number, number, number] = isDarkTheme ? [147, 51, 234] : [103, 18, 124];
+    const blue: [number, number, number] = isDarkTheme ? [37, 99, 235] : [18, 39, 124];
+    const green: [number, number, number] = isDarkTheme ? [22, 163, 74] : [18, 124, 39];
+
+    if (p < 20) {
+      return interp(violet, blue, p / 20);
+    }
+    if (p < 40) {
+      return interp(blue, green, (p - 20) / 20);
+    }
+    if (p < 60) {
+      return interp(green, blue, (p - 40) / 20);
+    }
+    if (p < 80) {
+      return interp(blue, violet, (p - 60) / 20);
+    }
+
+    return `rgb(${violet[0]}, ${violet[1]}, ${violet[2]})`;
+  };
 
   const handleAreaCardClick = (topicKey: TopicKey) => {
     setOpenTopic(topicKey);
@@ -52,22 +100,28 @@ export default function Areas() {
     <div className="py-20 bg-white dark:bg-zinc-950 text-gray-900 dark:text-gray-100 space-y-20 transition-colors">
       <section id="servicos-oferecidos">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 dark:text-gray-100 mb-8">
+          <h2
+            ref={servicesTitleRef}
+            onMouseMove={handleServicesTitleMouseMove}
+            onMouseLeave={() => setServicesTitleMousePosition({ x: 50 })}
+            className="text-3xl md:text-4xl font-bold text-center mb-8 transition-colors duration-300 ease-out"
+            style={{ color: getColorFromPosition(servicesTitleMousePosition.x) }}
+          >
             {t.areas.servicesTitle}
           </h2>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {t.areas.servicesExamples.map((service) => (
               <div
                 key={service}
-                className="bg-white dark:bg-zinc-900 border border-gray-200 dark:border-gray-700 rounded-lg px-4 py-3 text-gray-700 dark:text-gray-200"
+                className="group rounded-2xl border border-[#67127c]/15 dark:border-purple-800/60 bg-gradient-to-br from-white to-[#67127c]/[0.04] dark:from-zinc-900 dark:to-purple-950/30 px-5 py-4 text-gray-700 dark:text-gray-200 shadow-sm hover:-translate-y-1 hover:shadow-lg transition-all duration-300"
               >
-                {service}
+                <div className="flex items-start gap-3">
+                  <span className="mt-1 h-2.5 w-2.5 shrink-0 rounded-full bg-[#67127c] dark:bg-purple-400 transition-transform duration-300 group-hover:scale-125" />
+                  <span className="text-base font-medium leading-relaxed">{service}</span>
+                </div>
               </div>
             ))}
           </div>
-          <p className="text-sm text-gray-500 dark:text-gray-400 italic mt-4">
-            *essa area ainda tenho que melhorar
-          </p>
         </div>
       </section>
 

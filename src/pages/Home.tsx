@@ -1,11 +1,44 @@
-import React, { useState, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useI18n } from "../app/i18n";
+import itaipuImage from "../assets/images/itaipu-parquetec.png";
+import home1Image from "../assets/images/home1.jpeg";
+import home2Image from "../assets/images/home2.jpeg";
+import home3Image from "../assets/images/home3.jpeg";
+import home4Image from "../assets/images/home4.jpeg";
+import home5Image from "../assets/images/home5.jpeg";
+
+const homeSlides = [home1Image, home2Image, home3Image, home4Image, home5Image];
 
 export default function Home() {
   const { t } = useI18n();
   const [mousePosition, setMousePosition] = useState({ x: 50 });
+  const [currentHomeSlide, setCurrentHomeSlide] = useState(0);
+  const [isHomeSlideVisible, setIsHomeSlideVisible] = useState(true);
   const titleRef = useRef<HTMLHeadingElement | null>(null);
+  const fadeTimeoutRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    const intervalId = window.setInterval(() => {
+      setIsHomeSlideVisible(false);
+
+      if (fadeTimeoutRef.current) {
+        window.clearTimeout(fadeTimeoutRef.current);
+      }
+
+      fadeTimeoutRef.current = window.setTimeout(() => {
+        setCurrentHomeSlide((prev) => (prev + 1) % homeSlides.length);
+        setIsHomeSlideVisible(true);
+      }, 500);
+    }, 10000);
+
+    return () => {
+      window.clearInterval(intervalId);
+      if (fadeTimeoutRef.current) {
+        window.clearTimeout(fadeTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLHeadingElement>) => {
     if (!titleRef.current) return;
@@ -32,9 +65,12 @@ export default function Home() {
       return `rgb(${r}, ${g}, ${b})`;
     };
 
-    const violet: [number, number, number] = [103, 18, 124];
-    const blue: [number, number, number] = [18, 39, 124];
-    const green: [number, number, number] = [18, 124, 39];
+    const isDarkTheme =
+      typeof document !== "undefined" && document.documentElement.classList.contains("dark");
+
+    const violet: [number, number, number] = isDarkTheme ? [147, 51, 234] : [103, 18, 124];
+    const blue: [number, number, number] = isDarkTheme ? [37, 99, 235] : [18, 39, 124];
+    const green: [number, number, number] = isDarkTheme ? [22, 163, 74] : [18, 124, 39];
 
     if (p < 20) {
       return interp(violet, blue, p / 20);
@@ -59,24 +95,40 @@ export default function Home() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-12 md:py-16">
         <div className="text-center">
-          <h2
-            ref={titleRef}
-            onMouseMove={handleMouseMove}
-            onMouseLeave={() => setMousePosition({ x: 50 })}
-            className="text-4xl md:text-5xl font-bold mb-6 transition-colors duration-300 ease-out"
-            style={{ color: getColorFromPosition(mousePosition.x) }}
-          >
-            {t.home.title}
-          </h2>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-8">
-            {t.home.description}
-          </p>
-          <Link
-            to="/areas"
-            className="inline-block mt-2 mb-10 bg-[#67127c] dark:bg-purple-600 text-white px-10 py-4 text-lg font-semibold rounded-lg hover:bg-[#67127c]/90 dark:hover:bg-purple-700 transition-colors shadow-lg hover:shadow-xl"
-          >
-            {t.home.cta}
-          </Link>
+          <div className="mx-auto flex min-h-[42vh] max-w-4xl flex-col items-center justify-center">
+            <h2
+              ref={titleRef}
+              onMouseMove={handleMouseMove}
+              onMouseLeave={() => setMousePosition({ x: 50 })}
+              className="text-4xl md:text-5xl font-bold mb-6 transition-colors duration-300 ease-out"
+              style={{ color: getColorFromPosition(mousePosition.x) }}
+            >
+              {t.home.title}
+            </h2>
+            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-8">
+              {t.home.description}
+            </p>
+            <Link
+              to="/areas"
+              className="inline-block mt-2 mb-10 bg-[#67127c] dark:bg-purple-600 text-white px-10 py-4 text-lg font-semibold rounded-lg hover:bg-[#67127c]/90 dark:hover:bg-purple-700 transition-colors shadow-lg hover:shadow-xl"
+            >
+              {t.home.cta}
+            </Link>
+          </div>
+
+          <div className="mt-14 mb-14 text-center">
+            <h3 className="text-xl md:text-2xl font-medium tracking-normal text-[#67127c]/85 dark:text-purple-300/75 mb-5">
+              {t.home.trustTitle}
+            </h3>
+            <div className="flex justify-center items-center">
+              <img
+                src={itaipuImage}
+                alt="Itaipu Parquetec"
+                className="h-12 md:h-14 object-contain grayscale opacity-80 hover:opacity-90 dark:invert dark:grayscale dark:opacity-55 dark:hover:opacity-75 transition-opacity"
+              />
+            </div>
+          </div>
+
           <div className="mt-12 bg-white/60 dark:bg-white/5 border border-transparent dark:border-gray-700 rounded-2xl p-6 md:p-8 text-left">
             <div>
               <div className="inline-block px-4 py-2 bg-[#67127c]/10 text-[#67127c] dark:bg-purple-900/40 dark:text-purple-200 rounded-full mb-6">
@@ -86,12 +138,12 @@ export default function Home() {
                 {t.about.title}
               </h3>
 
-              <div className="relative w-52 sm:w-60 md:w-72 mx-auto md:float-right md:ml-8 mb-6">
+              <div className="relative w-52 sm:w-60 md:w-72 aspect-square mx-auto md:float-right md:ml-8 mb-6">
                 <div className="absolute inset-0 bg-gradient-to-br from-[#67127c]/60 dark:from-purple-400 to-[#12277C]/60 dark:to-blue-400 rounded-lg transform rotate-3"></div>
                 <img
-                  src="https://media.licdn.com/dms/image/v2/D4D03AQH3jMPS3KHIzA/profile-displayphoto-crop_800_800/B4DZyWB7x8IUAI-/0/1772043619280?e=1773878400&v=beta&t=NkT2qFNV_CL8fx1DnBbOAc9bGfnWuK6w16KiShngDlk"
+                  src={homeSlides[currentHomeSlide]}
                   alt={t.about.imageAlt}
-                  className="relative rounded-lg shadow-xl"
+                  className={`relative h-full w-full rounded-lg object-cover shadow-xl transition-opacity duration-500 ${isHomeSlideVisible ? "opacity-100" : "opacity-0"}`}
                 />
               </div>
 
