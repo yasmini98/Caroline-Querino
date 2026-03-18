@@ -180,6 +180,10 @@ export default function App() {
   }, [themeMode]);
 
   useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [location.pathname]);
+
+  useEffect(() => {
     const htmlElement = document.documentElement;
     htmlElement.classList.toggle("dark", resolvedTheme === "dark");
   }, [resolvedTheme]);
