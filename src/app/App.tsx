@@ -51,6 +51,30 @@ function PageWrapper({ children }: { children: React.ReactNode }) {
   );
 }
 
+function setMetaTag(attribute: "name" | "property", key: string, value: string) {
+  let tag = document.head.querySelector(`meta[${attribute}='${key}']`) as HTMLMetaElement | null;
+
+  if (!tag) {
+    tag = document.createElement("meta");
+    tag.setAttribute(attribute, key);
+    document.head.appendChild(tag);
+  }
+
+  tag.setAttribute("content", value);
+}
+
+function setCanonicalTag(url: string) {
+  let tag = document.head.querySelector("link[rel='canonical']") as HTMLLinkElement | null;
+
+  if (!tag) {
+    tag = document.createElement("link");
+    tag.setAttribute("rel", "canonical");
+    document.head.appendChild(tag);
+  }
+
+  tag.setAttribute("href", url);
+}
+
 export default function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [themeMode, setThemeMode] = useState<ThemeMode>(() => getInitialThemeMode());
@@ -160,6 +184,87 @@ export default function App() {
     htmlElement.classList.toggle("dark", resolvedTheme === "dark");
   }, [resolvedTheme]);
 
+  useEffect(() => {
+    const path = location.pathname;
+
+    const isArticleDetail = path.startsWith("/artigos/materias/");
+    const isOpinionDetail = path.startsWith("/artigos/opinioes/");
+
+    const pageTitle =
+      path === "/"
+        ? t.home.title
+        : path === "/areas"
+          ? t.app.nav.areas
+          : path === "/midias"
+            ? t.app.nav.media
+            : path === "/contato"
+              ? t.app.nav.contact
+              : path === "/artigos"
+                ? t.app.nav.articles
+                : isArticleDetail || isOpinionDetail
+                  ? `${t.app.nav.articles} - ${t.common.readMore.replace(" ->", "")}`
+                  : t.home.title;
+
+    const pageDescription =
+      path === "/"
+        ? t.home.description
+        : path === "/areas"
+          ? t.areas.servicesTitle
+          : path === "/midias"
+            ? t.midias.latestEventsTitle
+            : path === "/contato"
+              ? t.contact.description
+              : path === "/artigos" || isArticleDetail || isOpinionDetail
+                ? t.articles.title
+                : t.home.description;
+
+    const localeByLanguage: Record<Language, string> = {
+      "pt-BR": "pt_BR",
+      en: "en_US",
+      es: "es_ES",
+    };
+
+    const fullTitle = `${pageTitle} | Caroline Querino`;
+    const canonicalUrl = `${window.location.origin}${path}`;
+
+    document.documentElement.lang = language;
+    document.title = fullTitle;
+
+    setMetaTag("name", "description", pageDescription);
+    setMetaTag("name", "robots", "index, follow");
+    setMetaTag("name", "twitter:card", "summary");
+    setMetaTag("name", "twitter:title", fullTitle);
+    setMetaTag("name", "twitter:description", pageDescription);
+
+    setMetaTag("property", "og:type", "website");
+    setMetaTag("property", "og:title", fullTitle);
+    setMetaTag("property", "og:description", pageDescription);
+    setMetaTag("property", "og:url", canonicalUrl);
+    setMetaTag("property", "og:locale", localeByLanguage[language]);
+
+    setCanonicalTag(canonicalUrl);
+
+    const jsonLd = {
+      "@context": "https://schema.org",
+      "@type": "ProfessionalService",
+      name: "Caroline Querino Consultoria ESG & Tech",
+      url: window.location.origin,
+      description: t.home.description,
+      inLanguage: ["pt-BR", "en", "es"],
+      knowsAbout: ["Genero", "Tecnologia", "ESG", "Diversidade", "Inclusao"],
+    };
+
+    let jsonLdScript = document.getElementById("seo-json-ld");
+    if (!jsonLdScript) {
+      jsonLdScript = document.createElement("script");
+      jsonLdScript.id = "seo-json-ld";
+      jsonLdScript.setAttribute("type", "application/ld+json");
+      document.head.appendChild(jsonLdScript);
+    }
+
+    jsonLdScript.textContent = JSON.stringify(jsonLd);
+  }, [language, location.pathname, t]);
+
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col transition-colors">
       {/* Header/Navigation */}
@@ -253,6 +358,8 @@ export default function App() {
             <button
               className="md:hidden text-gray-800 dark:text-gray-100"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              title="Abrir menu"
+              aria-label="Abrir menu"
             >
               <Menu className="h-6 w-6" />
             </button>
