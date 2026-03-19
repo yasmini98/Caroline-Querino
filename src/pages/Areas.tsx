@@ -65,19 +65,19 @@ export default function Areas() {
     const green: [number, number, number] = isDarkTheme ? [22, 163, 74] : [18, 124, 39];
 
     if (p < 20) {
-      return interp(violet, blue, p / 20);
+      return interp(green, blue, p / 20);
     }
     if (p < 40) {
-      return interp(blue, green, (p - 20) / 20);
+      return interp(blue, violet, (p - 20) / 20);
     }
     if (p < 60) {
-      return interp(green, blue, (p - 40) / 20);
+      return `rgb(${violet[0]}, ${violet[1]}, ${violet[2]})`;
     }
     if (p < 80) {
-      return interp(blue, violet, (p - 60) / 20);
+      return interp(violet, blue, (p - 60) / 20);
     }
 
-    return `rgb(${violet[0]}, ${violet[1]}, ${violet[2]})`;
+    return interp(blue, green, (p - 80) / 20);
   };
 
   const scrollTopicIntoView = (topicKey: TopicKey) => {

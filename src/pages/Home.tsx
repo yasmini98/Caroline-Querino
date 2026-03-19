@@ -51,7 +51,7 @@ export default function Home() {
   };
 
   const getColorFromPosition = (percentage: number) => {
-    // Sequence: violeta -> azul -> verde -> azul -> violeta
+    // Sequence: verde -> azul -> violeta -> violeta -> azul -> verde
     // Split 0-100 into 5 equal segments (20 each).
     const p = percentage;
 
@@ -73,19 +73,19 @@ export default function Home() {
     const green: [number, number, number] = isDarkTheme ? [22, 163, 74] : [18, 124, 39];
 
     if (p < 20) {
-      return interp(violet, blue, p / 20);
+      return interp(green, blue, p / 20);
     }
     if (p < 40) {
-      return interp(blue, green, (p - 20) / 20);
+      return interp(blue, violet, (p - 20) / 20);
     }
     if (p < 60) {
-      return interp(green, blue, (p - 40) / 20);
+      return `rgb(${violet[0]}, ${violet[1]}, ${violet[2]})`;
     }
     if (p < 80) {
-      return interp(blue, violet, (p - 60) / 20);
+      return interp(violet, blue, (p - 60) / 20);
     }
 
-    return `rgb(${violet[0]}, ${violet[1]}, ${violet[2]})`;
+    return interp(blue, green, (p - 80) / 20);
   };
 
   return (
