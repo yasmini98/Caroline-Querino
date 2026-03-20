@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useI18n } from "../app/i18n";
 import eventWd2026Image from "../assets/images/event-wd2026.png";
 import eventHostPodcastImage from "../assets/images/event-hostpodcast.png";
+import eventInterviewImage from "../assets/images/event-interview.png";
 import latestEvent1Image from "../assets/images/latestevent1.jpeg";
 import latestEvent2Image from "../assets/images/latestevent2.png";
 import latestEvent3Image from "../assets/images/latestevent3.png";
@@ -242,13 +243,9 @@ export default function Midias() {
       href: "https://www.patreon.com/posts/guest-5-leonardo-149912074",
     },
     {
-      photo: "https://picsum.photos/seed/entrevista-2/1200/800",
-    },
-    {
-      photo: "https://picsum.photos/seed/entrevista-3/1200/800",
-    },
-    {
-      photo: "https://picsum.photos/seed/entrevista-4/1200/800",
+      photo: eventInterviewImage,
+      title: t.midias.interviewSecondTitle,
+      href: "https://globoplay.globo.com/v/12065891/",
     },
   ];
 

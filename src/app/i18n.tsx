@@ -238,6 +238,7 @@ const translations = {
       interviewsPhotoAltPrefix: "Foto de entrevista",
       interviewFeaturedTitle:
         "Convidado #5 - Leonardo Bezerra - Edição de aniversário com apresentação de Carolline Querino",
+      interviewSecondTitle: "Inter Bio - #InterBio - 28/10/2023 - Bloco 01",
       agendaTitle: "Próximos eventos",
       upcomingEvents: [
         {
@@ -493,6 +494,7 @@ const translations = {
       interviewsPhotoAltPrefix: "Interview photo",
       interviewFeaturedTitle:
         "Guest #5 - Leonardo Bezerra - Birthday Edition hosted by Carolline Querino",
+      interviewSecondTitle: "Inter Bio - #InterBio - 10/28/2023 - Block 01",
       agendaTitle: "Upcoming events",
       upcomingEvents: [
         {
@@ -748,6 +750,7 @@ const translations = {
       interviewsPhotoAltPrefix: "Foto de entrevista",
       interviewFeaturedTitle:
         "Invitado #5 - Leonardo Bezerra - Edición de cumpleaños conducida por Carolline Querino",
+      interviewSecondTitle: "Inter Bio - #InterBio - 28/10/2023 - Bloque 01",
       agendaTitle: "Próximos eventos",
       upcomingEvents: [
         {

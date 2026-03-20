@@ -85,6 +85,16 @@ export default function App() {
   const isActive = (path: string) => location.pathname === path;
   const resolvedTheme = themeMode === "system" ? (systemPrefersDark ? "dark" : "light") : themeMode;
 
+  const scrollToPageTop = (behavior: ScrollBehavior = "smooth") => {
+    window.scrollTo({ top: 0, left: 0, behavior });
+  };
+
+  const handleHeaderNavigation = (path: string) => {
+    if (location.pathname === path) {
+      scrollToPageTop();
+    }
+  };
+
   const languageOptions: Array<{
     code: Language;
     flag: string;
@@ -181,6 +191,10 @@ export default function App() {
 
   useEffect(() => {
     setMobileMenuOpen(false);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    scrollToPageTop("auto");
   }, [location.pathname]);
 
   useEffect(() => {
@@ -311,6 +325,7 @@ export default function App() {
             <div className="flex items-center">
               <Link
                 to="/"
+                onClick={() => handleHeaderNavigation("/")}
                 className="inline-block hover:text-[#67127c] dark:hover:text-purple-700 transition-colors cursor-pointer leading-none"
               >
                 <span className="block text-xl font-bold text-[#67127c] dark:text-purple-600 whitespace-nowrap">
@@ -326,30 +341,35 @@ export default function App() {
             <div className="hidden md:flex items-center space-x-6">
               <Link
                 to="/"
+                onClick={() => handleHeaderNavigation("/")}
                 className={`${isActive("/") ? "text-[#67127c] dark:text-purple-600" : "text-gray-700 dark:text-gray-200 nav-link"} font-semibold transition-colors transform hover:scale-105`}
               >
                 {t.app.nav.home}
               </Link>
               <Link
                 to="/areas"
+                onClick={() => handleHeaderNavigation("/areas")}
                 className={`${isActive("/areas") ? "text-[#67127c] dark:text-purple-600" : "text-gray-700 dark:text-gray-200 nav-link"} font-semibold transition-colors transform hover:scale-105`}
               >
                 {t.app.nav.areas}
               </Link>
               <Link
                 to="/midias"
+                onClick={() => handleHeaderNavigation("/midias")}
                 className={`${isActive("/midias") ? "text-[#67127c] dark:text-purple-600" : "text-gray-700 dark:text-gray-200 nav-link"} font-semibold transition-colors transform hover:scale-105`}
               >
                 {t.app.nav.media}
               </Link>
               <Link
                 to="/artigos"
+                onClick={() => handleHeaderNavigation("/artigos")}
                 className={`${isActive("/artigos") ? "text-[#67127c] dark:text-purple-600" : "text-gray-700 dark:text-gray-200 nav-link"} font-semibold transition-colors transform hover:scale-105`}
               >
                 {t.app.nav.articles}
               </Link>
               <Link
                 to="/contato"
+                onClick={() => handleHeaderNavigation("/contato")}
                 className={`${isActive("/contato") ? "text-[#127C27] dark:text-green-600" : "text-gray-700 dark:text-gray-200"} nav-contato font-semibold transition-colors transform hover:scale-105`}
               >
                 {t.app.nav.contact}
@@ -375,30 +395,35 @@ export default function App() {
               <div className="flex flex-col space-y-4">
                 <Link
                   to="/"
+                  onClick={() => handleHeaderNavigation("/")}
                   className={`${isActive("/") ? "text-[#67127c] dark:text-purple-600" : "text-gray-700 dark:text-gray-200 nav-link"} font-semibold transition-colors transform hover:scale-105`}
                 >
                   {t.app.nav.home}
                 </Link>
                 <Link
                   to="/areas"
+                  onClick={() => handleHeaderNavigation("/areas")}
                   className={`${isActive("/areas") ? "text-[#67127c] dark:text-purple-600" : "text-gray-700 dark:text-gray-200 nav-link"} font-semibold transition-colors transform hover:scale-105`}
                 >
                   {t.app.nav.areas}
                 </Link>
                 <Link
                   to="/midias"
+                  onClick={() => handleHeaderNavigation("/midias")}
                   className={`${isActive("/midias") ? "text-[#67127c] dark:text-purple-600" : "text-gray-700 dark:text-gray-200 nav-link"} font-semibold transition-colors transform hover:scale-105`}
                 >
                   {t.app.nav.media}
                 </Link>
                 <Link
                   to="/artigos"
+                  onClick={() => handleHeaderNavigation("/artigos")}
                   className={`${isActive("/artigos") ? "text-[#67127c] dark:text-purple-600" : "text-gray-700 dark:text-gray-200 nav-link"} font-semibold transition-colors transform hover:scale-105`}
                 >
                   {t.app.nav.articles}
                 </Link>
                 <Link
                   to="/contato"
+                  onClick={() => handleHeaderNavigation("/contato")}
                   className={`${isActive("/contato") ? "text-[#127C27] dark:text-green-600" : "text-gray-700 dark:text-gray-200"} nav-contato font-semibold transition-colors transform hover:scale-105`}
                 >
                   {t.app.nav.contact}
