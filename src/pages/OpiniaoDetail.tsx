@@ -1,6 +1,9 @@
+import { useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useI18n } from "../app/i18n";
 import { getOpinions } from "./opinioesData";
+import { getPublicOpinionById } from "../services/cms";
+import { CmsOpinion } from "../types/cms";
 
 const richTokenRegex = /(https?:\/\/[^\s]+|[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,})/g;
 
@@ -36,8 +39,49 @@ export default function OpiniaoDetalhe() {
   const { id } = useParams();
   const { language } = useI18n();
   const parsedId = Number(id);
+  const hasNumericId = Number.isFinite(parsedId) && !Number.isNaN(parsedId);
   const opinions = getOpinions(language);
-  const opinion = opinions.find((op) => op.id === parsedId);
+  const opinion = hasNumericId ? opinions.find((op) => op.id === parsedId) : undefined;
+  const [cmsOpinion, setCmsOpinion] = useState<CmsOpinion | null>(null);
+  const [cmsReady, setCmsReady] = useState(hasNumericId);
+
+  useEffect(() => {
+    if (!id || hasNumericId) return;
+
+    let isMounted = true;
+    setCmsReady(false);
+
+    getPublicOpinionById(id)
+      .then((data) => {
+        if (!isMounted) return;
+        setCmsOpinion(data);
+      })
+      .catch(() => {
+        if (!isMounted) return;
+        setCmsOpinion(null);
+      })
+      .finally(() => {
+        if (!isMounted) return;
+        setCmsReady(true);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [hasNumericId, id]);
+
+  const currentOpinion = useMemo(() => {
+    if (opinion) return opinion;
+    if (!cmsOpinion) return null;
+
+    return {
+      id: cmsOpinion.id,
+      title: cmsOpinion.title,
+      body: cmsOpinion.body,
+      image: cmsOpinion.image_url ?? "",
+    };
+  }, [cmsOpinion, opinion]);
+
   const opinionIds = opinions.map((op) => op.id);
   const currentIndex = opinionIds.indexOf(parsedId);
   const previousId = currentIndex > 0 ? opinionIds[currentIndex - 1] : undefined;
@@ -46,7 +90,17 @@ export default function OpiniaoDetalhe() {
       ? opinionIds[currentIndex + 1]
       : undefined;
 
-  if (!opinion) {
+  if (!cmsReady) {
+    return (
+      <section className="py-20 text-gray-900 dark:text-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <p>Carregando opiniao...</p>
+        </div>
+      </section>
+    );
+  }
+
+  if (!currentOpinion) {
     return (
       <section className="py-20 text-gray-900 dark:text-gray-100">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -62,10 +116,10 @@ export default function OpiniaoDetalhe() {
   return (
     <section className="py-20 text-gray-900 dark:text-gray-100">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="text-3xl md:text-4xl font-bold mb-8 leading-tight">{opinion.title}</h1>
+        <h1 className="text-3xl md:text-4xl font-bold mb-8 leading-tight">{currentOpinion.title}</h1>
 
         <article className="space-y-6 text-base md:text-lg leading-relaxed text-gray-700 dark:text-gray-300 mb-10 text-justify">
-          {opinion.body.map((paragraph) => (
+          {currentOpinion.body.map((paragraph) => (
             <p key={paragraph} className="whitespace-pre-line">
               {renderRichText(paragraph)}
             </p>
@@ -74,8 +128,8 @@ export default function OpiniaoDetalhe() {
 
         <div className="rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700">
           <img
-            src={opinion.image}
-            alt={`Imagem da opinião ${parsedId}`}
+            src={currentOpinion.image}
+            alt={`Imagem da opiniao ${String(currentOpinion.id)}`}
             className="max-w-full h-auto block mx-auto"
           />
         </div>

@@ -16,6 +16,8 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "../app/components/ui/carousel";
+import { listPublicInterviews, listPublicUpcomingEvents } from "../services/cms";
+import { CmsInterview, CmsUpcomingEvent } from "../types/cms";
 
 const latestEventPhotos = [
   "https://picsum.photos/seed/evento-1/1200/800",
@@ -38,6 +40,7 @@ type AgendaEvent = {
   location: string;
   href?: string;
   image?: keyof typeof mediaImages;
+  imageUrl?: string;
   sortDate?: string;
 };
 
@@ -179,12 +182,53 @@ function RichLoopingCarousel({
 }
 
 export default function Midias() {
-  const { t } = useI18n();
+  const { t, language } = useI18n();
+  const [cmsInterviews, setCmsInterviews] = useState<CmsInterview[]>([]);
+  const [cmsUpcomingEvents, setCmsUpcomingEvents] = useState<CmsUpcomingEvent[]>([]);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    async function loadCmsMedia() {
+      try {
+        const [interviews, events] = await Promise.all([
+          listPublicInterviews(language),
+          listPublicUpcomingEvents(language),
+        ]);
+
+        if (!isMounted) return;
+        setCmsInterviews(interviews);
+        setCmsUpcomingEvents(events);
+      } catch (error) {
+        console.warn("CMS indisponivel para midias:", error);
+        if (!isMounted) return;
+        setCmsInterviews([]);
+        setCmsUpcomingEvents([]);
+      }
+    }
+
+    loadCmsMedia();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [language]);
 
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
-  const allAgendaEvents = t.midias.upcomingEvents as AgendaEvent[];
+  const staticAgendaEvents = t.midias.upcomingEvents as AgendaEvent[];
+  const allAgendaEvents = [
+    ...cmsUpcomingEvents.map((event) => ({
+      date: event.date_label,
+      title: event.title,
+      location: event.location,
+      href: event.href ?? undefined,
+      imageUrl: event.image_url ?? undefined,
+      sortDate: event.sort_date ?? undefined,
+    })),
+    ...staticAgendaEvents,
+  ];
   const upcomingEvents = allAgendaEvents.filter((event) => {
     const eventDate = parseIsoDate(event.sortDate);
     return !eventDate || eventDate >= today;
@@ -204,6 +248,8 @@ export default function Midias() {
       photo:
         event.image && mediaImages[event.image]
           ? mediaImages[event.image]
+          : event.imageUrl
+            ? event.imageUrl
           : `https://picsum.photos/seed/upcoming-archive-${index + 1}/1200/800`,
       title: event.title,
       date: event.date,
@@ -237,6 +283,11 @@ export default function Midias() {
   const latestEventSlides: CarouselSlide[] = [...migratedToLatestSlides, ...curatedLatestSlides];
 
   const interviewSlides: CarouselSlide[] = [
+    ...cmsInterviews.map((item) => ({
+      photo: item.image_url,
+      title: item.title,
+      href: item.href ?? undefined,
+    })),
     {
       photo: eventHostPodcastImage,
       title: t.midias.interviewFeaturedTitle,

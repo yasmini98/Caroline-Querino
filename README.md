@@ -39,6 +39,24 @@ npm run dev
 
 To publish and continuously improve this project as part of my professional portfolio, documenting visual and functional enhancements over time.
 
+### Client Portal (secure publishing)
+
+This project now includes a discreet client portal for publishing and managing content:
+
+- URL: `/portal-cliente/login`
+- Features: create, edit, and delete `upcoming events`, `interviews`, `articles`, and `opinions`
+- Access: only authenticated user (Supabase Auth)
+
+Setup steps:
+
+1. Create a Supabase project.
+1. In Supabase SQL Editor, run `supabase/schema.sql`.
+1. Create only one user in Supabase Auth (your client).
+1. Disable open signups in Supabase Auth settings.
+1. Add environment variables from `.env.example` into your deployment (Hostinger) and local `.env`.
+
+After setup, content created by your client will be shown automatically in public pages (Media and Contents).
+
 ---
 
 ## 🇧🇷 Português (Secundário)
@@ -79,3 +97,21 @@ npm run dev
 ### Objetivo
 
 Publicar e evoluir este projeto como parte do meu portfólio profissional, registrando melhorias visuais e funcionais ao longo do desenvolvimento.
+
+### Portal da Cliente (publicação com segurança)
+
+Este projeto agora inclui um portal discreto para a cliente publicar e gerenciar conteúdo:
+
+- URL: `/portal-cliente/login`
+- Recursos: criar, editar e excluir `próximos eventos`, `entrevistas`, `artigos` e `opiniões`
+- Acesso: apenas usuário autenticado (Supabase Auth)
+
+Passos de configuração:
+
+1. Crie um projeto no Supabase.
+1. No SQL Editor do Supabase, execute `supabase/schema.sql`.
+1. Crie apenas uma usuária no Supabase Auth (sua cliente).
+1. Desative cadastro público (signups) nas configurações de Auth.
+1. Adicione as variáveis de `.env.example` no deploy (Hostinger) e no `.env` local.
+
+Depois da configuração, o conteúdo publicado pela cliente aparece automaticamente nas páginas públicas (Mídias e Conteúdos).

@@ -8,7 +8,7 @@ import opiniao7Imagem from "../assets/images/opiniao7.jpeg";
 import imagemFallback from "../assets/images/iconesite.avif";
 
 export type OpinionEntry = {
-  id: number;
+  id: number | string;
   title: string;
   body: string[];
   image: string;

@@ -1,15 +1,64 @@
+import { useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useI18n } from "../app/i18n";
 import { getArtigoCards } from "./artigosCardsData";
 import iconeSite from "../assets/images/iconesite.avif";
+import { getPublicArticleById } from "../services/cms";
+import { CmsArticle } from "../types/cms";
 
 export default function ArtigoCardDetail() {
   const { id } = useParams();
   const { language } = useI18n();
   const parsedId = Number(id);
+  const hasNumericId = Number.isFinite(parsedId) && !Number.isNaN(parsedId);
   const cards = getArtigoCards(language);
-  const card = cards.find((item) => item.id === parsedId);
-  const articleImage = card?.image ?? iconeSite;
+  const card = hasNumericId ? cards.find((item) => item.id === parsedId) : undefined;
+  const [cmsArticle, setCmsArticle] = useState<CmsArticle | null>(null);
+  const [cmsReady, setCmsReady] = useState(hasNumericId);
+
+  useEffect(() => {
+    if (!id || hasNumericId) return;
+
+    let isMounted = true;
+    setCmsReady(false);
+
+    getPublicArticleById(id)
+      .then((data) => {
+        if (!isMounted) return;
+        setCmsArticle(data);
+      })
+      .catch(() => {
+        if (!isMounted) return;
+        setCmsArticle(null);
+      })
+      .finally(() => {
+        if (!isMounted) return;
+        setCmsReady(true);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [hasNumericId, id]);
+
+  const article = useMemo(() => {
+    if (card) return card;
+    if (!cmsArticle) return null;
+
+    return {
+      id: cmsArticle.id,
+      title: cmsArticle.title,
+      subtitle: cmsArticle.subtitle ?? undefined,
+      preview: cmsArticle.preview,
+      authors: cmsArticle.authors,
+      body: cmsArticle.body,
+      image: cmsArticle.image_url ?? undefined,
+      sourceSiteLabel: cmsArticle.source_label ?? "",
+      sourceSiteUrl: cmsArticle.source_url ?? "#",
+    };
+  }, [card, cmsArticle]);
+
+  const articleImage = article?.image ?? iconeSite;
 
   const labels = {
     "pt-BR": {
@@ -29,7 +78,17 @@ export default function ArtigoCardDetail() {
     },
   }[language];
 
-  if (!card) {
+  if (!cmsReady) {
+    return (
+      <section className="py-20 text-gray-900 dark:text-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <p>Carregando artigo...</p>
+        </div>
+      </section>
+    );
+  }
+
+  if (!article) {
     return (
       <section className="py-20 text-gray-900 dark:text-gray-100">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -45,40 +104,40 @@ export default function ArtigoCardDetail() {
   return (
     <section className="py-20 text-gray-900 dark:text-gray-100">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="text-3xl md:text-4xl font-bold mb-8 leading-tight">{card.title}</h1>
+        <h1 className="text-3xl md:text-4xl font-bold mb-8 leading-tight">{article.title}</h1>
 
-        {card.subtitle && (
+        {article.subtitle && (
           <h2 className="text-xl md:text-2xl font-semibold mb-6 leading-snug text-gray-800 dark:text-gray-200">
-            {card.subtitle}
+            {article.subtitle}
           </h2>
         )}
 
-        {card.authors && card.authors.length > 0 && (
+        {article.authors && article.authors.length > 0 && (
           <div className="mb-8 space-y-1 text-sm md:text-base text-gray-700 dark:text-gray-300">
-            {card.authors.map((author) => (
+            {article.authors.map((author) => (
               <p key={author}>{author}</p>
             ))}
           </div>
         )}
 
         <article className="space-y-6 text-base md:text-lg leading-relaxed text-gray-700 dark:text-gray-300 mb-10 text-justify">
-          {card.body.map((paragraph, index) => (
-            <p key={`${card.id}-${index}`}>{paragraph}</p>
+          {article.body.map((paragraph, index) => (
+            <p key={`${article.id}-${index}`}>{paragraph}</p>
           ))}
         </article>
 
         <div className="mb-10 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-zinc-900 overflow-hidden">
           <img
             src={articleImage}
-            alt={card.title}
-            className={`${card.id === 2 ? "w-1/2 mx-auto" : "w-full"} h-auto object-cover`}
+            alt={article.title}
+            className={`${article.id === 2 ? "w-1/2 mx-auto" : "w-full"} h-auto object-cover`}
             loading="lazy"
           />
         </div>
 
         <div className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-zinc-900 p-6 mb-8">
           <a
-            href={card.sourceSiteUrl}
+            href={article.sourceSiteUrl}
             target="_blank"
             rel="noreferrer"
             className="text-[#67127c] dark:text-purple-300 hover:underline break-all font-semibold"

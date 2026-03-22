@@ -1,7 +1,7 @@
 import { Language } from "../app/i18n";
 
 export type ArtigoCardEntry = {
-  id: number;
+  id: number | string;
   title: string;
   subtitle?: string;
   preview: string;

@@ -1,9 +1,11 @@
-import { useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useI18n } from "../app/i18n";
 import { Link } from "react-router-dom";
 import { getOpinions } from "./opinioesData";
 import { getArtigoCards } from "./artigosCardsData";
 import iconeSite from "../assets/images/iconesite.avif";
+import { listPublicArticles, listPublicOpinions } from "../services/cms";
+import { CmsArticle, CmsOpinion } from "../types/cms";
 
 function TikTokCreatorEmbed() {
   useEffect(() => {
@@ -38,16 +40,15 @@ function TikTokCreatorEmbed() {
 
   return (
     <blockquote
-      className="tiktok-embed"
+      className="tiktok-embed max-w-[780px] min-w-[288px]"
       cite="https://www.tiktok.com/@carollinequerino"
       data-unique-id="carollinequerino"
       data-embed-type="creator"
-      style={{ maxWidth: "780px", minWidth: "288px" }}
     >
       <section>
         <a
           target="_blank"
-          rel="noreferrer"
+          rel="noreferrer noopener"
           href="https://www.tiktok.com/@carollinequerino?refer=creator_embed"
         >
           @carollinequerino
@@ -77,21 +78,14 @@ function InstagramProfileEmbed() {
 
   return (
     <blockquote
-      className="instagram-media"
+      className="instagram-media bg-white border-0 m-0 max-w-[540px] w-full"
       data-instgrm-permalink="https://www.instagram.com/carollinequerino?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
       data-instgrm-version="14"
-      style={{
-        background: "#fff",
-        border: 0,
-        margin: 0,
-        maxWidth: "540px",
-        width: "100%",
-      }}
     >
       <a
         href="https://www.instagram.com/carollinequerino?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
         target="_blank"
-        rel="noreferrer"
+        rel="noreferrer noopener"
       >
         {t.articles.instagramProfile}
       </a>
@@ -101,8 +95,70 @@ function InstagramProfileEmbed() {
 
 export default function Artigos() {
   const { t, language } = useI18n();
-  const opinions = getOpinions(language);
-  const articleCards = getArtigoCards(language);
+  const staticOpinions = getOpinions(language);
+  const staticArticleCards = getArtigoCards(language);
+  const [cmsArticles, setCmsArticles] = useState<CmsArticle[]>([]);
+  const [cmsOpinions, setCmsOpinions] = useState<CmsOpinion[]>([]);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    async function loadCmsContent() {
+      try {
+        const [articles, opinions] = await Promise.all([
+          listPublicArticles(language),
+          listPublicOpinions(language),
+        ]);
+
+        if (!isMounted) return;
+        setCmsArticles(articles);
+        setCmsOpinions(opinions);
+      } catch (error) {
+        console.warn("CMS indisponivel para artigos/opinioes:", error);
+        if (!isMounted) return;
+        setCmsArticles([]);
+        setCmsOpinions([]);
+      }
+    }
+
+    loadCmsContent();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [language]);
+
+  const articleCards = useMemo(
+    () => [
+      ...cmsArticles.map((item) => ({
+        id: item.id,
+        title: item.title,
+        subtitle: item.subtitle ?? undefined,
+        preview: item.preview,
+        authors: item.authors,
+        body: item.body,
+        image: item.image_url ?? undefined,
+        sourceSiteLabel: item.source_label ?? "See on source website",
+        sourceSiteUrl: item.source_url ?? "#",
+      })),
+      ...staticArticleCards,
+    ],
+    [cmsArticles, staticArticleCards],
+  );
+
+  const opinions = useMemo(
+    () => [
+      ...cmsOpinions.map((item) => ({
+        id: item.id,
+        title: item.title,
+        body: item.body,
+        image: item.image_url ?? iconeSite,
+      })),
+      ...staticOpinions,
+    ],
+    [cmsOpinions, staticOpinions],
+  );
+
   return (
     <div className="space-y-20 py-20 text-gray-900 dark:text-gray-100 transition-colors">
       {/* Artigos section */}

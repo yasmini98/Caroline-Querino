@@ -8,6 +8,8 @@ import Artigos from "../pages/Artigos";
 import Midias from "../pages/Midias";
 import ArtigoCardDetail from "../pages/ArtigoCardDetail";
 import OpiniaoDetalhe from "../pages/OpiniaoDetail";
+import AdminLogin from "../pages/admin/AdminLogin";
+import AdminPortal from "../pages/admin/AdminPortal";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLocation } from "react-router-dom";
 import { Language, useI18n } from "./i18n";
@@ -496,6 +498,22 @@ export default function App() {
                 </PageWrapper>
               }
             />
+            <Route
+              path="/portal-cliente/login"
+              element={
+                <PageWrapper>
+                  <AdminLogin />
+                </PageWrapper>
+              }
+            />
+            <Route
+              path="/portal-cliente"
+              element={
+                <PageWrapper>
+                  <AdminPortal />
+                </PageWrapper>
+              }
+            />
             {/* qualquer rota desconhecida também vai pra home */}
             <Route
               path="*"
@@ -524,6 +542,11 @@ export default function App() {
               >
                 Yasmini Oliveira
               </a>
+            </p>
+            <p className="text-xs opacity-70">
+              <Link to="/portal-cliente/login" className="hover:underline">
+                Area da cliente
+              </Link>
             </p>
           </div>
         </div>
