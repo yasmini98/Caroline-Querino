@@ -16,4 +16,42 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (!id.includes("node_modules")) {
+            return undefined;
+          }
+
+          if (id.includes("@supabase/supabase-js")) {
+            return "supabase";
+          }
+
+          if (id.includes("@mui/")) {
+            return "mui";
+          }
+
+          if (id.includes("@radix-ui/")) {
+            return "radix";
+          }
+
+          if (id.includes("framer-motion") || id.includes("node_modules/motion/")) {
+            return "motion";
+          }
+
+          if (
+            id.includes("react") ||
+            id.includes("react-dom") ||
+            id.includes("react-router-dom") ||
+            id.includes("scheduler")
+          ) {
+            return "react-vendor";
+          }
+
+          return "vendor";
+        },
+      },
+    },
+  },
 });

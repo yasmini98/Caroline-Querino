@@ -1,18 +1,19 @@
 import { Menu, Monitor, Moon, Sun } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { Routes, Route, Link } from "react-router-dom";
-import Home from "../pages/Home";
-import Areas from "../pages/Areas";
-import Contato from "../pages/Contato";
-import Artigos from "../pages/Artigos";
-import Midias from "../pages/Midias";
-import ArtigoCardDetail from "../pages/ArtigoCardDetail";
-import OpiniaoDetalhe from "../pages/OpiniaoDetail";
-import AdminLogin from "../pages/admin/AdminLogin";
-import AdminPortal from "../pages/admin/AdminPortal";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLocation } from "react-router-dom";
 import { Language, useI18n } from "./i18n";
+
+const Home = lazy(() => import("../pages/Home"));
+const Areas = lazy(() => import("../pages/Areas"));
+const Contato = lazy(() => import("../pages/Contato"));
+const Artigos = lazy(() => import("../pages/Artigos"));
+const Midias = lazy(() => import("../pages/Midias"));
+const ArtigoCardDetail = lazy(() => import("../pages/ArtigoCardDetail"));
+const OpiniaoDetalhe = lazy(() => import("../pages/OpiniaoDetail"));
+const AdminLogin = lazy(() => import("../pages/admin/AdminLogin"));
+const AdminPortal = lazy(() => import("../pages/admin/AdminPortal"));
 
 type ThemeMode = "system" | "light" | "dark";
 
@@ -411,7 +412,6 @@ export default function App() {
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               title="Abrir menu"
               aria-label="Abrir menu"
-              aria-expanded={mobileMenuOpen}
               aria-controls="mobile-nav"
             >
               <Menu className="h-6 w-6" />
@@ -473,89 +473,97 @@ export default function App() {
         className={`${isContatoPage ? "pt-16" : "pt-20"} flex-1 flex flex-col focus:outline-none`}
       >
         <AnimatePresence mode="wait">
-          <Routes location={location} key={location.pathname}>
-            <Route
-              path="/"
-              element={
-                <PageWrapper>
-                  <Home />
-                </PageWrapper>
-              }
-            />
-            <Route
-              path="/areas"
-              element={
-                <PageWrapper>
-                  <Areas />
-                </PageWrapper>
-              }
-            />
-            <Route
-              path="/midias"
-              element={
-                <PageWrapper>
-                  <Midias />
-                </PageWrapper>
-              }
-            />
-            <Route
-              path="/contato"
-              element={
-                <PageWrapper>
-                  <Contato />
-                </PageWrapper>
-              }
-            />
-            <Route
-              path="/artigos"
-              element={
-                <PageWrapper>
-                  <Artigos />
-                </PageWrapper>
-              }
-            />
-            <Route
-              path="/artigos/materias/:id"
-              element={
-                <PageWrapper>
-                  <ArtigoCardDetail />
-                </PageWrapper>
-              }
-            />
-            <Route
-              path="/artigos/opinioes/:id"
-              element={
-                <PageWrapper>
-                  <OpiniaoDetalhe />
-                </PageWrapper>
-              }
-            />
-            <Route
-              path="/portal-cliente/login"
-              element={
-                <PageWrapper>
-                  <AdminLogin />
-                </PageWrapper>
-              }
-            />
-            <Route
-              path="/portal-cliente"
-              element={
-                <PageWrapper>
-                  <AdminPortal />
-                </PageWrapper>
-              }
-            />
-            {/* qualquer rota desconhecida também vai pra home */}
-            <Route
-              path="*"
-              element={
-                <PageWrapper>
-                  <Home />
-                </PageWrapper>
-              }
-            />
-          </Routes>
+          <Suspense
+            fallback={
+              <PageWrapper>
+                <div className="px-6 py-10 text-sm text-gray-600 dark:text-gray-300">Carregando pagina...</div>
+              </PageWrapper>
+            }
+          >
+            <Routes location={location} key={location.pathname}>
+              <Route
+                path="/"
+                element={
+                  <PageWrapper>
+                    <Home />
+                  </PageWrapper>
+                }
+              />
+              <Route
+                path="/areas"
+                element={
+                  <PageWrapper>
+                    <Areas />
+                  </PageWrapper>
+                }
+              />
+              <Route
+                path="/midias"
+                element={
+                  <PageWrapper>
+                    <Midias />
+                  </PageWrapper>
+                }
+              />
+              <Route
+                path="/contato"
+                element={
+                  <PageWrapper>
+                    <Contato />
+                  </PageWrapper>
+                }
+              />
+              <Route
+                path="/artigos"
+                element={
+                  <PageWrapper>
+                    <Artigos />
+                  </PageWrapper>
+                }
+              />
+              <Route
+                path="/artigos/materias/:id"
+                element={
+                  <PageWrapper>
+                    <ArtigoCardDetail />
+                  </PageWrapper>
+                }
+              />
+              <Route
+                path="/artigos/opinioes/:id"
+                element={
+                  <PageWrapper>
+                    <OpiniaoDetalhe />
+                  </PageWrapper>
+                }
+              />
+              <Route
+                path="/portal-cliente/login"
+                element={
+                  <PageWrapper>
+                    <AdminLogin />
+                  </PageWrapper>
+                }
+              />
+              <Route
+                path="/portal-cliente"
+                element={
+                  <PageWrapper>
+                    <AdminPortal />
+                  </PageWrapper>
+                }
+              />
+              {/* qualquer rota desconhecida também vai pra home */}
+              <Route
+                path="*"
+                element={
+                  <PageWrapper>
+                    <Home />
+                  </PageWrapper>
+                }
+              />
+            </Routes>
+          </Suspense>
         </AnimatePresence>
       </main>
 
