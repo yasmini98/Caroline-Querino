@@ -95,7 +95,8 @@ export default function AdminLogin() {
           <div className="rounded-xl border border-amber-300 bg-amber-50 p-6 text-amber-900">
             <h1 className="text-2xl font-bold mb-3">Portal da cliente indisponivel</h1>
             <p className="text-sm leading-relaxed">
-              Configure as variaveis VITE_SUPABASE_URL e VITE_SUPABASE_ANON_KEY para habilitar o login.
+              Configure as variaveis VITE_SUPABASE_URL e VITE_SUPABASE_ANON_KEY para habilitar o
+              login.
             </p>
           </div>
         </div>

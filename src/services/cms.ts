@@ -158,7 +158,11 @@ export async function createArticle(input: CmsInsertArticle) {
   return data as CmsArticle;
 }
 
-export async function updateArticle(id: string, authorId: string, input: Partial<CmsInsertArticle>) {
+export async function updateArticle(
+  id: string,
+  authorId: string,
+  input: Partial<CmsInsertArticle>,
+) {
   const client = requireClient();
   const { data, error } = await client
     .from(TABLES.articles)
@@ -174,7 +178,11 @@ export async function updateArticle(id: string, authorId: string, input: Partial
 
 export async function deleteArticle(id: string, authorId: string) {
   const client = requireClient();
-  const { error } = await client.from(TABLES.articles).delete().eq("id", id).eq("author_id", authorId);
+  const { error } = await client
+    .from(TABLES.articles)
+    .delete()
+    .eq("id", id)
+    .eq("author_id", authorId);
   if (error) throw error;
 }
 
@@ -185,7 +193,11 @@ export async function createOpinion(input: CmsInsertOpinion) {
   return data as CmsOpinion;
 }
 
-export async function updateOpinion(id: string, authorId: string, input: Partial<CmsInsertOpinion>) {
+export async function updateOpinion(
+  id: string,
+  authorId: string,
+  input: Partial<CmsInsertOpinion>,
+) {
   const client = requireClient();
   const { data, error } = await client
     .from(TABLES.opinions)
@@ -201,7 +213,11 @@ export async function updateOpinion(id: string, authorId: string, input: Partial
 
 export async function deleteOpinion(id: string, authorId: string) {
   const client = requireClient();
-  const { error } = await client.from(TABLES.opinions).delete().eq("id", id).eq("author_id", authorId);
+  const { error } = await client
+    .from(TABLES.opinions)
+    .delete()
+    .eq("id", id)
+    .eq("author_id", authorId);
   if (error) throw error;
 }
 
@@ -212,7 +228,11 @@ export async function createInterview(input: CmsInsertInterview) {
   return data as CmsInterview;
 }
 
-export async function updateInterview(id: string, authorId: string, input: Partial<CmsInsertInterview>) {
+export async function updateInterview(
+  id: string,
+  authorId: string,
+  input: Partial<CmsInsertInterview>,
+) {
   const client = requireClient();
   const { data, error } = await client
     .from(TABLES.interviews)
@@ -228,13 +248,21 @@ export async function updateInterview(id: string, authorId: string, input: Parti
 
 export async function deleteInterview(id: string, authorId: string) {
   const client = requireClient();
-  const { error } = await client.from(TABLES.interviews).delete().eq("id", id).eq("author_id", authorId);
+  const { error } = await client
+    .from(TABLES.interviews)
+    .delete()
+    .eq("id", id)
+    .eq("author_id", authorId);
   if (error) throw error;
 }
 
 export async function createUpcomingEvent(input: CmsInsertUpcomingEvent) {
   const client = requireClient();
-  const { data, error } = await client.from(TABLES.upcomingEvents).insert(input).select("*").single();
+  const { data, error } = await client
+    .from(TABLES.upcomingEvents)
+    .insert(input)
+    .select("*")
+    .single();
   if (error) throw error;
   return data as CmsUpcomingEvent;
 }

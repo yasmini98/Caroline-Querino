@@ -150,14 +150,20 @@ function RichLoopingCarousel({
               )}
               {slide.title || slide.date || slide.location || slide.href ? (
                 <div className="p-4">
-                  {slide.title ? <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{slide.title}</h3> : null}
+                  {slide.title ? (
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                      {slide.title}
+                    </h3>
+                  ) : null}
                   {slide.date ? (
                     <p className="mt-2 text-sm font-medium text-[#67127c] dark:text-purple-300">
                       {slide.date}
                     </p>
                   ) : null}
                   {slide.location ? (
-                    <p className="mt-1 text-sm text-gray-700 dark:text-gray-300">{slide.location}</p>
+                    <p className="mt-1 text-sm text-gray-700 dark:text-gray-300">
+                      {slide.location}
+                    </p>
                   ) : null}
                   {slide.href ? (
                     <a
@@ -250,7 +256,7 @@ export default function Midias() {
           ? mediaImages[event.image]
           : event.imageUrl
             ? event.imageUrl
-          : `https://picsum.photos/seed/upcoming-archive-${index + 1}/1200/800`,
+            : `https://picsum.photos/seed/upcoming-archive-${index + 1}/1200/800`,
       title: event.title,
       date: event.date,
       location: event.location,

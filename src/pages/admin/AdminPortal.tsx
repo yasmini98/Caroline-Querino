@@ -20,11 +20,46 @@ import {
   updateOpinion,
   updateUpcomingEvent,
 } from "../../services/cms";
-import { CmsArticle, CmsInterview, CmsLanguage, CmsOpinion, CmsUpcomingEvent } from "../../types/cms";
+import { translateLiteralList, translateLiteralText } from "../../services/translation";
+import {
+  CmsArticle,
+  CmsInterview,
+  CmsLanguage,
+  CmsOpinion,
+  CmsUpcomingEvent,
+} from "../../types/cms";
 
 type TabKey = "eventos" | "entrevistas" | "artigos" | "opinioes";
 
 const languageOptions: CmsLanguage[] = ["pt-BR", "en", "es"];
+
+async function translateWithFallback(
+  text: string,
+  fromLanguage: CmsLanguage,
+  toLanguage: CmsLanguage,
+  onFallback: () => void,
+) {
+  try {
+    return await translateLiteralText(text, fromLanguage, toLanguage);
+  } catch {
+    onFallback();
+    return text.trim();
+  }
+}
+
+async function translateListWithFallback(
+  values: string[],
+  fromLanguage: CmsLanguage,
+  toLanguage: CmsLanguage,
+  onFallback: () => void,
+) {
+  try {
+    return await translateLiteralList(values, fromLanguage, toLanguage);
+  } catch {
+    onFallback();
+    return values.map((value) => value.trim()).filter(Boolean);
+  }
+}
 
 function textAreaToList(value: string) {
   return value
@@ -195,6 +230,11 @@ export default function AdminPortal() {
 
     try {
       setLoading(true);
+      let usedTranslationFallback = false;
+      const markFallback = () => {
+        usedTranslationFallback = true;
+      };
+
       const payload = {
         author_id: userId,
         language: articleLanguage,
@@ -214,7 +254,61 @@ export default function AdminPortal() {
         setStatusMessage("Artigo atualizado com sucesso.");
       } else {
         await createArticle(payload);
-        setStatusMessage("Artigo criado com sucesso.");
+
+        await Promise.all(
+          languageOptions
+            .filter((language) => language !== articleLanguage)
+            .map(async (targetLanguage) => {
+              const translatedBody = await translateListWithFallback(
+                payload.body,
+                articleLanguage,
+                targetLanguage,
+                markFallback,
+              );
+
+              const translatedPayload = {
+                ...payload,
+                language: targetLanguage,
+                title: await translateWithFallback(
+                  payload.title,
+                  articleLanguage,
+                  targetLanguage,
+                  markFallback,
+                ),
+                subtitle: payload.subtitle
+                  ? await translateWithFallback(
+                      payload.subtitle,
+                      articleLanguage,
+                      targetLanguage,
+                      markFallback,
+                    )
+                  : null,
+                preview: await translateWithFallback(
+                  payload.preview,
+                  articleLanguage,
+                  targetLanguage,
+                  markFallback,
+                ),
+                body: translatedBody,
+                source_label: payload.source_label
+                  ? await translateWithFallback(
+                      payload.source_label,
+                      articleLanguage,
+                      targetLanguage,
+                      markFallback,
+                    )
+                  : null,
+              };
+
+              await createArticle(translatedPayload);
+            }),
+        );
+
+        setStatusMessage(
+          usedTranslationFallback
+            ? "Artigo criado com traducoes automaticas. Alguns trechos ficaram com texto original por limite do tradutor."
+            : "Artigo criado com traducao automatica para pt-BR, en e es.",
+        );
       }
 
       await refreshAll(userId);
@@ -233,6 +327,11 @@ export default function AdminPortal() {
 
     try {
       setLoading(true);
+      let usedTranslationFallback = false;
+      const markFallback = () => {
+        usedTranslationFallback = true;
+      };
+
       const payload = {
         author_id: userId,
         language: opinionLanguage,
@@ -247,7 +346,37 @@ export default function AdminPortal() {
         setStatusMessage("Opiniao atualizada com sucesso.");
       } else {
         await createOpinion(payload);
-        setStatusMessage("Opiniao criada com sucesso.");
+
+        await Promise.all(
+          languageOptions
+            .filter((language) => language !== opinionLanguage)
+            .map(async (targetLanguage) => {
+              const translatedPayload = {
+                ...payload,
+                language: targetLanguage,
+                title: await translateWithFallback(
+                  payload.title,
+                  opinionLanguage,
+                  targetLanguage,
+                  markFallback,
+                ),
+                body: await translateListWithFallback(
+                  payload.body,
+                  opinionLanguage,
+                  targetLanguage,
+                  markFallback,
+                ),
+              };
+
+              await createOpinion(translatedPayload);
+            }),
+        );
+
+        setStatusMessage(
+          usedTranslationFallback
+            ? "Opiniao criada com traducoes automaticas. Alguns trechos ficaram com texto original por limite do tradutor."
+            : "Opiniao criada com traducao automatica para pt-BR, en e es.",
+        );
       }
 
       await refreshAll(userId);
@@ -266,6 +395,11 @@ export default function AdminPortal() {
 
     try {
       setLoading(true);
+      let usedTranslationFallback = false;
+      const markFallback = () => {
+        usedTranslationFallback = true;
+      };
+
       const payload = {
         author_id: userId,
         language: interviewLanguage,
@@ -280,7 +414,31 @@ export default function AdminPortal() {
         setStatusMessage("Entrevista atualizada com sucesso.");
       } else {
         await createInterview(payload);
-        setStatusMessage("Entrevista criada com sucesso.");
+
+        await Promise.all(
+          languageOptions
+            .filter((language) => language !== interviewLanguage)
+            .map(async (targetLanguage) => {
+              const translatedPayload = {
+                ...payload,
+                language: targetLanguage,
+                title: await translateWithFallback(
+                  payload.title,
+                  interviewLanguage,
+                  targetLanguage,
+                  markFallback,
+                ),
+              };
+
+              await createInterview(translatedPayload);
+            }),
+        );
+
+        setStatusMessage(
+          usedTranslationFallback
+            ? "Entrevista criada com traducoes automaticas. Alguns trechos ficaram com texto original por limite do tradutor."
+            : "Entrevista criada com traducao automatica para pt-BR, en e es.",
+        );
       }
 
       await refreshAll(userId);
@@ -299,6 +457,11 @@ export default function AdminPortal() {
 
     try {
       setLoading(true);
+      let usedTranslationFallback = false;
+      const markFallback = () => {
+        usedTranslationFallback = true;
+      };
+
       const payload = {
         author_id: userId,
         language: eventLanguage,
@@ -316,7 +479,43 @@ export default function AdminPortal() {
         setStatusMessage("Evento atualizado com sucesso.");
       } else {
         await createUpcomingEvent(payload);
-        setStatusMessage("Evento criado com sucesso.");
+
+        await Promise.all(
+          languageOptions
+            .filter((language) => language !== eventLanguage)
+            .map(async (targetLanguage) => {
+              const translatedPayload = {
+                ...payload,
+                language: targetLanguage,
+                date_label: await translateWithFallback(
+                  payload.date_label,
+                  eventLanguage,
+                  targetLanguage,
+                  markFallback,
+                ),
+                title: await translateWithFallback(
+                  payload.title,
+                  eventLanguage,
+                  targetLanguage,
+                  markFallback,
+                ),
+                location: await translateWithFallback(
+                  payload.location,
+                  eventLanguage,
+                  targetLanguage,
+                  markFallback,
+                ),
+              };
+
+              await createUpcomingEvent(translatedPayload);
+            }),
+        );
+
+        setStatusMessage(
+          usedTranslationFallback
+            ? "Evento criado com traducoes automaticas. Alguns trechos ficaram com texto original por limite do tradutor."
+            : "Evento criado com traducao automatica para pt-BR, en e es.",
+        );
       }
 
       await refreshAll(userId);
@@ -408,7 +607,8 @@ export default function AdminPortal() {
           <div className="rounded-xl border border-amber-300 bg-amber-50 p-6 text-amber-900">
             <h1 className="text-2xl font-bold mb-3">Portal da cliente indisponivel</h1>
             <p className="text-sm leading-relaxed">
-              Defina as variaveis VITE_SUPABASE_URL e VITE_SUPABASE_ANON_KEY para habilitar o painel.
+              Defina as variaveis VITE_SUPABASE_URL e VITE_SUPABASE_ANON_KEY para habilitar o
+              painel.
             </p>
           </div>
         </div>
@@ -454,7 +654,9 @@ export default function AdminPortal() {
             type="button"
             onClick={() => setActiveTab("entrevistas")}
             className={`rounded-full px-4 py-2 text-sm font-semibold ${
-              activeTab === "entrevistas" ? "bg-[#67127c] text-white" : "bg-gray-100 dark:bg-zinc-800"
+              activeTab === "entrevistas"
+                ? "bg-[#67127c] text-white"
+                : "bg-gray-100 dark:bg-zinc-800"
             }`}
           >
             Entrevistas
@@ -491,7 +693,9 @@ export default function AdminPortal() {
               onSubmit={submitArticle}
               className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-zinc-900 p-5 space-y-3"
             >
-              <h2 className="text-xl font-semibold">{articleEditingId ? "Editar artigo" : "Novo artigo"}</h2>
+              <h2 className="text-xl font-semibold">
+                {articleEditingId ? "Editar artigo" : "Novo artigo"}
+              </h2>
               <select
                 value={articleLanguage}
                 onChange={(e) => setArticleLanguage(e.target.value as CmsLanguage)}
@@ -505,21 +709,83 @@ export default function AdminPortal() {
                   </option>
                 ))}
               </select>
-              <input value={articleTitle} onChange={(e) => setArticleTitle(e.target.value)} placeholder="Titulo" required className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-2" />
-              <input value={articleSubtitle} onChange={(e) => setArticleSubtitle(e.target.value)} placeholder="Subtitulo (opcional)" className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-2" />
-              <textarea value={articlePreview} onChange={(e) => setArticlePreview(e.target.value)} placeholder="Preview" required rows={3} className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-2" />
-              <textarea value={articleBody} onChange={(e) => setArticleBody(e.target.value)} placeholder="Corpo do artigo (1 paragrafo por linha)" required rows={7} className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-2" />
-              <textarea value={articleAuthors} onChange={(e) => setArticleAuthors(e.target.value)} placeholder="Autores (1 por linha)" rows={3} className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-2" />
-              <input value={articleImageUrl} onChange={(e) => setArticleImageUrl(e.target.value)} placeholder="URL da imagem" className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-2" />
-              <input value={articleSourceLabel} onChange={(e) => setArticleSourceLabel(e.target.value)} placeholder="Texto do link externo" className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-2" />
-              <input value={articleSourceUrl} onChange={(e) => setArticleSourceUrl(e.target.value)} placeholder="URL da fonte" className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-2" />
+              <input
+                value={articleTitle}
+                onChange={(e) => setArticleTitle(e.target.value)}
+                placeholder="Titulo"
+                required
+                className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-2"
+              />
+              <input
+                value={articleSubtitle}
+                onChange={(e) => setArticleSubtitle(e.target.value)}
+                placeholder="Subtitulo (opcional)"
+                className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-2"
+              />
+              <textarea
+                value={articlePreview}
+                onChange={(e) => setArticlePreview(e.target.value)}
+                placeholder="Preview"
+                required
+                rows={3}
+                className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-2"
+              />
+              <textarea
+                value={articleBody}
+                onChange={(e) => setArticleBody(e.target.value)}
+                placeholder="Corpo do artigo (1 paragrafo por linha)"
+                required
+                rows={7}
+                className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-2"
+              />
+              <textarea
+                value={articleAuthors}
+                onChange={(e) => setArticleAuthors(e.target.value)}
+                placeholder="Autores (1 por linha)"
+                rows={3}
+                className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-2"
+              />
+              <input
+                value={articleImageUrl}
+                onChange={(e) => setArticleImageUrl(e.target.value)}
+                placeholder="URL da imagem"
+                className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-2"
+              />
+              <input
+                value={articleSourceLabel}
+                onChange={(e) => setArticleSourceLabel(e.target.value)}
+                placeholder="Texto do link externo"
+                className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-2"
+              />
+              <input
+                value={articleSourceUrl}
+                onChange={(e) => setArticleSourceUrl(e.target.value)}
+                placeholder="URL da fonte"
+                className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-2"
+              />
               <label className="flex items-center gap-2 text-sm">
-                <input type="checkbox" checked={articlePublished} onChange={(e) => setArticlePublished(e.target.checked)} />
+                <input
+                  type="checkbox"
+                  checked={articlePublished}
+                  onChange={(e) => setArticlePublished(e.target.checked)}
+                />
                 Publicado
               </label>
               <div className="flex gap-2">
-                <button type="submit" disabled={loading} className="rounded-lg bg-[#67127c] px-4 py-2 text-white font-semibold disabled:opacity-70">Salvar</button>
-                <button type="button" onClick={clearArticleForm} className="rounded-lg border border-gray-300 dark:border-gray-600 px-4 py-2">Limpar</button>
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="rounded-lg bg-[#67127c] px-4 py-2 text-white font-semibold disabled:opacity-70"
+                >
+                  Salvar
+                </button>
+                <button
+                  type="button"
+                  onClick={clearArticleForm}
+                  className="rounded-lg border border-gray-300 dark:border-gray-600 px-4 py-2"
+                >
+                  Limpar
+                </button>
               </div>
             </form>
 
@@ -527,28 +793,47 @@ export default function AdminPortal() {
               <h3 className="text-lg font-semibold mb-3">Artigos publicados por voce</h3>
               <div className="space-y-3 max-h-[60vh] overflow-auto pr-1">
                 {articles.map((item) => (
-                  <div key={item.id} className="rounded-lg border border-gray-200 dark:border-gray-700 p-3">
+                  <div
+                    key={item.id}
+                    className="rounded-lg border border-gray-200 dark:border-gray-700 p-3"
+                  >
                     <p className="font-semibold">{item.title}</p>
-                    <p className="text-xs text-gray-500">{item.language} | {item.published ? "Publicado" : "Rascunho"}</p>
+                    <p className="text-xs text-gray-500">
+                      {item.language} | {item.published ? "Publicado" : "Rascunho"}
+                    </p>
                     <div className="mt-2 flex gap-2">
-                      <button type="button" onClick={() => {
-                        setArticleEditingId(item.id);
-                        setArticleLanguage(item.language);
-                        setArticleTitle(item.title);
-                        setArticleSubtitle(item.subtitle ?? "");
-                        setArticlePreview(item.preview);
-                        setArticleBody(listToTextArea(item.body));
-                        setArticleAuthors(listToTextArea(item.authors));
-                        setArticleImageUrl(item.image_url ?? "");
-                        setArticleSourceLabel(item.source_label ?? "");
-                        setArticleSourceUrl(item.source_url ?? "");
-                        setArticlePublished(item.published);
-                      }} className="rounded-lg border border-gray-300 dark:border-gray-600 px-3 py-1 text-sm">Editar</button>
-                      <button type="button" onClick={() => removeArticle(item.id)} className="rounded-lg border border-red-300 text-red-700 dark:text-red-300 px-3 py-1 text-sm">Excluir</button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setArticleEditingId(item.id);
+                          setArticleLanguage(item.language);
+                          setArticleTitle(item.title);
+                          setArticleSubtitle(item.subtitle ?? "");
+                          setArticlePreview(item.preview);
+                          setArticleBody(listToTextArea(item.body));
+                          setArticleAuthors(listToTextArea(item.authors));
+                          setArticleImageUrl(item.image_url ?? "");
+                          setArticleSourceLabel(item.source_label ?? "");
+                          setArticleSourceUrl(item.source_url ?? "");
+                          setArticlePublished(item.published);
+                        }}
+                        className="rounded-lg border border-gray-300 dark:border-gray-600 px-3 py-1 text-sm"
+                      >
+                        Editar
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => removeArticle(item.id)}
+                        className="rounded-lg border border-red-300 text-red-700 dark:text-red-300 px-3 py-1 text-sm"
+                      >
+                        Excluir
+                      </button>
                     </div>
                   </div>
                 ))}
-                {!articles.length ? <p className="text-sm text-gray-500">Nenhum artigo cadastrado.</p> : null}
+                {!articles.length ? (
+                  <p className="text-sm text-gray-500">Nenhum artigo cadastrado.</p>
+                ) : null}
               </div>
             </div>
           </div>
@@ -556,20 +841,70 @@ export default function AdminPortal() {
 
         {activeTab === "opinioes" ? (
           <div className="grid lg:grid-cols-2 gap-6">
-            <form onSubmit={submitOpinion} className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-zinc-900 p-5 space-y-3">
-              <h2 className="text-xl font-semibold">{opinionEditingId ? "Editar opiniao" : "Nova opiniao"}</h2>
-              <select value={opinionLanguage} onChange={(e) => setOpinionLanguage(e.target.value as CmsLanguage)} aria-label="Idioma da opiniao" title="Idioma da opiniao" className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-2">
+            <form
+              onSubmit={submitOpinion}
+              className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-zinc-900 p-5 space-y-3"
+            >
+              <h2 className="text-xl font-semibold">
+                {opinionEditingId ? "Editar opiniao" : "Nova opiniao"}
+              </h2>
+              <select
+                value={opinionLanguage}
+                onChange={(e) => setOpinionLanguage(e.target.value as CmsLanguage)}
+                aria-label="Idioma da opiniao"
+                title="Idioma da opiniao"
+                className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-2"
+              >
                 {languageOptions.map((lang) => (
-                  <option key={lang} value={lang} className="text-black">{lang}</option>
+                  <option key={lang} value={lang} className="text-black">
+                    {lang}
+                  </option>
                 ))}
               </select>
-              <input value={opinionTitle} onChange={(e) => setOpinionTitle(e.target.value)} placeholder="Titulo" required className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-2" />
-              <textarea value={opinionBody} onChange={(e) => setOpinionBody(e.target.value)} placeholder="Texto (1 paragrafo por linha)" required rows={8} className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-2" />
-              <input value={opinionImageUrl} onChange={(e) => setOpinionImageUrl(e.target.value)} placeholder="URL da imagem" className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-2" />
-              <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={opinionPublished} onChange={(e) => setOpinionPublished(e.target.checked)} />Publicado</label>
+              <input
+                value={opinionTitle}
+                onChange={(e) => setOpinionTitle(e.target.value)}
+                placeholder="Titulo"
+                required
+                className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-2"
+              />
+              <textarea
+                value={opinionBody}
+                onChange={(e) => setOpinionBody(e.target.value)}
+                placeholder="Texto (1 paragrafo por linha)"
+                required
+                rows={8}
+                className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-2"
+              />
+              <input
+                value={opinionImageUrl}
+                onChange={(e) => setOpinionImageUrl(e.target.value)}
+                placeholder="URL da imagem"
+                className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-2"
+              />
+              <label className="flex items-center gap-2 text-sm">
+                <input
+                  type="checkbox"
+                  checked={opinionPublished}
+                  onChange={(e) => setOpinionPublished(e.target.checked)}
+                />
+                Publicado
+              </label>
               <div className="flex gap-2">
-                <button type="submit" disabled={loading} className="rounded-lg bg-[#67127c] px-4 py-2 text-white font-semibold disabled:opacity-70">Salvar</button>
-                <button type="button" onClick={clearOpinionForm} className="rounded-lg border border-gray-300 dark:border-gray-600 px-4 py-2">Limpar</button>
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="rounded-lg bg-[#67127c] px-4 py-2 text-white font-semibold disabled:opacity-70"
+                >
+                  Salvar
+                </button>
+                <button
+                  type="button"
+                  onClick={clearOpinionForm}
+                  className="rounded-lg border border-gray-300 dark:border-gray-600 px-4 py-2"
+                >
+                  Limpar
+                </button>
               </div>
             </form>
 
@@ -577,23 +912,42 @@ export default function AdminPortal() {
               <h3 className="text-lg font-semibold mb-3">Opinioes publicadas por voce</h3>
               <div className="space-y-3 max-h-[60vh] overflow-auto pr-1">
                 {opinions.map((item) => (
-                  <div key={item.id} className="rounded-lg border border-gray-200 dark:border-gray-700 p-3">
+                  <div
+                    key={item.id}
+                    className="rounded-lg border border-gray-200 dark:border-gray-700 p-3"
+                  >
                     <p className="font-semibold">{item.title}</p>
-                    <p className="text-xs text-gray-500">{item.language} | {item.published ? "Publicado" : "Rascunho"}</p>
+                    <p className="text-xs text-gray-500">
+                      {item.language} | {item.published ? "Publicado" : "Rascunho"}
+                    </p>
                     <div className="mt-2 flex gap-2">
-                      <button type="button" onClick={() => {
-                        setOpinionEditingId(item.id);
-                        setOpinionLanguage(item.language);
-                        setOpinionTitle(item.title);
-                        setOpinionBody(listToTextArea(item.body));
-                        setOpinionImageUrl(item.image_url ?? "");
-                        setOpinionPublished(item.published);
-                      }} className="rounded-lg border border-gray-300 dark:border-gray-600 px-3 py-1 text-sm">Editar</button>
-                      <button type="button" onClick={() => removeOpinion(item.id)} className="rounded-lg border border-red-300 text-red-700 dark:text-red-300 px-3 py-1 text-sm">Excluir</button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setOpinionEditingId(item.id);
+                          setOpinionLanguage(item.language);
+                          setOpinionTitle(item.title);
+                          setOpinionBody(listToTextArea(item.body));
+                          setOpinionImageUrl(item.image_url ?? "");
+                          setOpinionPublished(item.published);
+                        }}
+                        className="rounded-lg border border-gray-300 dark:border-gray-600 px-3 py-1 text-sm"
+                      >
+                        Editar
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => removeOpinion(item.id)}
+                        className="rounded-lg border border-red-300 text-red-700 dark:text-red-300 px-3 py-1 text-sm"
+                      >
+                        Excluir
+                      </button>
                     </div>
                   </div>
                 ))}
-                {!opinions.length ? <p className="text-sm text-gray-500">Nenhuma opiniao cadastrada.</p> : null}
+                {!opinions.length ? (
+                  <p className="text-sm text-gray-500">Nenhuma opiniao cadastrada.</p>
+                ) : null}
               </div>
             </div>
           </div>
@@ -601,20 +955,69 @@ export default function AdminPortal() {
 
         {activeTab === "entrevistas" ? (
           <div className="grid lg:grid-cols-2 gap-6">
-            <form onSubmit={submitInterview} className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-zinc-900 p-5 space-y-3">
-              <h2 className="text-xl font-semibold">{interviewEditingId ? "Editar entrevista" : "Nova entrevista"}</h2>
-              <select value={interviewLanguage} onChange={(e) => setInterviewLanguage(e.target.value as CmsLanguage)} aria-label="Idioma da entrevista" title="Idioma da entrevista" className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-2">
+            <form
+              onSubmit={submitInterview}
+              className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-zinc-900 p-5 space-y-3"
+            >
+              <h2 className="text-xl font-semibold">
+                {interviewEditingId ? "Editar entrevista" : "Nova entrevista"}
+              </h2>
+              <select
+                value={interviewLanguage}
+                onChange={(e) => setInterviewLanguage(e.target.value as CmsLanguage)}
+                aria-label="Idioma da entrevista"
+                title="Idioma da entrevista"
+                className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-2"
+              >
                 {languageOptions.map((lang) => (
-                  <option key={lang} value={lang} className="text-black">{lang}</option>
+                  <option key={lang} value={lang} className="text-black">
+                    {lang}
+                  </option>
                 ))}
               </select>
-              <input value={interviewTitle} onChange={(e) => setInterviewTitle(e.target.value)} placeholder="Titulo" required className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-2" />
-              <input value={interviewImageUrl} onChange={(e) => setInterviewImageUrl(e.target.value)} placeholder="URL da imagem" required className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-2" />
-              <input value={interviewHref} onChange={(e) => setInterviewHref(e.target.value)} placeholder="Link da entrevista" className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-2" />
-              <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={interviewPublished} onChange={(e) => setInterviewPublished(e.target.checked)} />Publicado</label>
+              <input
+                value={interviewTitle}
+                onChange={(e) => setInterviewTitle(e.target.value)}
+                placeholder="Titulo"
+                required
+                className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-2"
+              />
+              <input
+                value={interviewImageUrl}
+                onChange={(e) => setInterviewImageUrl(e.target.value)}
+                placeholder="URL da imagem"
+                required
+                className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-2"
+              />
+              <input
+                value={interviewHref}
+                onChange={(e) => setInterviewHref(e.target.value)}
+                placeholder="Link da entrevista"
+                className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-2"
+              />
+              <label className="flex items-center gap-2 text-sm">
+                <input
+                  type="checkbox"
+                  checked={interviewPublished}
+                  onChange={(e) => setInterviewPublished(e.target.checked)}
+                />
+                Publicado
+              </label>
               <div className="flex gap-2">
-                <button type="submit" disabled={loading} className="rounded-lg bg-[#67127c] px-4 py-2 text-white font-semibold disabled:opacity-70">Salvar</button>
-                <button type="button" onClick={clearInterviewForm} className="rounded-lg border border-gray-300 dark:border-gray-600 px-4 py-2">Limpar</button>
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="rounded-lg bg-[#67127c] px-4 py-2 text-white font-semibold disabled:opacity-70"
+                >
+                  Salvar
+                </button>
+                <button
+                  type="button"
+                  onClick={clearInterviewForm}
+                  className="rounded-lg border border-gray-300 dark:border-gray-600 px-4 py-2"
+                >
+                  Limpar
+                </button>
               </div>
             </form>
 
@@ -622,23 +1025,42 @@ export default function AdminPortal() {
               <h3 className="text-lg font-semibold mb-3">Entrevistas publicadas por voce</h3>
               <div className="space-y-3 max-h-[60vh] overflow-auto pr-1">
                 {interviews.map((item) => (
-                  <div key={item.id} className="rounded-lg border border-gray-200 dark:border-gray-700 p-3">
+                  <div
+                    key={item.id}
+                    className="rounded-lg border border-gray-200 dark:border-gray-700 p-3"
+                  >
                     <p className="font-semibold">{item.title}</p>
-                    <p className="text-xs text-gray-500">{item.language} | {item.published ? "Publicado" : "Rascunho"}</p>
+                    <p className="text-xs text-gray-500">
+                      {item.language} | {item.published ? "Publicado" : "Rascunho"}
+                    </p>
                     <div className="mt-2 flex gap-2">
-                      <button type="button" onClick={() => {
-                        setInterviewEditingId(item.id);
-                        setInterviewLanguage(item.language);
-                        setInterviewTitle(item.title);
-                        setInterviewImageUrl(item.image_url);
-                        setInterviewHref(item.href ?? "");
-                        setInterviewPublished(item.published);
-                      }} className="rounded-lg border border-gray-300 dark:border-gray-600 px-3 py-1 text-sm">Editar</button>
-                      <button type="button" onClick={() => removeInterview(item.id)} className="rounded-lg border border-red-300 text-red-700 dark:text-red-300 px-3 py-1 text-sm">Excluir</button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setInterviewEditingId(item.id);
+                          setInterviewLanguage(item.language);
+                          setInterviewTitle(item.title);
+                          setInterviewImageUrl(item.image_url);
+                          setInterviewHref(item.href ?? "");
+                          setInterviewPublished(item.published);
+                        }}
+                        className="rounded-lg border border-gray-300 dark:border-gray-600 px-3 py-1 text-sm"
+                      >
+                        Editar
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => removeInterview(item.id)}
+                        className="rounded-lg border border-red-300 text-red-700 dark:text-red-300 px-3 py-1 text-sm"
+                      >
+                        Excluir
+                      </button>
                     </div>
                   </div>
                 ))}
-                {!interviews.length ? <p className="text-sm text-gray-500">Nenhuma entrevista cadastrada.</p> : null}
+                {!interviews.length ? (
+                  <p className="text-sm text-gray-500">Nenhuma entrevista cadastrada.</p>
+                ) : null}
               </div>
             </div>
           </div>
@@ -646,23 +1068,90 @@ export default function AdminPortal() {
 
         {activeTab === "eventos" ? (
           <div className="grid lg:grid-cols-2 gap-6">
-            <form onSubmit={submitEvent} className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-zinc-900 p-5 space-y-3">
-              <h2 className="text-xl font-semibold">{eventEditingId ? "Editar evento" : "Novo evento"}</h2>
-              <select value={eventLanguage} onChange={(e) => setEventLanguage(e.target.value as CmsLanguage)} aria-label="Idioma do evento" title="Idioma do evento" className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-2">
+            <form
+              onSubmit={submitEvent}
+              className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-zinc-900 p-5 space-y-3"
+            >
+              <h2 className="text-xl font-semibold">
+                {eventEditingId ? "Editar evento" : "Novo evento"}
+              </h2>
+              <select
+                value={eventLanguage}
+                onChange={(e) => setEventLanguage(e.target.value as CmsLanguage)}
+                aria-label="Idioma do evento"
+                title="Idioma do evento"
+                className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-2"
+              >
                 {languageOptions.map((lang) => (
-                  <option key={lang} value={lang} className="text-black">{lang}</option>
+                  <option key={lang} value={lang} className="text-black">
+                    {lang}
+                  </option>
                 ))}
               </select>
-              <input value={eventDateLabel} onChange={(e) => setEventDateLabel(e.target.value)} placeholder="Data exibida (ex: 12-14 maio 2026)" required className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-2" />
-              <input value={eventSortDate} onChange={(e) => setEventSortDate(e.target.value)} type="date" aria-label="Data de ordenacao" title="Data de ordenacao" className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-2" />
-              <input value={eventTitle} onChange={(e) => setEventTitle(e.target.value)} placeholder="Titulo" required className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-2" />
-              <input value={eventLocation} onChange={(e) => setEventLocation(e.target.value)} placeholder="Local" required className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-2" />
-              <input value={eventImageUrl} onChange={(e) => setEventImageUrl(e.target.value)} placeholder="URL da imagem (opcional)" className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-2" />
-              <input value={eventHref} onChange={(e) => setEventHref(e.target.value)} placeholder="Link do evento" className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-2" />
-              <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={eventPublished} onChange={(e) => setEventPublished(e.target.checked)} />Publicado</label>
+              <input
+                value={eventDateLabel}
+                onChange={(e) => setEventDateLabel(e.target.value)}
+                placeholder="Data exibida (ex: 12-14 maio 2026)"
+                required
+                className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-2"
+              />
+              <input
+                value={eventSortDate}
+                onChange={(e) => setEventSortDate(e.target.value)}
+                type="date"
+                aria-label="Data de ordenacao"
+                title="Data de ordenacao"
+                className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-2"
+              />
+              <input
+                value={eventTitle}
+                onChange={(e) => setEventTitle(e.target.value)}
+                placeholder="Titulo"
+                required
+                className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-2"
+              />
+              <input
+                value={eventLocation}
+                onChange={(e) => setEventLocation(e.target.value)}
+                placeholder="Local"
+                required
+                className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-2"
+              />
+              <input
+                value={eventImageUrl}
+                onChange={(e) => setEventImageUrl(e.target.value)}
+                placeholder="URL da imagem (opcional)"
+                className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-2"
+              />
+              <input
+                value={eventHref}
+                onChange={(e) => setEventHref(e.target.value)}
+                placeholder="Link do evento"
+                className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-2"
+              />
+              <label className="flex items-center gap-2 text-sm">
+                <input
+                  type="checkbox"
+                  checked={eventPublished}
+                  onChange={(e) => setEventPublished(e.target.checked)}
+                />
+                Publicado
+              </label>
               <div className="flex gap-2">
-                <button type="submit" disabled={loading} className="rounded-lg bg-[#67127c] px-4 py-2 text-white font-semibold disabled:opacity-70">Salvar</button>
-                <button type="button" onClick={clearEventForm} className="rounded-lg border border-gray-300 dark:border-gray-600 px-4 py-2">Limpar</button>
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="rounded-lg bg-[#67127c] px-4 py-2 text-white font-semibold disabled:opacity-70"
+                >
+                  Salvar
+                </button>
+                <button
+                  type="button"
+                  onClick={clearEventForm}
+                  className="rounded-lg border border-gray-300 dark:border-gray-600 px-4 py-2"
+                >
+                  Limpar
+                </button>
               </div>
             </form>
 
@@ -670,26 +1159,45 @@ export default function AdminPortal() {
               <h3 className="text-lg font-semibold mb-3">Eventos publicados por voce</h3>
               <div className="space-y-3 max-h-[60vh] overflow-auto pr-1">
                 {events.map((item) => (
-                  <div key={item.id} className="rounded-lg border border-gray-200 dark:border-gray-700 p-3">
+                  <div
+                    key={item.id}
+                    className="rounded-lg border border-gray-200 dark:border-gray-700 p-3"
+                  >
                     <p className="font-semibold">{item.title}</p>
-                    <p className="text-xs text-gray-500">{item.language} | {item.published ? "Publicado" : "Rascunho"}</p>
+                    <p className="text-xs text-gray-500">
+                      {item.language} | {item.published ? "Publicado" : "Rascunho"}
+                    </p>
                     <div className="mt-2 flex gap-2">
-                      <button type="button" onClick={() => {
-                        setEventEditingId(item.id);
-                        setEventLanguage(item.language);
-                        setEventDateLabel(item.date_label);
-                        setEventSortDate(item.sort_date ?? "");
-                        setEventTitle(item.title);
-                        setEventLocation(item.location);
-                        setEventImageUrl(item.image_url ?? "");
-                        setEventHref(item.href ?? "");
-                        setEventPublished(item.published);
-                      }} className="rounded-lg border border-gray-300 dark:border-gray-600 px-3 py-1 text-sm">Editar</button>
-                      <button type="button" onClick={() => removeEvent(item.id)} className="rounded-lg border border-red-300 text-red-700 dark:text-red-300 px-3 py-1 text-sm">Excluir</button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setEventEditingId(item.id);
+                          setEventLanguage(item.language);
+                          setEventDateLabel(item.date_label);
+                          setEventSortDate(item.sort_date ?? "");
+                          setEventTitle(item.title);
+                          setEventLocation(item.location);
+                          setEventImageUrl(item.image_url ?? "");
+                          setEventHref(item.href ?? "");
+                          setEventPublished(item.published);
+                        }}
+                        className="rounded-lg border border-gray-300 dark:border-gray-600 px-3 py-1 text-sm"
+                      >
+                        Editar
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => removeEvent(item.id)}
+                        className="rounded-lg border border-red-300 text-red-700 dark:text-red-300 px-3 py-1 text-sm"
+                      >
+                        Excluir
+                      </button>
                     </div>
                   </div>
                 ))}
-                {!events.length ? <p className="text-sm text-gray-500">Nenhum evento cadastrado.</p> : null}
+                {!events.length ? (
+                  <p className="text-sm text-gray-500">Nenhum evento cadastrado.</p>
+                ) : null}
               </div>
             </div>
           </div>

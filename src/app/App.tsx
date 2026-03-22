@@ -1,5 +1,5 @@
 import { Menu, Monitor, Moon, Sun } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import Home from "../pages/Home";
 import Areas from "../pages/Areas";
@@ -82,6 +82,7 @@ export default function App() {
   const [themeMode, setThemeMode] = useState<ThemeMode>(() => getInitialThemeMode());
   const [systemPrefersDark, setSystemPrefersDark] = useState(() => getSystemPrefersDark());
   const location = useLocation();
+  const mainRef = useRef<HTMLElement>(null);
   const { language, setLanguage, t } = useI18n();
   const isContatoPage = location.pathname === "/contato";
   const isActive = (path: string) => location.pathname === path;
@@ -197,6 +198,7 @@ export default function App() {
 
   useEffect(() => {
     scrollToPageTop("auto");
+    mainRef.current?.focus();
   }, [location.pathname]);
 
   useEffect(() => {
@@ -266,12 +268,26 @@ export default function App() {
 
     const jsonLd = {
       "@context": "https://schema.org",
-      "@type": "ProfessionalService",
-      name: "Caroline Querino Consultoria ESG & Tech",
+      "@graph": [
+        {
+          "@type": "Person",
+          name: "Caroline Querino",
+          alternateName: "Carolline Querino",
+          jobTitle: "Consultora ESG e Tecnologia",
+          description: t.home.description,
+          url: window.location.origin,
+          sameAs: ["https://www.linkedin.com/in/carolinequerino"],
+        },
+        {
+          "@type": "ProfessionalService",
+          name: "Caroline Querino Consultoria ESG & Tech",
+          url: window.location.origin,
+          description: t.home.description,
+          inLanguage: ["pt-BR", "en", "es"],
+          keywords: ["Caroline Querino", "Consultoria ESG", "Genero e Tecnologia"],
+        },
+      ],
       url: window.location.origin,
-      description: t.home.description,
-      inLanguage: ["pt-BR", "en", "es"],
-      knowsAbout: ["Genero", "Tecnologia", "ESG", "Diversidade", "Inclusao"],
     };
 
     let jsonLdScript = document.getElementById("seo-json-ld");
@@ -287,9 +303,18 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col transition-colors">
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:rounded-md focus:bg-white focus:px-3 focus:py-2 focus:text-black focus:shadow"
+      >
+        Pular para o conteudo principal
+      </a>
       {/* Header/Navigation */}
-      <header className="fixed top-0 left-0 right-0 bg-white/40 dark:bg-zinc-900/70 backdrop-blur-xs shadow-sm z-50 transition-colors">
-        <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <header
+        className="fixed top-0 left-0 right-0 bg-white/40 dark:bg-zinc-900/70 backdrop-blur-xs shadow-sm z-50 transition-colors"
+        role="banner"
+      >
+        <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" aria-label="Navegacao principal">
           <style>{`
             .nav-link { transition: color .15s; }
             .nav-link:hover { color: #12277C; }
@@ -386,6 +411,8 @@ export default function App() {
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               title="Abrir menu"
               aria-label="Abrir menu"
+              aria-expanded={mobileMenuOpen}
+              aria-controls="mobile-nav"
             >
               <Menu className="h-6 w-6" />
             </button>
@@ -393,7 +420,7 @@ export default function App() {
 
           {/* Mobile Navigation */}
           {mobileMenuOpen && (
-            <div className="md:hidden pb-4">
+            <div id="mobile-nav" className="md:hidden pb-4">
               <div className="flex flex-col space-y-4">
                 <Link
                   to="/"
@@ -439,7 +466,12 @@ export default function App() {
       </header>
 
       {/* Conteúdo das rotas */}
-      <main className={`${isContatoPage ? "pt-16" : "pt-20"} flex-1 flex flex-col`}>
+      <main
+        id="main-content"
+        ref={mainRef}
+        tabIndex={-1}
+        className={`${isContatoPage ? "pt-16" : "pt-20"} flex-1 flex flex-col focus:outline-none`}
+      >
         <AnimatePresence mode="wait">
           <Routes location={location} key={location.pathname}>
             <Route

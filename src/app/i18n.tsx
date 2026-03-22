@@ -484,8 +484,7 @@ const translations = {
         "AI & Gender event: Unhyped AI - Sociotechnical & Responsible AI Seminars",
       latestEventFeaturedDate: "August 29, 2025",
       latestEventFeaturedLocation: "United Kingdom",
-      latestEventSecondTitle:
-        "Amazon: building an economy for the forest and for the people",
+      latestEventSecondTitle: "Amazon: building an economy for the forest and for the people",
       latestEventSecondDate: "June 26, 2022",
       latestEventThirdTitle: "Maria Valente chatbot launch",
       latestEventThirdDate: "12/09/2025",

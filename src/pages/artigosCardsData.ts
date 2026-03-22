@@ -16,8 +16,7 @@ const articlesByLanguage: Record<Language, ArtigoCardEntry[]> = {
   "pt-BR": [
     {
       id: 1,
-      title:
-        "Brasil, de líder regional a pária internacional: uma história de derrubada",
+      title: "Brasil, de líder regional a pária internacional: uma história de derrubada",
       preview:
         "Análise sobre o papel do governo brasileiro no combate à COVID-19 e os impactos regionais e globais de ações ineficazes.",
       authors: [
@@ -26,7 +25,7 @@ const articlesByLanguage: Record<Language, ArtigoCardEntry[]> = {
         "Lígia Maria Freitas Silveira (UNILA)",
       ],
       body: [
-        "A pandemia de coronavírus levou governos ao redor do mundo a adotar medidas restritivas para ajudar a combater o vírus em seus respectivos países. Apesar disso, alguns governos adotaram uma postura negacionista em torno da COVID-19, dificultando a adoção de ações para conter a doença. Uma dessas posturas é a do presidente brasileiro, Jair Bolsonaro, que vem tentando minimizar a doença, chamando-a de \"gripezinha\", além de tomar ações (ou não) que vão contra a comunidade científica, incluindo o atraso brasileiro na obtenção da vacina. Essa postura levou o país a ser considerado o novo epicentro do vírus e até uma possível ameaça regional. Nesse sentido, este artigo busca analisar o papel do governo brasileiro no combate à pandemia de coronavírus, tentando compreender como suas ações ineficazes se tornaram uma ameaça regional (e possivelmente global) e quais são os impactos disso. Como resultado, concluímos que o discurso negacionista de Bolsonaro, aliado à sua falta de ação em torno da pandemia de coronavírus, é e continuará sendo um fator crucial para grandes perdas no Brasil, com seus impactos reverberando para além dos anos da pandemia.",
+        'A pandemia de coronavírus levou governos ao redor do mundo a adotar medidas restritivas para ajudar a combater o vírus em seus respectivos países. Apesar disso, alguns governos adotaram uma postura negacionista em torno da COVID-19, dificultando a adoção de ações para conter a doença. Uma dessas posturas é a do presidente brasileiro, Jair Bolsonaro, que vem tentando minimizar a doença, chamando-a de "gripezinha", além de tomar ações (ou não) que vão contra a comunidade científica, incluindo o atraso brasileiro na obtenção da vacina. Essa postura levou o país a ser considerado o novo epicentro do vírus e até uma possível ameaça regional. Nesse sentido, este artigo busca analisar o papel do governo brasileiro no combate à pandemia de coronavírus, tentando compreender como suas ações ineficazes se tornaram uma ameaça regional (e possivelmente global) e quais são os impactos disso. Como resultado, concluímos que o discurso negacionista de Bolsonaro, aliado à sua falta de ação em torno da pandemia de coronavírus, é e continuará sendo um fator crucial para grandes perdas no Brasil, com seus impactos reverberando para além dos anos da pandemia.',
       ],
       image:
         "https://www.encontro2021.abri.org.br/resources/content/enabri2021/configuracao3_1619461096_1_8_abri21_identidade_site(2).jpg?1619461096",
@@ -59,8 +58,7 @@ const articlesByLanguage: Record<Language, ArtigoCardEntry[]> = {
   en: [
     {
       id: 1,
-      title:
-        "Brazil, from a regional leader to international outcast: a history of an overthrow.",
+      title: "Brazil, from a regional leader to international outcast: a history of an overthrow.",
       preview:
         "Analysis of the Brazilian government's role in combating COVID-19 and the regional and global impacts of ineffective actions.",
       authors: [
@@ -69,7 +67,7 @@ const articlesByLanguage: Record<Language, ArtigoCardEntry[]> = {
         "Lígia Maria Freitas Silveira (UNILA)",
       ],
       body: [
-        "The coronavirus pandemic has prompted governments around the world to take restrictive measures to help fight the virus in their respective countries. Despite this, some governments have adopted a denialist stance around COVID-19, making it difficult to take action to contain the disease. One of these attitudes is that of the Brazilian president, Jair Bolsonaro, who has been trying to minimize the disease, calling it a \"gripezinha\" in addition to taking actions (or not) that go against the scientific community, including the Brazilian delay in obtaining the vaccine. This attitude led the country to be considered the new epicenter of the virus and even a possible regional threat. In this sense, this paper seeks to analyze the role of the Brazilian government in combating the coronavirus pandemic, trying to understand how its ineffective actions have become a regional (and possibly global) threat and what are the impacts of this. As a result, we conclude that Bolsonaro's denialist speech coupled with his lack of action around the coronavirus pandemic is and will continue to be a crucial factor for major losses in Brazil, with its impacts reverberating beyond the pandemic years.",
+        'The coronavirus pandemic has prompted governments around the world to take restrictive measures to help fight the virus in their respective countries. Despite this, some governments have adopted a denialist stance around COVID-19, making it difficult to take action to contain the disease. One of these attitudes is that of the Brazilian president, Jair Bolsonaro, who has been trying to minimize the disease, calling it a "gripezinha" in addition to taking actions (or not) that go against the scientific community, including the Brazilian delay in obtaining the vaccine. This attitude led the country to be considered the new epicenter of the virus and even a possible regional threat. In this sense, this paper seeks to analyze the role of the Brazilian government in combating the coronavirus pandemic, trying to understand how its ineffective actions have become a regional (and possibly global) threat and what are the impacts of this. As a result, we conclude that Bolsonaro\'s denialist speech coupled with his lack of action around the coronavirus pandemic is and will continue to be a crucial factor for major losses in Brazil, with its impacts reverberating beyond the pandemic years.',
       ],
       image:
         "https://www.encontro2021.abri.org.br/resources/content/enabri2021/configuracao3_1619461096_1_8_abri21_identidade_site(2).jpg?1619461096",
@@ -102,8 +100,7 @@ const articlesByLanguage: Record<Language, ArtigoCardEntry[]> = {
   es: [
     {
       id: 1,
-      title:
-        "Brasil, de líder regional a paria internacional: una historia de un derrocamiento",
+      title: "Brasil, de líder regional a paria internacional: una historia de un derrocamiento",
       preview:
         "Análisis del papel del gobierno brasileño en el combate a la COVID-19 y los impactos regionales y globales de acciones ineficaces.",
       authors: [
@@ -112,7 +109,7 @@ const articlesByLanguage: Record<Language, ArtigoCardEntry[]> = {
         "Lígia Maria Freitas Silveira (UNILA)",
       ],
       body: [
-        "La pandemia del coronavirus llevó a gobiernos de todo el mundo a adoptar medidas restrictivas para ayudar a combatir el virus en sus respectivos países. A pesar de esto, algunos gobiernos han adoptado una postura negacionista en torno a la COVID-19, dificultando la adopción de acciones para contener la enfermedad. Una de estas posturas es la del presidente brasileño, Jair Bolsonaro, quien ha estado intentando minimizar la enfermedad, llamándola una \"gripecita\", además de tomar acciones (o no) que van en contra de la comunidad científica, incluido el retraso brasileño en obtener la vacuna. Esta postura llevó al país a ser considerado el nuevo epicentro del virus e incluso una posible amenaza regional. En este sentido, este artículo busca analizar el papel del gobierno brasileño en el combate a la pandemia del coronavirus, intentando comprender cómo sus acciones ineficaces se han convertido en una amenaza regional (y posiblemente global) y cuáles son los impactos de esto. Como resultado, concluimos que el discurso negacionista de Bolsonaro, junto con su falta de acción en torno a la pandemia del coronavirus, es y continuará siendo un factor crucial para grandes pérdidas en Brasil, con sus impactos reverberando más allá de los años de la pandemia.",
+        'La pandemia del coronavirus llevó a gobiernos de todo el mundo a adoptar medidas restrictivas para ayudar a combatir el virus en sus respectivos países. A pesar de esto, algunos gobiernos han adoptado una postura negacionista en torno a la COVID-19, dificultando la adopción de acciones para contener la enfermedad. Una de estas posturas es la del presidente brasileño, Jair Bolsonaro, quien ha estado intentando minimizar la enfermedad, llamándola una "gripecita", además de tomar acciones (o no) que van en contra de la comunidad científica, incluido el retraso brasileño en obtener la vacuna. Esta postura llevó al país a ser considerado el nuevo epicentro del virus e incluso una posible amenaza regional. En este sentido, este artículo busca analizar el papel del gobierno brasileño en el combate a la pandemia del coronavirus, intentando comprender cómo sus acciones ineficaces se han convertido en una amenaza regional (y posiblemente global) y cuáles son los impactos de esto. Como resultado, concluimos que el discurso negacionista de Bolsonaro, junto con su falta de acción en torno a la pandemia del coronavirus, es y continuará siendo un factor crucial para grandes pérdidas en Brasil, con sus impactos reverberando más allá de los años de la pandemia.',
       ],
       image:
         "https://www.encontro2021.abri.org.br/resources/content/enabri2021/configuracao3_1619461096_1_8_abri21_identidade_site(2).jpg?1619461096",
