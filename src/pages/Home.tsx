@@ -2,13 +2,12 @@ import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useI18n } from "../app/i18n";
 import itaipuImage from "../assets/images/itaipu-parquetec.png";
-import home1Image from "../assets/images/home1.jpeg";
 import home2Image from "../assets/images/home2.jpeg";
 import home3Image from "../assets/images/home3.jpeg";
 import home4Image from "../assets/images/home4.jpeg";
 import home5Image from "../assets/images/home5.jpeg";
 
-const homeSlides = [home1Image, home2Image, home3Image, home4Image, home5Image];
+const homeSlides = [home2Image, home3Image, home4Image, home5Image];
 
 export default function Home() {
   const { t } = useI18n();

@@ -60,6 +60,9 @@ export default function AdminLogin() {
       const { error } = await supabase.auth.signUp({
         email: normalizedEmail,
         password,
+        options: {
+          emailRedirectTo: `${window.location.origin}/portal-cliente`,
+        },
       });
 
       setLoading(false);
