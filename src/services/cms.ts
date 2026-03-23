@@ -295,3 +295,36 @@ export async function deleteUpcomingEvent(id: string, authorId: string) {
 
   if (error) throw error;
 }
+
+/**
+ * Valida se um email está autorizado para criar uma conta
+ * @param email Email a ser validado
+ * @returns true se o email está autorizado, false caso contrário
+ */
+export async function isEmailAuthorized(email: string): Promise<boolean> {
+  try {
+    const client = requireClient();
+    const { data, error } = await client
+      .from("authorized_users")
+      .select("email")
+      .eq("email", email.toLowerCase())
+      .single();
+
+    // Se não encontrou o email na lista autorizada
+    if (error) {
+      if (error.code === "PGRST116") {
+        // PGRST116 = não encontrado (esperado para emails não autorizados)
+        return false;
+      }
+      // Outros erros (ex: tabela não existe, permissão negada)
+      throw error;
+    }
+
+    // Se encontrou o email, retorna true
+    return !!data;
+  } catch (error) {
+    console.error("Erro crítico ao validar email autorizado:", error);
+    // Em caso de erro, nega o acesso por segurança
+    return false;
+  }
+}

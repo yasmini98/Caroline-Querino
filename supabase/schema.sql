@@ -178,3 +178,59 @@ drop policy if exists "owner_delete_events" on public.cms_upcoming_events;
 create policy "owner_delete_events" on public.cms_upcoming_events
 for delete to authenticated
 using (auth.uid() = author_id);
+
+-- Tabela de usuários autorizados para limitação de signup
+create table if not exists public.authorized_users (
+  id uuid primary key default gen_random_uuid(),
+  email text not null unique,
+  created_at timestamptz not null default now()
+);
+
+-- Sem RLS, apenas admin pode gerenciar
+alter table public.authorized_users disable row level security;
+
+-- Função para validar email autorizado no signup
+create or replace function public.is_email_authorized(user_email text)
+returns boolean
+language plpgsql
+security definer
+as $$
+begin
+  return exists(
+    select 1 from public.authorized_users where email = user_email
+  );
+end;
+$$;
+
+-- Função para validar no signup via trigger (usando auth hook)
+create or replace function public.validate_new_user_signup()
+returns jsonb
+language plpgsql
+as $$
+declare
+  v_is_authorized boolean;
+begin
+  -- Verifica se o email está na lista de autorizados
+  v_is_authorized := (
+    select exists(
+      select 1 from public.authorized_users 
+      where email = auth.jwt() ->> 'email'
+    )
+  );
+  
+  if not v_is_authorized then
+    return jsonb_build_object(
+      'error', 'unauthorized_signup',
+      'error_description', 'Email não está autorizado para criar conta.'
+    );
+  end if;
+  
+  return null;
+end;
+$$;
+
+-- Adicionar os dois emails autorizados
+insert into public.authorized_users (email) values
+  ('oliveira.yasmini@gmail.com'),
+  ('carollinecquerino@gmail.com')
+on conflict (email) do nothing;

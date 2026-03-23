@@ -1,6 +1,7 @@
 import { FormEvent, useEffect, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { getSupabaseClient, isSupabaseConfigured } from "../../lib/supabase";
+import { isEmailAuthorized } from "../../services/cms";
 
 export default function AdminLogin() {
   const navigate = useNavigate();
@@ -46,6 +47,16 @@ export default function AdminLogin() {
     setSuccessMessage("");
 
     if (mode === "signup") {
+      // Validar se o email está autorizado
+      const authorized = await isEmailAuthorized(normalizedEmail);
+      if (!authorized) {
+        setLoading(false);
+        setErrorMessage(
+          "Este e-mail não está autorizado para criar uma conta. Entre em contato com o administrador.",
+        );
+        return;
+      }
+
       const { error } = await supabase.auth.signUp({
         email: normalizedEmail,
         password,
