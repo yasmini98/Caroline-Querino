@@ -179,7 +179,7 @@ export default function Home() {
                   <img
                     src={logo.src}
                     alt={trustLogoLabels[language][logo.key]}
-                    className={`h-12 md:h-14 object-contain grayscale opacity-80 hover:opacity-90 dark:invert dark:grayscale dark:opacity-55 dark:hover:opacity-75 transition-opacity ${logo.key === "glg" ? "invert" : ""}`}
+                    className={`h-12 md:h-14 object-contain grayscale opacity-80 hover:opacity-90 dark:invert dark:grayscale dark:opacity-55 dark:hover:opacity-75 transition-opacity ${logo.key === "glg" ? "invert dark:invert-0" : ""}`}
                   />
                 </div>
               ))}
