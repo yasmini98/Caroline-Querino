@@ -2,6 +2,13 @@ import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useI18n } from "../app/i18n";
 import itaipuImage from "../assets/images/itaipu-parquetec.png";
+import glgLogo from "../assets/images/glg-logo.svg";
+import cheveningLogo from "../assets/images/logo-chevening.png";
+import sciinovLogo from "../assets/images/logo-sciinov.png";
+import sgpLogo from "../assets/images/logo-SGP.png";
+import urbioNatalLogo from "../assets/images/logo-urbio_natal.avif";
+import usLogo from "../assets/images/US-logo.png";
+import ukGovernmentLogo from "../assets/images/uk-government-crown-crest-seeklogo.png";
 import home2Image from "../assets/images/home2.jpeg";
 import home3Image from "../assets/images/home3.jpeg";
 import home4Image from "../assets/images/home4.jpeg";
@@ -9,8 +16,52 @@ import home5Image from "../assets/images/home5.jpeg";
 
 const homeSlides = [home2Image, home3Image, home4Image, home5Image];
 
+const trustLogos = [
+  { src: itaipuImage, key: "itaipu" },
+  { src: glgLogo, key: "glg" },
+  { src: usLogo, key: "sussex" },
+  { src: sgpLogo, key: "sgp" },
+  { src: urbioNatalLogo, key: "urbio" },
+  { src: cheveningLogo, key: "chevening" },
+  { src: sciinovLogo, key: "sciinov" },
+  { src: ukGovernmentLogo, key: "ukGovernment" },
+] as const;
+
+const trustLogoLabels = {
+  "pt-BR": {
+    itaipu: "Itaipu Parquetec",
+    glg: "GLG",
+    sussex: "University of Sussex",
+    sgp: "Society of Gender Professionals",
+    urbio: "Urbio Natal",
+    chevening: "Chevening",
+    sciinov: "Sciinov",
+    ukGovernment: "Foreign, Commonwealth & Development Office e Consulado Geral Britanico Sao Paulo",
+  },
+  en: {
+    itaipu: "Itaipu Parquetec",
+    glg: "GLG",
+    sussex: "University of Sussex",
+    sgp: "Society of Gender Professionals",
+    urbio: "Urbio Natal",
+    chevening: "Chevening",
+    sciinov: "Sciinov",
+    ukGovernment: "Foreign, Commonwealth & Development Office and British Consulate General Sao Paulo",
+  },
+  es: {
+    itaipu: "Itaipu Parquetec",
+    glg: "GLG",
+    sussex: "University of Sussex",
+    sgp: "Society of Gender Professionals",
+    urbio: "Urbio Natal",
+    chevening: "Chevening",
+    sciinov: "Sciinov",
+    ukGovernment: "Foreign, Commonwealth & Development Office y Consulado General Britanico en Sao Paulo",
+  },
+} as const;
+
 export default function Home() {
-  const { t } = useI18n();
+  const { t, language } = useI18n();
   const [mousePosition, setMousePosition] = useState({ x: 50 });
   const [currentHomeSlide, setCurrentHomeSlide] = useState(0);
   const [isHomeSlideVisible, setIsHomeSlideVisible] = useState(true);
@@ -119,12 +170,19 @@ export default function Home() {
             <h3 className="text-xl md:text-2xl font-medium tracking-normal text-[#67127c]/85 dark:text-purple-300/75 mb-5">
               {t.home.trustTitle}
             </h3>
-            <div className="flex justify-center items-center">
-              <img
-                src={itaipuImage}
-                alt="Itaipu Parquetec"
-                className="h-12 md:h-14 object-contain grayscale opacity-80 hover:opacity-90 dark:invert dark:grayscale dark:opacity-55 dark:hover:opacity-75 transition-opacity"
-              />
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 justify-items-center items-center">
+              {trustLogos.map((logo) => (
+                <div
+                  key={logo.key}
+                  className="flex h-20 w-full max-w-[210px] items-center justify-center rounded-lg bg-white/40 dark:bg-white/5"
+                >
+                  <img
+                    src={logo.src}
+                    alt={trustLogoLabels[language][logo.key]}
+                    className={`h-12 md:h-14 object-contain grayscale opacity-80 hover:opacity-90 dark:invert dark:grayscale dark:opacity-55 dark:hover:opacity-75 transition-opacity ${logo.key === "glg" ? "invert" : ""}`}
+                  />
+                </div>
+              ))}
             </div>
           </div>
 
